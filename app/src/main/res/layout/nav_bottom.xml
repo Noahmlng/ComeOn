@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:src="@drawable/nav_btn_appoint"
+        android:id="@+id/open_map_appointment_activity"
+        />
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/nav_btn_group"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:id="@+id/open_group_activity"
+        />
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/nav_btn_launch_appointment"
+        android:layout_weight="1"
+        android:id="@+id/open_launch_appointment_activity"
+        />
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/nav_btn_friends"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:id="@+id/open_friends_activity"
+        />
+
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/nav_btn_mine"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:id="@+id/open_mine_activity"
+        />
+
+</LinearLayout>

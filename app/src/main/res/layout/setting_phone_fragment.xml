@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="50dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        >
+
+            <Spinner
+                android:id="@+id/phone_index"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/edittext_background_color_short"
+                ></Spinner>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/phone"
+                android:background="@drawable/edittextbackground_colorful"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            >
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/validate_code"
+                android:background="@drawable/edittextbackground_colorful"
+                android:layout_weight="1"
+                />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/edittext_background_color_short"
+                android:text="获取验证码"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/btn_getValidateCode"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+

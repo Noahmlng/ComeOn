@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="50dp"
+    android:paddingVertical="50dp"
+    android:paddingRight="30dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="20dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名"
+            android:textSize="20sp"
+            android:layout_marginRight="15dp"
+            android:textColor="#666"
+            android:layout_gravity="center"
+            />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/phone"
+            android:background="@drawable/edittext_background_color_short"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_height="45dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="生日"
+            android:textSize="20sp"
+            android:layout_marginRight="30dp"
+            android:textColor="#666"
+            android:layout_gravity="center"
+            />
+
+        <Spinner
+            android:id="@+id/birthday_year"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/edittext_background_color_short"
+            android:layout_marginRight="10dp"
+            ></Spinner>
+        <Spinner
+            android:id="@+id/birthday_month"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/edittext_background_color_short"
+            android:layout_marginRight="10dp"
+            ></Spinner>
+        <Spinner
+            android:id="@+id/birthday_day"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/edittext_background_color_short"
+            ></Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="性别"
+            android:textSize="20sp"
+            android:layout_marginRight="15dp"
+            android:textColor="#666"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

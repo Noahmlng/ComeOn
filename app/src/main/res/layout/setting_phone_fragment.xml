@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="50dp"
+    android:padding="35dp"
     >
 
     <LinearLayout
@@ -15,7 +15,7 @@
 
             <Spinner
                 android:id="@+id/phone_index"
-                android:layout_width="70dp"
+                android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/edittext_background_color_short"
                 ></Spinner>
@@ -24,9 +24,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/phone"
-                android:background="@drawable/edittextbackground_colorful"
+                android:background="@drawable/edittext_background_color_short"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
+                android:maxLines="1"
+                android:maxLength="11"
                 />
 
         </LinearLayout>
@@ -42,17 +44,20 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/validate_code"
-                android:background="@drawable/edittextbackground_colorful"
+                android:background="@drawable/edittext_background_color_short"
+                android:maxLength="6"
                 android:layout_weight="1"
+                android:maxLines="1"
                 />
 
-            <Button
-                android:layout_width="100dp"
+            <com.comeon.android.controls.GradientTextButton
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/edittext_background_color_short"
+                android:background="@drawable/edittext_background_color_short_white"
                 android:text="获取验证码"
                 android:layout_marginLeft="15dp"
                 android:id="@+id/btn_getValidateCode"
+                android:gravity="center"
                 />
 
         </LinearLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="50dp"
+    android:paddingLeft="35dp"
     android:paddingVertical="50dp"
     android:paddingRight="30dp"
     >
@@ -14,13 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginBottom="20dp"
+        android:gravity="center_vertical"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="姓名"
-            android:textSize="20sp"
+            android:text="昵称"
+            android:textSize="16sp"
             android:layout_marginRight="15dp"
             android:textColor="#666"
             android:layout_gravity="center"
@@ -28,64 +29,107 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/phone"
+            android:id="@+id/nickname"
             android:background="@drawable/edittext_background_color_short"
-            android:layout_marginLeft="15dp"
+            android:hint="默认昵称"
             android:layout_weight="1"
+            android:textSize="16sp"
+            android:maxLines="1"
             />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginBottom="20dp"
+        android:gravity="center_vertical"
         android:layout_height="45dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="生日"
-            android:textSize="20sp"
-            android:layout_marginRight="30dp"
+            android:textSize="16sp"
+            android:layout_marginRight="15dp"
             android:textColor="#666"
             android:layout_gravity="center"
             />
 
-        <Spinner
-            android:id="@+id/birthday_year"
-            android:layout_width="90dp"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/edittext_background_color_short"
-            android:layout_marginRight="10dp"
-            ></Spinner>
-        <Spinner
-            android:id="@+id/birthday_month"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/edittext_background_color_short"
-            android:layout_marginRight="10dp"
-            ></Spinner>
-        <Spinner
-            android:id="@+id/birthday_day"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/edittext_background_color_short"
-            ></Spinner>
+            android:layout_weight="1"
+            >
 
+            <Spinner
+                android:id="@+id/birthday_year"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="3"
+                android:background="@drawable/edittext_background_color_short"
+                android:gravity="center"
+                android:spinnerMode="dropdown"></Spinner>
+            <Spinner
+                android:id="@+id/birthday_month"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/edittext_background_color_short"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:spinnerMode="dropdown"
+                ></Spinner>
+            <Spinner
+                android:id="@+id/birthday_day"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/edittext_background_color_short"
+                android:gravity="center"
+                android:spinnerMode="dropdown"
+                ></Spinner>
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="性别"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginRight="15dp"
             android:textColor="#666"
             android:layout_gravity="center"
             />
+
+        <RadioGroup
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_weight="1"
+            >
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/male"
+                android:id="@+id/sex_male"
+                android:layout_marginRight="50dp"
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/female"
+                android:id="@+id/sex_female"
+                />
+        </RadioGroup>
 
     </LinearLayout>
 

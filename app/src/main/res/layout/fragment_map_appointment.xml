@@ -14,7 +14,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="300dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/whitebar"
@@ -30,8 +30,8 @@
 
             <ImageButton
                 android:id="@+id/btn_search"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="center"
                 android:background="@mipmap/ic_search"
                 />
@@ -50,8 +50,8 @@
 
             <ImageButton
                 android:id="@+id/btn_scan"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="@mipmap/ic_scan"
                 android:layout_gravity="center"
                 />

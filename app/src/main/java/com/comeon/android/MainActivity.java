@@ -1,5 +1,6 @@
 package com.comeon.android;
 
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.widget.ImageButton;
 import com.comeon.android.fragment.GroupFragment;
 import com.comeon.android.fragment.MapAppointmentFragment;
 import com.comeon.android.util.LogUtil;
+import com.comeon.android.util.ViewUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ViewUtil.setStatusBarColor(this, Color.rgb(255,255,255),false);
         initControls();
         //注册碎片返回栈监听器
         fragmentManager.addOnBackStackChangedListener(new fragmentBackStackListener());
@@ -56,12 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_launch_appointment.setOnClickListener(this);
         btn_open_friends.setOnClickListener(this);
         btn_open_mine.setOnClickListener(this);
-    }
-
-    @Override
-    protected void onStop() {
-        current_Fragment.onStop();
-        super.onStop();
     }
 
     /**
@@ -99,17 +96,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        //监听返回栈中的碎片
-    }
 
+    /**
+     * 内部类监听自定义碎片返回栈
+     */
     public class fragmentBackStackListener implements FragmentManager.OnBackStackChangedListener{
         @Override
         public void onBackStackChanged() {
+            /*
+            当返回栈中没有碎片时，则关闭活动
+             */
             if(fragmentManager.getBackStackEntryCount()==0){
-                LogUtil.e(TAG, "当前返回栈没有碎片啦");
+                finish();
             }
         }
     }

@@ -1,13 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationActivity"
-    >
+    tools:context=".RegistrationActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="35dp"
+            android:paddingTop="30dp"
+            android:layout_marginTop="30dp"
+            android:id="@+id/tip_layout"
+            android:layout_marginBottom="50dp"
+            >
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="15dp"
+                android:src="@drawable/arrow_down_solid"
+                android:id="@+id/img_arrow_down"
+                android:layout_marginRight="12dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请输入手机号"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:id="@+id/txt_tip"
+                />
+        </LinearLayout>
 
 
+        <FrameLayout
+            android:id="@+id/fragment_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tip_layout"
+            ></FrameLayout>
+
+        <Button
+            android:id="@+id/btn_next_step"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/fragment_layout"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_colorful"
+            android:text="下一步"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            />
+    </RelativeLayout>
 
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

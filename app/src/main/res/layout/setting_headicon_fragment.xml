@@ -2,17 +2,38 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="25dp"
     >
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:id="@+id/head_icon"
-        android:src="@drawable/head_protrait_initial_background"
+        android:src="@drawable/init_portrait"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        />
+    
+    <com.comeon.android.controls.GradientTextButton
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:id="@+id/btn_choosePhotoFromAlbum"
+        android:background="@drawable/edittext_background_color_short_white"
+        android:layout_below="@id/head_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:text="上传图片"
         />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <com.comeon.android.controls.GradientTextButton
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:id="@+id/btn_takePhoto"
+        android:background="@drawable/edittext_background_color_short_white"
+        android:layout_below="@id/btn_choosePhotoFromAlbum"
+        android:layout_centerHorizontal="true"
+        android:text="拍照"
+        android:layout_marginBottom="5dp"
+        />
+
 </RelativeLayout>

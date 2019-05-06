@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.comeon.android.R;
 
 /**
- * Created by ${User} on ${Date}
+ * 组团碎片
  */
 public class GroupFragment extends Fragment {
 

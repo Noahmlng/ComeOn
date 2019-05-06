@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
 
 
     <RelativeLayout
@@ -23,31 +25,44 @@
             android:layout_marginBottom="15dp"
             android:src="@drawable/logo" />
 
-        <ImageButton
+        <Button
             android:id="@+id/btn_login"
             android:layout_width="180dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_login" />
+            android:text="登录"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:background="@drawable/button_colorful" />
 
 
-        <ImageButton
+        <Button
             android:id="@+id/btn_register"
             android:layout_width="180dp"
             android:layout_height="40dp"
             android:layout_below="@id/btn_login"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="18dp"
-            android:background="@drawable/btn_register" />
+            android:text="注册"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:background="@drawable/button_colorful" />
 
-        <ImageButton
+        <Button
             android:id="@+id/btn_visitor_login"
-            android:layout_width="60dp"
-            android:layout_height="23dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/visitor_login" />
+            android:text="游客登录"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:background="@android:color/transparent"
+            android:drawableBottom="@drawable/arrow_down"
+            />
 
     </RelativeLayout>
 

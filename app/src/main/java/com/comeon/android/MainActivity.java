@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Fragment current_Fragment;
 
     CommonTabLayout tlCommen;
-    CoordinatorLayout flContent;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private String[] mTitles = {"约球", "组团","发布组团", "朋友", "我的"};
@@ -80,19 +79,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onTabReselect(int position) {
-                switch (position){
-                    case 0:
-                        replaceFragment(mapAppointmentFragment);
-                        break;
-                    case 1:
-                        replaceFragment(groupFragment);
-                        break;
-                    case 2:
-                        break;
-                }
             }
         });
-        flContent=(CoordinatorLayout)findViewById(R.id.fragment_layout);
     }
 
     /**
@@ -165,12 +153,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    /**
+     * 处理界面中的点击事件
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
         }
     }
 
+    /**
+     * 返回键返回桌面
+     */
     @Override
     public void onBackPressed() {
         Intent home=new Intent(Intent.ACTION_MAIN);

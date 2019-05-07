@@ -35,30 +35,30 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="80dp"
             android:orientation="horizontal"
             android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
             >
 
             <EditText
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
                 android:id="@+id/validate_code"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
                 android:background="@drawable/edittext_background_color_short"
                 android:maxLength="6"
-                android:layout_weight="1"
-                android:maxLines="1"
-                />
+                android:maxLines="1" />
 
             <com.comeon.android.controls.GradientTextButton
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/edittext_background_color_short_white"
-                android:text="获取验证码"
-                android:layout_marginLeft="15dp"
                 android:id="@+id/btn_getValidateCode"
+                style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/edittext_background_color_short"
                 android:gravity="center"
-                />
+                android:text="获取验证码" />
 
         </LinearLayout>
 

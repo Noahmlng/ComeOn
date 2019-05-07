@@ -1,19 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    android:paddingTop="35dp">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="123213132132131231231"
-        android:gravity="center"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="测试"
+        android:layout_marginHorizontal="40dp"
+        android:paddingLeft="20dp"
+        android:paddingVertical="10dp"
+        android:background="@drawable/search_edittext"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_search"
+            android:layout_marginRight="10dp"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:id="@+id/search_text"
+            android:hint="请输入关键字"
+            android:background="@null"
+            android:maxLines="1"
+            />
+    </LinearLayout>
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="?attr/colorPrimary"
+        tl:tl_indicator_color="@color/colorAccent"
+        tl:tl_indicator_style="NORMAL"
+        tl:tl_indicator_height="5dp"
+        tl:tl_indicator_gravity="BOTTOM"
+        tl:tl_indicator_corner_radius="3dp"
+        tl:tl_indicator_width_equal_title="true"
+        tl:tl_tab_padding="10dp"
+        tl:tl_textSelectColor="#898989"
+        tl:tl_textUnselectColor="#898989"
+        tl:tl_textsize="14sp"
+        tl:tl_textBold="true"
+        tl:tl_tab_space_equal="true"
+        />
+    
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         />
 
-</android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

@@ -46,6 +46,23 @@ public class SettingPersonalInfoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.from(getActivity()).inflate(R.layout.setting_personal_info_fragment,container, false);
         initControls(view);
+        //如果有缓存数据，则先加载缓存数据
+        if(savedInstanceState!=null){
+            editText_nickname.setText(savedInstanceState.getString("nickname"));
+            birthday_year.setSelection(savedInstanceState.getIntArray("birthday")[0]-1930);
+            birthday_month.setSelection(savedInstanceState.getIntArray("birthday")[1]-1);
+            birthday_day.setSelection(savedInstanceState.getIntArray("birthday")[2]-1);
+
+            int sex=savedInstanceState.getInt("sex",2);
+            switch (sex){
+                case 0:
+                    sex_male.setChecked(true);
+                    break;
+                case 1:
+                    sex_female.setChecked(false);
+                    break;
+            }
+        }
         return view;
     }
 
@@ -308,5 +325,17 @@ public class SettingPersonalInfoFragment extends Fragment {
             date[i-1]=i;
         }
         return date;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("nickname",editText_nickname.getText().toString());
+        outState.putIntArray("birthday",new int[]{selectedYear,selectedMonth,selectedDay});
+        if(sex_male.isChecked()){
+            outState.putInt("sex",0);
+        }else if(sex_female.isChecked()){
+            outState.putInt("sex",1);
+        }
+        super.onSaveInstanceState(outState);
     }
 }

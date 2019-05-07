@@ -10,4 +10,10 @@
         android:gravity="center"
         />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试"
+        />
+
 </android.support.design.widget.CoordinatorLayout>

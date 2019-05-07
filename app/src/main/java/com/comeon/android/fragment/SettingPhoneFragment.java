@@ -32,6 +32,10 @@ public class SettingPhoneFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.setting_phone_fragment, container, false);
         initControls(view);
+        //如果有缓存数据，则先加载缓存数据
+        if(savedInstanceState!=null){
+            phone.setText(savedInstanceState.getString("phone"));
+        }
         return view;
     }
 
@@ -50,5 +54,11 @@ public class SettingPhoneFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         phone_index.setAdapter(adapter);
         phone_index.setSelection(0);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("phone",phone.getText().toString());
+        super.onSaveInstanceState(outState);
     }
 }

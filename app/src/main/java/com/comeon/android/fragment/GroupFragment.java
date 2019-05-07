@@ -13,12 +13,17 @@ import com.comeon.android.R;
 /**
  * 组团碎片
  */
-public class GroupFragment extends Fragment {
+public class GroupFragment extends BaseFragment {
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_group, container, false);
         return view;
     }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.fragment_group;
+    }
+
 }

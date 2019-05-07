@@ -43,7 +43,7 @@ import java.util.List;
 /**
  * 地图组团的碎片
  */
-public class MapAppointmentFragment extends Fragment {
+public class MapAppointmentFragment extends BaseFragment {
 
     MapView bMapView;
     BaiduMap bMap;
@@ -79,8 +79,8 @@ public class MapAppointmentFragment extends Fragment {
         requestPermission();
         //加载个性化地图文件
         setMapCustomFile(getActivity(), "custom_map_config.json");
+        View view=inflater.inflate(R.layout.fragment_map_appointment, container, false);
         //填充布局
-        View view = inflater.inflate(R.layout.fragment_map_appointment, container, false);
         bMapView = view.findViewById(R.id.bmapView);
         //设置百度地图logo的位置
         bMapView.setLogoPosition(LogoPosition.logoPostionleftTop);
@@ -120,6 +120,11 @@ public class MapAppointmentFragment extends Fragment {
             bMap.animateMapStatus(update);
         }
         return view;
+    }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.fragment_map_appointment;
     }
 
 

@@ -20,6 +20,7 @@ import com.comeon.android.fragment.SettingHeadIconFragment;
 import com.comeon.android.fragment.SettingPersonalInfoFragment;
 import com.comeon.android.fragment.SettingPhoneFragment;
 import com.comeon.android.util.Activity_Parent;
+import com.comeon.android.util.Utilities;
 import com.comeon.android.util.ViewUtil;
 
 import java.sql.Timestamp;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import okhttp3.internal.Util;
 
 public class RegistrationActivity extends Activity_Parent {
 
@@ -52,7 +55,7 @@ public class RegistrationActivity extends Activity_Parent {
         initControls();
         //注册碎片返回栈监听器
         fragmentManager.addOnBackStackChangedListener(new RegistrationActivity.fragmentBackStackListener());
-        replaceFragment(settingPhoneFragment);
+        Utilities.replaceFragment(fragmentManager,settingPhoneFragment,R.id.fragment_layout);
     }
 
     /**
@@ -74,15 +77,15 @@ public class RegistrationActivity extends Activity_Parent {
                 if (currentFragment instanceof SettingPhoneFragment) {
                     txt_tip.setText("请设置个人信息");
                     btn_next_step.setText("下一步");
-                    replaceFragment(settingPersonalInfoFragment);
+                    Utilities.replaceFragment(fragmentManager,settingPersonalInfoFragment,R.id.fragment_layout);
                 } else if (currentFragment instanceof SettingPersonalInfoFragment) {
                     txt_tip.setText("请输入可接受的约球距离");
                     btn_next_step.setText("下一步");
-                    replaceFragment(settingDistanceFragment);
+                    Utilities.replaceFragment(fragmentManager,settingDistanceFragment,R.id.fragment_layout);
                 } else if (currentFragment instanceof SettingDistanceFragment) {
                     txt_tip.setText("请设置头像");
                     btn_next_step.setText("开始吧！");
-                    replaceFragment(settingHeadIconFragment);
+                    Utilities.replaceFragment(fragmentManager,settingHeadIconFragment,R.id.fragment_layout);
                 } else if (currentFragment instanceof SettingHeadIconFragment) {
                     Intent intent=new Intent(RegistrationActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -101,33 +104,16 @@ public class RegistrationActivity extends Activity_Parent {
         } else if (currentFragment instanceof SettingPersonalInfoFragment) {
             txt_tip.setText("请输入手机号");
             btn_next_step.setText("下一步");
-            replaceFragment(settingPhoneFragment);
+            Utilities.replaceFragment(fragmentManager,settingPhoneFragment,R.id.fragment_layout);
         } else if (currentFragment instanceof SettingDistanceFragment) {
             txt_tip.setText("请设置个人信息");
             btn_next_step.setText("下一步");
-            replaceFragment(settingPersonalInfoFragment);
+            Utilities.replaceFragment(fragmentManager,settingPersonalInfoFragment,R.id.fragment_layout);
         } else if (currentFragment instanceof SettingHeadIconFragment) {
             txt_tip.setText("请输入可接受的约球距离");
             btn_next_step.setText("下一步");
-            replaceFragment(settingDistanceFragment);
+            Utilities.replaceFragment(fragmentManager,settingDistanceFragment,R.id.fragment_layout);
         }
-    }
-
-    /**
-     * 动态替换碎片的方法
-     *
-     * @param fragment
-     */
-    private void replaceFragment(Fragment fragment) {
-        //1、创建一个碎片的事务
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //2、替换碎片的操作
-        fragmentTransaction.replace(R.id.fragment_layout, fragment);
-        currentFragment = fragment;
-        //3、如果需要模拟返回栈的模式（替换的操作相当于让新的碎片处于栈顶，返回键就是出栈）
-        fragmentTransaction.addToBackStack(null);
-        //4、提交事务
-        fragmentTransaction.commit();
     }
 
     /**

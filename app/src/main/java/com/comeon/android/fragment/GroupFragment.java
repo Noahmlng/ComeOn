@@ -36,17 +36,30 @@ public class GroupFragment extends BaseFragment {
     //设置适配器
     private MyPageAdapter mAdapter;
     private ArrayList<Fragment> mFragments;
-    private String[] mTitles = {"场馆", "附近邀约","app"};
+    private String[] mTitles = {"场馆", "附近邀约"};
 
     SlidingTabLayout tabLayout;
     EditText search_text;
     ViewPager viewPager;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        /*
+            Activity中嵌套Fragment设置适配器管理：getSupportFragmentManager();
+            Fragment中嵌套Fragment设置适配器管理  getChildFragmentManager();
+         */
+        fragmentManager= this.getChildFragmentManager();
+        mFragments = new ArrayList<Fragment>();
+        mFragments.add(new StadiumsFragment());
+        mFragments.add(new StadiumsFragment());
+        //实例化适配器（构造方法：放入碎片管理对象）
+        mAdapter=new MyPageAdapter(fragmentManager);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_group, container, false);
-        fragmentManager= this.getActivity().getSupportFragmentManager();
-        mFragments = new ArrayList<>();
         initControls(view);
         return view;
     }
@@ -84,33 +97,11 @@ public class GroupFragment extends BaseFragment {
      * 加载Tab选项
      */
     private void initTab() {
-        mFragments.add(new StadiumsFragment());
-        mFragments.add(new StadiumsFragment());
-
-        //实例化适配器（构造方法：放入碎片管理对象）
-        mAdapter=new MyPageAdapter(fragmentManager);
         //设置ViewPager与适配器关联
         viewPager.setAdapter(mAdapter);
-        LogUtil.e(TAG,String.valueOf(mFragments.size()));
         //设置Tab与ViewPager关联
         tabLayout.setViewPager(viewPager);
     }
-
-    /**
-     * 动态替换碎片的方法
-     * @param fragment  要放入的碎片
-     */
-    private void replaceFragment(Fragment fragment) {
-        //1、创建一个碎片的事务
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //2、替换碎片的操作
-        fragmentTransaction.replace(R.id.fragment_layout, fragment);
-        //3、如果需要模拟返回栈的模式（替换的操作相当于让新的碎片处于栈顶，返回键就是出栈）
-        fragmentTransaction.addToBackStack(null);
-        //4、提交事务
-        fragmentTransaction.commit();
-    }
-
 
     /**
      * 适配器帮助读取tablayout中的值

@@ -17,6 +17,7 @@ import com.comeon.android.fragment.FriendsFragment;
 import com.comeon.android.fragment.GroupFragment;
 import com.comeon.android.fragment.MapAppointmentFragment;
 import com.comeon.android.util.LogUtil;
+import com.comeon.android.util.Utilities;
 import com.comeon.android.util.ViewUtil;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -34,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     MapAppointmentFragment mapAppointmentFragment = new MapAppointmentFragment();
     GroupFragment groupFragment = new GroupFragment();
-    private Fragment current_Fragment;
 
     CommonTabLayout tlCommen;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initControls();
         //注册碎片返回栈监听器
         fragmentManager.addOnBackStackChangedListener(new fragmentBackStackListener());
-        replaceFragment(mapAppointmentFragment);
+        Utilities.replaceFragment(fragmentManager, mapAppointmentFragment, R.id.fragment_layout);
     }
 
     /**
@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onTabSelect(int position) {
                 switch (position){
                     case 0:
-                        replaceFragment(mapAppointmentFragment);
+                        Utilities.replaceFragment(fragmentManager, mapAppointmentFragment, R.id.fragment_layout);
                         break;
                     case 1:
-                        replaceFragment(groupFragment);
+                        Utilities.replaceFragment(fragmentManager, groupFragment, R.id.fragment_layout);
                         break;
                     case 2:
                         break;
@@ -133,25 +133,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //隐藏指定位置未读红点或消息
 //        tlCommen.hideMsg(2);
     }
-
-    /**
-     * 动态替换碎片的方法
-     *
-     * @param fragment
-     */
-    private void replaceFragment(Fragment fragment) {
-        //1、创建一个碎片的事务
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //2、替换碎片的操作
-        fragmentTransaction.replace(R.id.fragment_layout, fragment);
-        //3、如果需要模拟返回栈的模式（替换的操作相当于让新的碎片处于栈顶，返回键就是出栈）
-        fragmentTransaction.addToBackStack(null);
-        //4、提交事务
-        fragmentTransaction.commit();
-
-        current_Fragment = fragment;
-    }
-
 
     /**
      * 处理界面中的点击事件

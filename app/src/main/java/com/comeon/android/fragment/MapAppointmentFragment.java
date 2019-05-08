@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -336,6 +337,7 @@ public class MapAppointmentFragment extends BaseFragment {
                 last_status = builder.target(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).zoom(15.5f).build();
             }
             buildSignal(bdLocation);
+            LogUtil.e(TAG, bdLocation.getAddress().address);
         }
     }
 

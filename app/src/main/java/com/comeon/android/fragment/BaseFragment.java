@@ -22,6 +22,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(getContentViewId(),container,false);
+        initControls(mRootView);
         return mRootView;
     }
 
@@ -29,10 +30,9 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData();
     }
 
-    protected void initData(){}
+    protected void initControls(View view){}
     protected abstract int getContentViewId();
 
     @Override

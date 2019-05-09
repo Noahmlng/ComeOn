@@ -3,37 +3,49 @@ package com.comeon.android.db;
 import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
+import java.util.List;
+
 /**
  * 运动类型表
  */
 public class SportsType extends LitePalSupport {
 
     public SportsType(){}
-    public SportsType(String type_name){
-        this.type_name=type_name;
+    public SportsType(String typeName){
+        this.typeName=typeName;
     }
-
-    private long id;
 
     @Column(nullable = false)
-    private String type_name;
+    private String typeName;
 
+    @Column(ignore = true)
     //迭代开发：运动归类
-    private int category_id;
+    private int cateGoryId;
 
-    public void setId(long id) {
-        this.id = id;
+    private List<StadiumInfo> stadiumInfos;
+    private List<AppointmentOrder> ordersType;
+
+    public List<AppointmentOrder> getOrdersType() {
+        return ordersType;
     }
 
-    public long getId() {
-        return id;
+    public void setOrdersType(List<AppointmentOrder> ordersType) {
+        this.ordersType = ordersType;
     }
 
-    public String getType_name() {
-        return type_name;
+    public List<StadiumInfo> getStadiumInfos() {
+        return stadiumInfos;
     }
 
-    public void setType_name(String type_name) {
-        this.type_name = type_name;
+    public void setStadiumInfos(List<StadiumInfo> stadiumInfos) {
+        this.stadiumInfos = stadiumInfos;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

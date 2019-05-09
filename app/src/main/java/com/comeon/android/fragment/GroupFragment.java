@@ -16,6 +16,7 @@ import android.widget.EditText;
 import com.comeon.android.R;
 import com.comeon.android.controls.TabEntity;
 import com.comeon.android.util.LogUtil;
+import com.comeon.android.util.Utilities;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -38,6 +39,9 @@ public class GroupFragment extends BaseFragment {
     private ArrayList<Fragment> mFragments;
     private String[] mTitles = {"场馆", "附近邀约"};
 
+    private StadiumsFragment stadiumsFragment=new StadiumsFragment();
+    private GroupInfoFragment groupInfoFragment=new GroupInfoFragment();
+
     SlidingTabLayout tabLayout;
     EditText search_text;
     ViewPager viewPager;
@@ -51,8 +55,8 @@ public class GroupFragment extends BaseFragment {
          */
         fragmentManager= this.getChildFragmentManager();
         mFragments = new ArrayList<Fragment>();
-        mFragments.add(new StadiumsFragment());
-        mFragments.add(new StadiumsFragment());
+        mFragments.add(stadiumsFragment);
+        mFragments.add(groupInfoFragment);
         //实例化适配器（构造方法：放入碎片管理对象）
         mAdapter=new MyPageAdapter(fragmentManager);
     }
@@ -67,7 +71,7 @@ public class GroupFragment extends BaseFragment {
     /**
      * 初始化控件
      */
-    private void initControls(View view){
+    protected void initControls(View view){
         tabLayout=(SlidingTabLayout) view.findViewById(R.id.tablayout);
         viewPager=(ViewPager)view.findViewById(R.id.view_pager);
         initTab();
@@ -79,10 +83,10 @@ public class GroupFragment extends BaseFragment {
             public void onTabSelect(int position) {
                 switch (position){
                     case 0:
+                        Utilities.replaceFragment(fragmentManager, stadiumsFragment,R.id.view_pager );
                         break;
                     case 1:
-                        break;
-                    case 2:
+                        Utilities.replaceFragment(fragmentManager, groupInfoFragment, R.id.view_pager);
                         break;
                 }
             }

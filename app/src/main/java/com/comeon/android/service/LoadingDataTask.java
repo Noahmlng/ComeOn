@@ -1,22 +1,17 @@
 package com.comeon.android.service;
-
-import android.database.Cursor;
 import android.os.AsyncTask;
-import android.os.Environment;
-import android.util.Log;
-import android.webkit.DownloadListener;
 
 import com.comeon.android.R;
 import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.db.Friends;
-import com.comeon.android.db.Location;
 import com.comeon.android.db.Message;
 import com.comeon.android.db.SportsType;
 import com.comeon.android.db.StadiumInfo;
 import com.comeon.android.db.UserInfo;
 import com.comeon.android.db.UserLogin;
 import com.comeon.android.db.UserLoginLog;
-import com.comeon.android.db_accessing.SportsTypeDBAccessing;
+import com.comeon.android.db_accessing.SportsTypeDao;
+import com.comeon.android.db_accessing.SportsTypeDaoImpl;
 import com.comeon.android.util.LogUtil;
 import com.comeon.android.util.Utilities;
 
@@ -149,187 +144,164 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             添加三个用户
          */
             UserLogin ul1 = new UserLogin();
-            ul1.setUser_name("Hi");
-            ul1.setUser_phone("17620388542");
-            ul1.setLast_modified_time(new Date());
+            ul1.setUserName("Hi");
+            ul1.setUserPhone("17620388542");
+            ul1.setLastModifiedTime(new Date());
+            ul1.setUserStatus(0);
             ul1.save();
 
             UserInfo user1 = new UserInfo();
-            user1.setUser_login_id(ul1.getId());
-            user1.setAcepted_distance(5000f);
+            user1.setUserLoginId(ul1.getId());
+            user1.setAcceptedDistance(5000f);
             user1.setDescription("Nothing to specifically to describe");
-            user1.setUser_birthday(new Date(2000, 11, 15));
-            user1.setHead_icon(Utilities.decodeResource(R.drawable.head_protrait_initial_background));
-            user1.setUser_nickname("无名氏");
-            user1.setUser_phone("17620388542");
-            user1.setLast_modified_time(new Date());
-            user1.setUser_gender(0);
+            user1.setUserBirthday(new Date(2000, 11, 15));
+            user1.setHeadIcon(Utilities.decodeResource(R.drawable.init_portrait));
+            user1.setUserNickName("无名氏");
+            user1.setUserPhone("17620388542");
+            user1.setLastModifiedTime(new Date());
+            user1.setUserGender(0);
             user1.save();
 
             UserLoginLog user1_log = new UserLoginLog();
-            user1_log.setUser_id(user1.getId());
-            user1_log.setLogin_time(new Date());
-            user1_log.setLogin_status(0);
+            user1_log.setUserId(user1.getId());
+            user1_log.setLoginTime(new Date());
+            user1_log.setLoginStatus(0);
             user1_log.save();
 
             UserLogin ul2 = new UserLogin();
-            ul2.setUser_name("Hello");
-            ul2.setUser_phone("12345678900");
-            ul2.setUser_name("test02");
-            ul2.setUser_password("123456");
-            ul2.setLast_modified_time(new Date());
+            ul2.setUserName("Hello");
+            ul2.setUserPhone("12345678900");
+            ul2.setUserName("test02");
+            ul2.setUserPassword("123456");
+            ul2.setLastModifiedTime(new Date());
             ul2.save();
 
             UserInfo user2 = new UserInfo();
-            user2.setUser_login_id(ul2.getId());
-            user2.setUser_birthday(new Date(1980, 12, 5));
-            user2.setHead_icon(Utilities.decodeResource(R.drawable.head_protrait_initial_background));
-            user2.setUser_nickname("无名氏");
-            user2.setUser_phone("17988554477");
-            user2.setLast_modified_time(new Date());
+            user2.setUserLoginId(ul2.getId());
+            user2.setUserBirthday(new Date(1980, 12, 5));
+            user2.setHeadIcon(Utilities.decodeResource(R.drawable.init_portrait));
+            user2.setUserNickName("Jack");
+            user2.setUserPhone("17988554477");
+            user2.setLastModifiedTime(new Date());
             user2.save();
 
             UserLogin ul3 = new UserLogin();
-            ul3.setUser_name("Hey");
-            ul3.setUser_phone("12345678912");
-            ul3.setUser_name("test03");
-            ul3.setUser_password("123456");
-            ul3.setLast_modified_time(new Date());
+            ul3.setUserName("Hey");
+            ul3.setUserPhone("12345678912");
+            ul3.setUserPassword("123456");
+            ul3.setLastModifiedTime(new Date());
             ul3.save();
 
             UserInfo user3 = new UserInfo();
-            user3.setUser_login_id(ul3.getId());
-            user3.setUser_birthday(new Date(1940, 2, 8));
-            user3.setHead_icon(Utilities.decodeResource(R.drawable.head_protrait_initial_background));
-            user3.setUser_phone("13688975564");
-            user3.setLast_modified_time(new Date());
-            user3.setUser_gender(1);
+            user3.setUserLoginId(ul3.getId());
+            user3.setUserBirthday(new Date(1940, 2, 8));
+            user3.setHeadIcon(Utilities.decodeResource(R.drawable.init_portrait));
+            user3.setUserPhone("13688975564");
+            user3.setUserNickName("Mike");
+            user3.setLastModifiedTime(new Date());
+            user3.setUserGender(1);
             user3.save();
 
 
-            SportsTypeDBAccessing sportsTypeDBAccessing = new SportsTypeDBAccessing();
-        /*
-            添加八个场馆信息
-         */
+            SportsTypeDao sportsTypeDao = new SportsTypeDaoImpl();
+            /*
+                添加八个场馆信息
+             */
             StadiumInfo stadium1 = new StadiumInfo();
-            stadium1.setStadium_name("足球场1");
-            stadium1.setStadium_contact("12345678910");
-            stadium1.setAvg_consumption(90);
-            Location location = new Location();
-            location.setProvince("广东省");
-            location.setCity("东莞市");
-            location.setDistrict("东莞市市辖区");
-            location.setStreet("建设路");
-            location.setStreetNumber("02号");
-            stadium1.setLocation(location);
-            stadium1.setStadium_icon(Utilities.decodeResource(R.drawable.stadium_sample_soccer1));
-            SportsType type=sportsTypeDBAccessing.findSportsTypeByName("足球");
-            stadium1.setStadium_type(type);
+            stadium1.setStadiumName("足球场1");
+            stadium1.setStadiumContact("12345678910");
+            stadium1.setAvgConsumption(90);
+            stadium1.setProvince("广东省");
+            stadium1.setCity("东莞市");
+            stadium1.setDistrict("东莞市市辖区");
+            stadium1.setStreet("建设路");
+            stadium1.setStreetNumber("02号");
+            SportsType type=sportsTypeDao.findSportsTypeByName("足球");
+            stadium1.setSportsType(type);
             stadium1.save();
 
             StadiumInfo stadium2 = new StadiumInfo();
-            stadium2.setStadium_name("足球场2");
-            stadium2.setStadium_contact("12345678910");
-            stadium2.setAvg_consumption(120);
-            location = new Location();
-            location.setProvince("广东省");
-            location.setCity("东莞市");
-            location.setDistrict("东莞市市辖区");
-            location.setStreet("莞太路");
-            location.setStreetNumber("106号");
-            stadium2.setLocation(location);
-            stadium2.setStadium_icon(Utilities.decodeResource(R.drawable.stadium_sample_soccer2));
-            stadium2.setStadium_type(sportsTypeDBAccessing.findSportsTypeByName("足球"));
+            stadium2.setStadiumName("足球场2");
+            stadium2.setStadiumContact("12345678910");
+            stadium2.setAvgConsumption(120);
+            stadium2.setProvince("广东省");
+            stadium2.setCity("东莞市");
+            stadium2.setDistrict("东莞市市辖区");
+            stadium2.setStreet("莞太路");
+            stadium2.setStreetNumber("106号");
+            stadium2.setSportsType(sportsTypeDao.findSportsTypeByName("足球"));
             stadium2.save();
 
             StadiumInfo stadium3 = new StadiumInfo();
-            stadium3.setStadium_name("足球场3");
-            stadium3.setStadium_contact("12345678910");
-            stadium3.setAvg_consumption(5);
-            location = new Location();
-            location.setProvince("广东省");
-            location.setCity("东莞市");
-            location.setDistrict("东莞市市辖区");
-            location.setStreet("莞太路");
-            location.setStreetNumber("120号");
-            stadium3.setLocation(location);
-            stadium3.setStadium_icon(Utilities.decodeResource(R.drawable.stadium_sample_soccer3));
-            stadium3.setStadium_type(sportsTypeDBAccessing.findSportsTypeByName("足球"));
+            stadium3.setStadiumName("足球场3");
+            stadium3.setStadiumContact("12345678910");
+            stadium3.setAvgConsumption(5);
+            stadium3.setProvince("广东省");
+            stadium3.setCity("东莞市");
+            stadium3.setDistrict("东莞市市辖区");
+            stadium3.setStreet("莞太路");
+            stadium3.setStreetNumber("120号");
+            stadium3.setSportsType(sportsTypeDao.findSportsTypeByName("足球"));
             stadium3.save();
 
             StadiumInfo stadium4 = new StadiumInfo();
-            stadium4.setStadium_name("篮球场1");
-            stadium4.setStadium_contact("12345678910");
-            stadium4.setAvg_consumption(5);
-            location = new Location();
-            location.setProvince("广东省");
-            location.setCity("东莞市");
-            location.setDistrict("东莞市市辖区");
-            location.setStreet("体育路");
-            location.setStreetNumber("12号");
-            stadium4.setLocation(location);
-            stadium4.setStadium_icon(Utilities.decodeResource(R.drawable.stadium_sample_basketball1));
-            stadium4.setStadium_type(sportsTypeDBAccessing.findSportsTypeByName("篮球"));
+            stadium4.setStadiumName("篮球场1");
+            stadium4.setStadiumContact("12345678910");
+            stadium4.setAvgConsumption(5);
+            stadium4.setProvince("广东省");
+            stadium4.setCity("东莞市");
+            stadium4.setDistrict("东莞市市辖区");
+            stadium4.setStreet("体育路");
+            stadium4.setStreetNumber("12号");
+            stadium4.setSportsType(sportsTypeDao.findSportsTypeByName("篮球"));
             stadium4.save();
 
             StadiumInfo stadium5 = new StadiumInfo();
-            stadium5.setStadium_name("篮球场2");
-            stadium5.setStadium_contact("12345678910");
-            stadium5.setAvg_consumption(50);
-            location = new Location();
-            location.setProvince("广东省");
-            location.setCity("东莞市");
-            location.setDistrict("东莞市市辖区");
-            location.setStreet("体育路");
-            location.setStreetNumber("100号");
-            stadium5.setLocation(location);
-            stadium5.setStadium_icon(Utilities.decodeResource(R.drawable.stadium_sample_basketball2));
-            stadium5.setStadium_type(sportsTypeDBAccessing.findSportsTypeByName("篮球"));
+            stadium5.setStadiumName("篮球场2");
+            stadium5.setStadiumContact("12345678910");
+            stadium5.setAvgConsumption(50);
+            stadium5.setProvince("广东省");
+            stadium5.setCity("东莞市");
+            stadium5.setDistrict("东莞市市辖区");
+            stadium5.setStreet("体育路");
+            stadium5.setStreetNumber("100号");
+            stadium5.setSportsType(sportsTypeDao.findSportsTypeByName("篮球"));
             stadium5.save();
 
             StadiumInfo stadium6 = new StadiumInfo();
-            stadium6.setStadium_name("羽毛球场1");
-            stadium6.setStadium_contact("12345678910");
-            stadium6.setAvg_consumption(30);
-            location = new Location();
-            location.setProvince("广东省");
-            location.setCity("东莞市");
-            location.setDistrict("东莞市市辖区");
-            location.setStreet("嘉和街");
-            location.setStreetNumber("16号");
-            stadium6.setLocation(location);
-            stadium6.setStadium_icon(Utilities.decodeResource(R.drawable.stadium_sample_badminton1));
-            stadium6.setStadium_type(sportsTypeDBAccessing.findSportsTypeByName("羽毛球"));
+            stadium6.setStadiumName("羽毛球场1");
+            stadium6.setStadiumContact("12345678910");
+            stadium6.setAvgConsumption(30);
+            stadium6.setProvince("广东省");
+            stadium6.setCity("东莞市");
+            stadium6.setDistrict("东莞市市辖区");
+            stadium6.setStreet("嘉和街");
+            stadium6.setStreetNumber("16号");
+            stadium6.setSportsType(sportsTypeDao.findSportsTypeByName("羽毛球"));
             stadium6.save();
 
             StadiumInfo stadium7 = new StadiumInfo();
-            stadium7.setStadium_name("羽毛球场2");
-            stadium7.setStadium_contact("12345678910");
-            stadium7.setAvg_consumption(50);
-            location = new Location();
-            location.setProvince("广东省");
-            location.setCity("东莞市");
-            location.setDistrict("东莞市市辖区");
-            location.setStreet("莞太路");
-            location.setStreetNumber("50号");
-            stadium7.setLocation(location);
-            stadium7.setStadium_icon(Utilities.decodeResource(R.drawable.stadium_sample_badminton2));
-            stadium7.setStadium_type(sportsTypeDBAccessing.findSportsTypeByName("羽毛球"));
+            stadium7.setStadiumName("羽毛球场2");
+            stadium7.setStadiumContact("12345678910");
+            stadium7.setAvgConsumption(50);
+            stadium7.setProvince("广东省");
+            stadium7.setCity("东莞市");
+            stadium7.setDistrict("东莞市市辖区");
+            stadium7.setStreet("莞太路");
+            stadium7.setStreetNumber("50号");
+            stadium7.setSportsType(sportsTypeDao.findSportsTypeByName("羽毛球"));
             stadium7.save();
 
             StadiumInfo stadium8 = new StadiumInfo();
-            stadium8.setStadium_name("网球场1");
-            stadium8.setStadium_contact("12345678910");
-            stadium8.setAvg_consumption(1000);
-            location = new Location();
-            location.setProvince("广东省");
-            location.setCity("东莞市");
-            location.setDistrict("东莞市市辖区");
-            location.setStreet("体育路");
-            location.setStreetNumber("106号");
-            stadium8.setLocation(location);
-            stadium8.setStadium_icon(Utilities.decodeResource(R.drawable.stadium_sample_tennis1));
-            stadium8.setStadium_type(sportsTypeDBAccessing.findSportsTypeByName("网球"));
+            stadium8.setStadiumName("网球场1");
+            stadium8.setStadiumContact("12345678910");
+            stadium8.setAvgConsumption(1000);
+            stadium8.setProvince("广东省");
+            stadium8.setCity("东莞市");
+            stadium8.setDistrict("东莞市市辖区");
+            stadium8.setStreet("体育路");
+            stadium8.setStreetNumber("106号");
+            stadium8.setSportsType(sportsTypeDao.findSportsTypeByName("网球"));
             stadium8.save();
 
 
@@ -337,42 +309,42 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             初始化好友各自为好友
          */
             Friends friends = new Friends();
-            friends.setFriend_id(user2.getId());
+            friends.setFriendId(user2.getId());
             friends.setRemarks("好友一号");
-            friends.setUser_id(user1.getId());
-            friends.setRelationship_status(0);
+            friends.setUserId(user1.getId());
+            friends.setRelationshipStatus(0);
             friends.save();
 
             friends = new Friends();
-            friends.setFriend_id(user3.getId());
-            friends.setUser_id(user1.getId());
-            friends.setRelationship_status(0);
+            friends.setFriendId(user3.getId());
+            friends.setUserId(user1.getId());
+            friends.setRelationshipStatus(0);
             friends.save();
 
             friends = new Friends();
-            friends.setFriend_id(user1.getId());
+            friends.setFriendId(user1.getId());
             friends.setRemarks("好友一号");
-            friends.setUser_id(user2.getId());
-            friends.setRelationship_status(0);
+            friends.setUserId(user2.getId());
+            friends.setRelationshipStatus(0);
             friends.save();
 
             friends = new Friends();
-            friends.setFriend_id(user3.getId());
-            friends.setUser_id(user2.getId());
-            friends.setRelationship_status(0);
+            friends.setFriendId(user3.getId());
+            friends.setUserId(user2.getId());
+            friends.setRelationshipStatus(0);
             friends.save();
 
             friends = new Friends();
-            friends.setFriend_id(user2.getId());
+            friends.setFriendId(user2.getId());
             friends.setRemarks("好友一号");
-            friends.setUser_id(user3.getId());
-            friends.setRelationship_status(0);
+            friends.setUserId(user3.getId());
+            friends.setRelationshipStatus(0);
             friends.save();
 
             friends = new Friends();
-            friends.setFriend_id(user1.getId());
-            friends.setUser_id(user3.getId());
-            friends.setRelationship_status(0);
+            friends.setFriendId(user1.getId());
+            friends.setUserId(user3.getId());
+            friends.setRelationshipStatus(0);
             friends.save();
 
         /*
@@ -380,52 +352,52 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
          */
 
             Message message = new Message();
-            message.setFriend_id(user1.getId());
-            message.setUser_id(user2.getId());
-            message.setMessage_content("你好啊，朋友1号");
-            message.setSend_time(new Date(2018, 11, 15));
+            message.setFriendId(user1.getId());
+            message.setUserId(user2.getId());
+            message.setMessageContent("你好啊，朋友1号");
+            message.setSendTime(new Date(2018, 11, 15));
             message.save();
 
             message = new Message();
-            message.setFriend_id(user2.getId());
-            message.setUser_id(user1.getId());
-            message.setMessage_content("hello,hello");
-            message.setSend_time(new Date(2018, 11, 16));
+            message.setFriendId(user2.getId());
+            message.setUserId(user1.getId());
+            message.setMessageContent("hello,hello");
+            message.setSendTime(new Date(2018, 11, 16));
             message.save();
 
             message = new Message();
-            message.setFriend_id(user1.getId());
-            message.setUser_id(user2.getId());
-            message.setMessage_content("你想不想去SHE的“十八”啊");
-            message.setSend_time(new Date(2018, 11, 17));
+            message.setFriendId(user1.getId());
+            message.setUserId(user2.getId());
+            message.setMessageContent("你想不想去SHE的“十八”啊");
+            message.setSendTime(new Date(2018, 11, 17));
             message.save();
 
             message = new Message();
-            message.setFriend_id(user2.getId());
-            message.setUser_id(user1.getId());
-            message.setMessage_content("我好像去啊，你呢？");
-            message.setSend_time(new Date(2018, 11, 18));
+            message.setFriendId(user2.getId());
+            message.setUserId(user1.getId());
+            message.setMessageContent("我好像去啊，你呢？");
+            message.setSendTime(new Date(2018, 11, 18));
             message.save();
 
             message = new Message();
-            message.setFriend_id(user2.getId());
-            message.setUser_id(user1.getId());
-            message.setMessage_content("那还用问，我都这样问你耶");
-            message.setSend_time(new Date(2018, 11, 19));
+            message.setFriendId(user2.getId());
+            message.setUserId(user1.getId());
+            message.setMessageContent("那还用问，我都这样问你耶");
+            message.setSendTime(new Date(2018, 11, 19));
             message.save();
 
             message = new Message();
-            message.setFriend_id(user2.getId());
-            message.setUser_id(user1.getId());
-            message.setMessage_content("对吼，但我到时候出国要去上学了，看不了.....");
-            message.setSend_time(new Date(2018, 11, 20));
+            message.setFriendId(user2.getId());
+            message.setUserId(user1.getId());
+            message.setMessageContent("对吼，但我到时候出国要去上学了，看不了.....");
+            message.setSendTime(new Date(2018, 11, 20));
             message.save();
 
             message = new Message();
-            message.setFriend_id(user2.getId());
-            message.setUser_id(user1.getId());
-            message.setMessage_content("那你滚吧~");
-            message.setSend_time(new Date(2018, 11, 20));
+            message.setFriendId(user2.getId());
+            message.setUserId(user1.getId());
+            message.setMessageContent("那你滚吧~");
+            message.setSendTime(new Date(2018, 11, 20));
             message.save();
 
         /*
@@ -437,39 +409,39 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             members.add(user3);
 
             AppointmentOrder order1 = new AppointmentOrder();
-            order1.setOrder_appoint_time(new Date());
-            order1.setOrder_expected_size(15);
-            order1.setOrder_launch_time(new Date(2019, 4, 19));
-            order1.setOrder_stadium(stadium1);
-            order1.setOrder_name("热血足球团");
-            order1.setOrder_participants(members);
-            order1.setOrder_sponsor(user1);
-            order1.setOrder_status(0);
-            order1.setOrder_sports_type(sportsTypeDBAccessing.findSportsTypeByName("足球"));
+            order1.setOrderAppointTime(new Date());
+            order1.setOrderExpectedSize(15);
+            order1.setOrderLaunchTime(new Date(2019, 4, 19));
+            order1.setOrderStadium(stadium1);
+            order1.setOrderName("热血足球团");
+            order1.setOrderParticipants(members);
+            order1.setOrderSponsor(user1);
+            order1.setOrderStatus(0);
+            order1.setOrderSportsType(sportsTypeDao.findSportsTypeByName("足球"));
             order1.save();
 
             AppointmentOrder order2 = new AppointmentOrder();
-            order2.setOrder_appoint_time(new Date(2019, 5, 15));
-            order2.setOrder_expected_size(9);
-            order2.setOrder_launch_time(new Date(2019, 4, 2));
-            order2.setOrder_stadium(stadium4);
-            order2.setOrder_name("NBA级别篮球局");
-            order2.setOrder_participants(members);
-            order2.setOrder_sponsor(user2);
-            order2.setOrder_status(0);
-            order2.setOrder_sports_type(sportsTypeDBAccessing.findSportsTypeByName("篮球"));
+            order2.setOrderAppointTime(new Date(2019, 5, 15));
+            order2.setOrderExpectedSize(9);
+            order2.setOrderLaunchTime(new Date(2019, 4, 2));
+            order2.setOrderStadium(stadium4);
+            order2.setOrderName("NBA级别篮球局");
+            order2.setOrderParticipants(members);
+            order2.setOrderSponsor(user2);
+            order2.setOrderStatus(0);
+            order2.setOrderSportsType(sportsTypeDao.findSportsTypeByName("篮球"));
             order2.save();
 
             AppointmentOrder order3 = new AppointmentOrder();
-            order3.setOrder_appoint_time(new Date(2018, 10, 5));
-            order3.setOrder_expected_size(2);
-            order3.setOrder_launch_time(new Date(2017, 4, 12));
-            order3.setOrder_name("打个羽毛球？");
-            order3.setOrder_location(location);
-            order3.setOrder_participants(members);
-            order3.setOrder_sponsor(user3);
-            order3.setOrder_status(1);
-            order3.setOrder_sports_type(sportsTypeDBAccessing.findSportsTypeByName("羽毛球"));
+            order3.setOrderAppointTime(new Date(2018, 10, 5));
+            order3.setOrderExpectedSize(2);
+            order3.setOrderLaunchTime(new Date(2017, 4, 12));
+            order3.setOrderName("打个羽毛球？");
+            order3.setOrderParticipants(members);
+            order3.setOrderSponsor(user3);
+            order3.setOrderStatus(1);
+            order3.setOrderSportsType(sportsTypeDao.findSportsTypeByName("羽毛球"));
+            order3.setOrderLocation("广东省东莞市市辖区建设路一号球场");
             order3.save();
         } catch (Exception ex) {
             LogUtil.e(TAG, "初始化数据出错："+ex.getMessage());

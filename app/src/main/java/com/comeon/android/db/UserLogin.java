@@ -11,62 +11,61 @@ import java.util.Date;
 public class UserLogin extends LitePalSupport {
 
     private long id;
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    private String user_name;
+    private String userName;
 
     @Column(nullable = false)
-    private String user_phone;
+    private String userPhone;
 
-    private String user_password;
+    private String userPassword;
     @Column(defaultValue = "0")
-    private byte user_status;
-    private Date last_modified_time;
+    private int userStatus;
+    private Date lastModifiedTime;
 
     public long getId() {
         return id;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public String getUser_phone() {
-        return user_phone;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void setUser_phone(String user_phone) {
-        this.user_phone = user_phone;
+    public String getUserPhone() {
+        return userPhone;
     }
 
-    public String getUser_password() {
-        return user_password;
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
     }
 
-    public void setUser_password(String user_password) {
-        this.user_password = user_password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public byte getUser_status() {
-        return user_status;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
-    public void setUser_status(byte user_status) {
-        this.user_status = user_status;
+    public int getUserStatus() {
+        return userStatus;
     }
 
-    public Date getLast_modified_time() {
-        return last_modified_time;
+    public void setUserStatus(int userStatus) {
+        this.userStatus = userStatus;
     }
 
-    public void setLast_modified_time(Date last_modified_time) {
-        this.last_modified_time = last_modified_time;
+    public Date getLastModifiedTime() {
+        return lastModifiedTime;
+    }
+
+    public void setLastModifiedTime(Date lastModifiedTime) {
+        this.lastModifiedTime = lastModifiedTime;
     }
 }

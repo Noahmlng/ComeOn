@@ -10,71 +10,62 @@ import java.util.Date;
  */
 public class Comment extends LitePalSupport {
 
-    private long id;
-    private long stadium_id;
-    private long order_id;
-    private long user_id;
-    private String comment_content;
-    private Date audit_time;
-    private byte audit_status;
+    private long stadiumId;
+    private long orderId;
+    private long userId;
+    private String commentContent;
+    private Date auditTime;
+    private int auditStatus;
 
     //用于评价星级
     @Column(ignore = true)
-    private int comment_grade;
+    private int commentGrade;
 
-    public void setId(long id) {
-        this.id = id;
+    public long getStadiumId() {
+        return stadiumId;
     }
 
-    public long getId() {
-        return id;
+    public void setStadiumId(long stadiumId) {
+        this.stadiumId = stadiumId;
     }
 
-    public long getStadium_id() {
-        return stadium_id;
+    public long getOrderId() {
+        return orderId;
     }
 
-    public void setStadium_id(long stadium_id) {
-        this.stadium_id = stadium_id;
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
     }
 
-    public long getOrder_id() {
-        return order_id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setOrder_id(long order_id) {
-        this.order_id = order_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public String getCommentContent() {
+        return commentContent;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
     }
 
-    public String getComment_content() {
-        return comment_content;
+    public Date getAuditTime() {
+        return auditTime;
     }
 
-    public void setComment_content(String comment_content) {
-        this.comment_content = comment_content;
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
     }
 
-    public Date getAudit_time() {
-        return audit_time;
+    public int getAuditStatus() {
+        return auditStatus;
     }
 
-    public void setAudit_time(Date audit_time) {
-        this.audit_time = audit_time;
-    }
-
-    public byte getAudit_status() {
-        return audit_status;
-    }
-
-    public void setAudit_status(byte audit_status) {
-        this.audit_status = audit_status;
+    public void setAuditStatus(int auditStatus) {
+        this.auditStatus = auditStatus;
     }
 }

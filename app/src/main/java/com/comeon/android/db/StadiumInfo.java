@@ -5,85 +5,126 @@ import com.baidu.location.Address;
 import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
+import java.util.List;
+
 /**
  * 场馆信息表
  */
 public class StadiumInfo extends LitePalSupport {
 
     private long id;
+    private float avgConsumption;
     @Column(nullable = false)
-    private String stadium_name;
+    private String stadiumName;
     @Column(nullable = false)
-    private String stadium_contact;
-    private byte[] stadium_icon;
-    private String stadium_description;
-    @Column(defaultValue = "0")
-    private double avg_consumption;
-    private SportsType stadium_type;
+    private String stadiumContact;
+    private String stadiumDescription;
+    private SportsType sportsType;
+    private String province;
+    private String city;
+    private String district;
+    private String street;
+    private String streetNumber;
+
+    private List<AppointmentOrder> orders;
 
     @Column(ignore = true)
-    private byte stadium_status;
-
-    private Location location;
-
-    public SportsType getStadium_type() {
-        return stadium_type;
-    }
-
-    public void setStadium_type(SportsType stadium_type) {
-        this.stadium_type = stadium_type;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public double getAvg_consumption() {
-        return avg_consumption;
-    }
-
-    public void setAvg_consumption(double avg_consumption) {
-        this.avg_consumption = avg_consumption;
-    }
+    private byte[] stadiumIcon;
 
 
     public long getId() {
         return id;
     }
 
-    public String getStadium_name() {
-        return stadium_name;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setStadium_name(String stadium_name) {
-        this.stadium_name = stadium_name;
+    public String getStadiumName() {
+        return stadiumName;
     }
 
-    public String getStadium_contact() {
-        return stadium_contact;
+    public void setStadiumName(String stadiumName) {
+        this.stadiumName = stadiumName;
     }
 
-    public void setStadium_contact(String stadium_contact) {
-        this.stadium_contact = stadium_contact;
+    public String getStadiumContact() {
+        return stadiumContact;
     }
 
-    public byte[] getStadium_icon() {
-        return stadium_icon;
+    public void setStadiumContact(String stadiumContact) {
+        this.stadiumContact = stadiumContact;
     }
 
-    public void setStadium_icon(byte[] stadium_icon) {
-        this.stadium_icon = stadium_icon;
+    public String getStadiumDescription() {
+        return stadiumDescription;
     }
 
-    public String getStadium_description() {
-        return stadium_description;
+    public void setStadiumDescription(String stadiumDescription) {
+        this.stadiumDescription = stadiumDescription;
     }
 
-    public void setStadium_description(String stadium_description) {
-        this.stadium_description = stadium_description;
+    public float getAvgConsumption() {
+        return avgConsumption;
+    }
+
+    public void setAvgConsumption(float avgConsumption) {
+        this.avgConsumption = avgConsumption;
+    }
+
+    public SportsType getSportsType() {
+        return sportsType;
+    }
+
+    public void setSportsType(SportsType sportsType) {
+        this.sportsType = sportsType;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public List<AppointmentOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<AppointmentOrder> orders) {
+        this.orders = orders;
     }
 }

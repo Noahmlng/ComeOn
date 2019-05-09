@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.baidu.entity.pb.WalkPlan;
 import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.db.Friends;
-import com.comeon.android.db.Location;
 import com.comeon.android.db.Message;
 import com.comeon.android.db.SportsType;
 import com.comeon.android.db.StadiumInfo;

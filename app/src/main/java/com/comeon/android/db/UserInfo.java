@@ -4,6 +4,7 @@ import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户基本信息表
@@ -12,21 +13,24 @@ public class UserInfo extends LitePalSupport {
 
     private long id;
     @Column(nullable = false)
-    private long user_login_id;
+    private long userLoginId;
 
     @Column(nullable = false)
-    private String user_phone;
-    private String user_nickname;
-    private Date user_birthday;
-    private int user_gender;
-    private byte[] head_icon;
+    private String userPhone;
+    private String userNickName;
+    private Date userBirthday;
+    private int userGender;
+    private byte[] headIcon;
     @Column(defaultValue = "这个人很无聊诶，什么都不说！")
     private String description;
 
-    private float acepted_distance;
+    private float acceptedDistance;
 
-    private Date last_modified_time;
+    private Date lastModifiedTime;
 
+    private List<AppointmentOrder> sponsoredOrder;
+
+    private AppointmentOrder participatedOrder;
     /*
         以下为为迭代开发所提供的字段
      */
@@ -47,52 +51,52 @@ public class UserInfo extends LitePalSupport {
         this.id = id;
     }
 
-    public long getUser_login_id() {
-        return user_login_id;
+    public long getUserLoginId() {
+        return userLoginId;
     }
 
-    public void setUser_login_id(long user_login_id) {
-        this.user_login_id = user_login_id;
+    public void setUserLoginId(long userLoginId) {
+        this.userLoginId = userLoginId;
     }
 
-    public String getUser_phone() {
-        return user_phone;
+    public String getUserPhone() {
+        return userPhone;
     }
 
-    public void setUser_phone(String user_phone) {
-        this.user_phone = user_phone;
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
     }
 
-    public String getUser_nickname() {
-        return user_nickname;
+    public String getUserNickName() {
+        return userNickName;
     }
 
-    public void setUser_nickname(String user_nickname) {
-        this.user_nickname = user_nickname;
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
-    public Date getUser_birthday() {
-        return user_birthday;
+    public Date getUserBirthday() {
+        return userBirthday;
     }
 
-    public void setUser_birthday(Date user_birthday) {
-        this.user_birthday = user_birthday;
+    public void setUserBirthday(Date userBirthday) {
+        this.userBirthday = userBirthday;
     }
 
-    public int getUser_gender() {
-        return user_gender;
+    public int getUserGender() {
+        return userGender;
     }
 
-    public void setUser_gender(int user_gender) {
-        this.user_gender = user_gender;
+    public void setUserGender(int userGender) {
+        this.userGender = userGender;
     }
 
-    public byte[] getHead_icon() {
-        return head_icon;
+    public byte[] getHeadIcon() {
+        return headIcon;
     }
 
-    public void setHead_icon(byte[] head_icon) {
-        this.head_icon = head_icon;
+    public void setHeadIcon(byte[] headIcon) {
+        this.headIcon = headIcon;
     }
 
     public String getDescription() {
@@ -103,19 +107,35 @@ public class UserInfo extends LitePalSupport {
         this.description = description;
     }
 
-    public float getAcepted_distance() {
-        return acepted_distance;
+    public float getAcceptedDistance() {
+        return acceptedDistance;
     }
 
-    public void setAcepted_distance(float acepted_distance) {
-        this.acepted_distance = acepted_distance;
+    public void setAcceptedDistance(float acceptedDistance) {
+        this.acceptedDistance = acceptedDistance;
     }
 
-    public Date getLast_modified_time() {
-        return last_modified_time;
+    public Date getLastModifiedTime() {
+        return lastModifiedTime;
     }
 
-    public void setLast_modified_time(Date last_modified_time) {
-        this.last_modified_time = last_modified_time;
+    public void setLastModifiedTime(Date lastModifiedTime) {
+        this.lastModifiedTime = lastModifiedTime;
+    }
+
+    public List<AppointmentOrder> getSponsoredOrder() {
+        return sponsoredOrder;
+    }
+
+    public void setSponsoredOrder(List<AppointmentOrder> sponsoredOrder) {
+        this.sponsoredOrder = sponsoredOrder;
+    }
+
+    public AppointmentOrder getParticipatedOrder() {
+        return participatedOrder;
+    }
+
+    public void setParticipatedOrder(AppointmentOrder participatedOrder) {
+        this.participatedOrder = participatedOrder;
     }
 }

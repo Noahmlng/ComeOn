@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="15dp"
+    android:gravity="center_vertical"
+    android:paddingLeft="35dp">
 
-</android.support.constraint.ConstraintLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_sponsorHeadIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/img_sponsorHeadIcon"
+        >
+
+        <TextView
+            android:id="@+id/txt_sponsorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_groupInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#DFDFDF"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_groupLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#E2E2E2"
+            android:textSize="12dp"
+            />
+
+
+    </LinearLayout>
+
+    <com.comeon.android.controls.GradientTextButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_launchTime"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40dp"
+        android:layout_centerVertical="true"
+        android:textSize="12dp"
+        android:background="@android:color/transparent"
+        android:clickable="false"
+        />
+
+</RelativeLayout>

@@ -10,46 +10,37 @@ import java.util.Date;
  */
 public class UserLoginLog extends LitePalSupport {
 
-    private long id;
-
     @Column(nullable = false)
-    private long user_id;
+    private long userId;
 
-    private Date login_time;
-    private int login_status;
+    private Date loginTime;
+    private int loginStatus;
 
+    //用于记录登录的ip地址（迭代开发部分）
     @Column(ignore = true)
     private String login_ipAddress;
 
-    public long getId() {
-        return id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public Date getLoginTime() {
+        return loginTime;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
     }
 
-    public Date getLogin_time() {
-        return login_time;
+    public int getLoginStatus() {
+        return loginStatus;
     }
 
-    public void setLogin_time(Date login_time) {
-        this.login_time = login_time;
-    }
-
-    public int getLogin_status() {
-        return login_status;
-    }
-
-    public void setLogin_status(int login_status) {
-        this.login_status = login_status;
+    public void setLoginStatus(int loginStatus) {
+        this.loginStatus = loginStatus;
     }
 }

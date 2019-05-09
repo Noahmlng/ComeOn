@@ -10,10 +10,11 @@ import android.widget.TextView;
 
 import com.comeon.android.R;
 import com.comeon.android.db.StadiumInfo;
-import com.comeon.android.fragment.StadiumsFragment;
+import com.comeon.android.util.LogUtil;
 import com.comeon.android.util.MyApplication;
 import com.comeon.android.util.Utilities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,14 +22,15 @@ import java.util.List;
  */
 public class StadiumsAdapter extends RecyclerView.Adapter<StadiumsAdapter.ViewHolder> {
 
+    private static final String TAG = "StadiumsAdapter";
     private List<StadiumInfo> stadiums;
 
     /**
      * 创建构造方法——初始化场馆集合
-     * @param stadiums  传入的场馆对象集合
+     * @param stadiumInfoList  传入的场馆对象集合
      */
-    public StadiumsAdapter(List<StadiumInfo> stadiums){
-        this.stadiums=stadiums;
+    public StadiumsAdapter(List<StadiumInfo> stadiumInfoList){
+        this.stadiums=stadiumInfoList;
     }
 
     /**
@@ -40,7 +42,7 @@ public class StadiumsAdapter extends RecyclerView.Adapter<StadiumsAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view=LayoutInflater.from(MyApplication.getContext()).inflate(R.layout.stadium_item, viewGroup, false);
+        View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.stadium_item, viewGroup, false);
         //获取子项布局中的控件
         ViewHolder viewHolder=new ViewHolder(view);
         /**
@@ -62,10 +64,15 @@ public class StadiumsAdapter extends RecyclerView.Adapter<StadiumsAdapter.ViewHo
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        StadiumInfo stadium=stadiums.get(position);
-        viewHolder.txt_stadiumType.setText(stadium.getStadium_type().getType_name());
-        viewHolder.txt_stadiumDistrict.setText(stadium.getLocation().getDistrict());
-        viewHolder.txt_stadiumName.setText(stadium.getStadium_name());
+        StadiumInfo stadiumInfo=stadiums.get(position);
+        try{
+            viewHolder.txt_stadiumName.setText(stadiumInfo.getStadiumName());
+            viewHolder.txt_stadiumDistrict.setText(stadiumInfo.getDistrict());
+            viewHolder.txt_stadiumType.setText(stadiumInfo.getSportsType().getTypeName());
+        }catch(Exception ex){
+            LogUtil.e(TAG, "绑定子项控件时报错："+ex.getMessage());
+            LogUtil.e(TAG, "当前位置为："+position);
+        }
     }
 
     @Override

@@ -11,105 +11,95 @@ import java.util.List;
  */
 public class AppointmentOrder extends LitePalSupport {
 
-    private long id;
-    private String order_name;
+    private String orderName;
     @Column(defaultValue = "1")
-    private int order_expected_size;
-    private UserInfo order_sponsor;
-    private List<UserInfo> order_participants;
-    private StadiumInfo order_stadium;
-    private Date order_launch_time;
-    private Date order_appoint_time;
-    private int order_status;
-    private SportsType order_sports_type;
+    private int orderExpectedSize;
+    private UserInfo orderSponsor;
+    private List<UserInfo> orderParticipants;
+    private StadiumInfo orderStadium;
+    private Date orderLaunchTime;
+    private Date orderAppointTime;
+    private int orderStatus;
+    private SportsType orderSportsType;
+    private String orderLocation;
 
-    private Location order_location;
-
-    public void setId(long id) {
-        this.id = id;
+    public String getOrderName() {
+        return orderName;
     }
 
-    public SportsType getOrder_sports_type() {
-        return order_sports_type;
+    public void setOrderName(String orderName) {
+        this.orderName = orderName;
     }
 
-    public void setOrder_sports_type(SportsType order_sports_type) {
-        this.order_sports_type = order_sports_type;
+    public int getOrderExpectedSize() {
+        return orderExpectedSize;
     }
 
-    public Location getOrder_location() {
-        return order_location;
+    public void setOrderExpectedSize(int orderExpectedSize) {
+        this.orderExpectedSize = orderExpectedSize;
     }
 
-    public void setOrder_location(Location order_location) {
-        this.order_location = order_location;
+    public UserInfo getOrderSponsor() {
+        return orderSponsor;
     }
 
-    public long getId() {
-        return id;
+    public void setOrderSponsor(UserInfo orderSponsor) {
+        this.orderSponsor = orderSponsor;
     }
 
-    public String getOrder_name() {
-        return order_name;
+    public List<UserInfo> getOrderParticipants() {
+        return orderParticipants;
     }
 
-    public void setOrder_name(String order_name) {
-        this.order_name = order_name;
+    public void setOrderParticipants(List<UserInfo> orderParticipants) {
+        this.orderParticipants = orderParticipants;
     }
 
-    public int getOrder_expected_size() {
-        return order_expected_size;
+    public StadiumInfo getOrderStadium() {
+        return orderStadium;
     }
 
-    public void setOrder_expected_size(int order_expected_size) {
-        this.order_expected_size = order_expected_size;
+    public void setOrderStadium(StadiumInfo orderStadium) {
+        this.orderStadium = orderStadium;
     }
 
-    public UserInfo getOrder_sponsor() {
-        return order_sponsor;
+    public Date getOrderLaunchTime() {
+        return orderLaunchTime;
     }
 
-    public void setOrder_sponsor(UserInfo order_sponsor) {
-        this.order_sponsor = order_sponsor;
+    public void setOrderLaunchTime(Date orderLaunchTime) {
+        this.orderLaunchTime = orderLaunchTime;
     }
 
-    public List<UserInfo> getOrder_participants() {
-        return order_participants;
+    public Date getOrderAppointTime() {
+        return orderAppointTime;
     }
 
-    public void setOrder_participants(List<UserInfo> order_participants) {
-        this.order_participants = order_participants;
+    public void setOrderAppointTime(Date orderAppointTime) {
+        this.orderAppointTime = orderAppointTime;
     }
 
-    public StadiumInfo getOrder_stadium() {
-        return order_stadium;
+    public int getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setOrder_stadium(StadiumInfo order_stadium) {
-        this.order_stadium = order_stadium;
+    public void setOrderStatus(int orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public Date getOrder_launch_time() {
-        return order_launch_time;
+    public SportsType getOrderSportsType() {
+        return orderSportsType;
     }
 
-    public void setOrder_launch_time(Date order_launch_time) {
-        this.order_launch_time = order_launch_time;
+    public void setOrderSportsType(SportsType orderSportsType) {
+        this.orderSportsType = orderSportsType;
     }
 
-    public Date getOrder_appoint_time() {
-        return order_appoint_time;
+    public String getOrderLocation() {
+        return orderLocation;
     }
 
-    public void setOrder_appoint_time(Date order_appoint_time) {
-        this.order_appoint_time = order_appoint_time;
-    }
-
-    public int getOrder_status() {
-        return order_status;
-    }
-
-    public void setOrder_status(int order_status) {
-        this.order_status = order_status;
+    public void setOrderLocation(String orderLocation) {
+        this.orderLocation = orderLocation;
     }
 }

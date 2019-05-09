@@ -9,27 +9,27 @@ import org.litepal.crud.LitePalSupport;
 public class Friends extends LitePalSupport {
 
     @Column(nullable = false)
-    private long friend_id;
+    private long friendId;
     @Column(nullable = false)
-    private long user_id;
+    private long userId;
 
     private String remarks;
-    private int relationship_status;
+    private int relationshipStatus;
 
-    public long getFriend_id() {
-        return friend_id;
+    public long getFriendId() {
+        return friendId;
     }
 
-    public void setFriend_id(long friend_id) {
-        this.friend_id = friend_id;
+    public void setFriendId(long friendId) {
+        this.friendId = friendId;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getRemarks() {
@@ -40,11 +40,11 @@ public class Friends extends LitePalSupport {
         this.remarks = remarks;
     }
 
-    public int getRelationship_status() {
-        return relationship_status;
+    public int getRelationshipStatus() {
+        return relationshipStatus;
     }
 
-    public void setRelationship_status(int relationship_status) {
-        this.relationship_status = relationship_status;
+    public void setRelationshipStatus(int relationshipStatus) {
+        this.relationshipStatus = relationshipStatus;
     }
 }

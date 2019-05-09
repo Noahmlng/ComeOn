@@ -1,68 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tl="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/colorPrimary"
+    android:orientation="vertical"
     android:paddingTop="35dp">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:paddingLeft="20dp"
-        android:paddingVertical="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/search_edittext"
         android:gravity="center_vertical"
-        android:layout_marginBottom="10dp"
-        >
+        android:paddingVertical="10dp"
+        android:paddingLeft="20dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_search"
             android:layout_marginRight="10dp"
-            />
+            android:src="@mipmap/ic_search" />
 
         <EditText
+            android:id="@+id/search_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:id="@+id/search_text"
-            android:hint="请输入关键字"
             android:background="@null"
+            android:hint="请输入关键字"
             android:maxLines="1"
-            />
+            android:textSize="13sp" />
     </LinearLayout>
 
-    <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/tablayout"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="?attr/colorPrimary"
-        tl:tl_indicator_color="@color/colorAccent"
-        tl:tl_indicator_style="NORMAL"
-        tl:tl_indicator_height="5dp"
-        tl:tl_indicator_gravity="BOTTOM"
-        tl:tl_indicator_corner_radius="3dp"
-        tl:tl_indicator_width_equal_title="true"
-        tl:tl_tab_padding="10dp"
-        tl:tl_textSelectColor="#898989"
-        tl:tl_textUnselectColor="#898989"
-        tl:tl_textsize="14sp"
-        tl:tl_textBold="true"
-        tl:tl_tab_space_equal="true"
-        />
-    
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        >
+        android:layout_weight="1">
 
-    </android.support.v4.view.ViewPager>
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="?attr/colorPrimary"
+                tl:tl_indicator_color="@color/colorAccent"
+                tl:tl_indicator_corner_radius="3dp"
+                tl:tl_indicator_gravity="BOTTOM"
+                tl:tl_indicator_height="5dp"
+                tl:tl_indicator_style="NORMAL"
+                tl:tl_indicator_width_equal_title="true"
+                tl:tl_tab_padding="10dp"
+                tl:tl_tab_space_equal="true"
+                tl:tl_textBold="true"
+                tl:tl_textSelectColor="#898989"
+                tl:tl_textUnselectColor="#898989"
+                tl:tl_textsize="14sp" />
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tl:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_selectFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="30dp"
+            android:elevation="8dp"
+            tl:fabSize="normal"
+            tl:layout_behavior="com.comeon.android.controls.ScrollAwareFABBehaviorDefault"
+            />
+    </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

@@ -1,6 +1,8 @@
 package com.comeon.android.fragment;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,8 +13,11 @@ import com.comeon.android.R;
 import com.comeon.android.adapter.StadiumsAdapter;
 import com.comeon.android.business_logic.StadiumsBusiness;
 import com.comeon.android.business_logic.StadiumsBusinessLogicInterface;
+import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.db.StadiumInfo;
 import com.comeon.android.util.LogUtil;
+
+import org.litepal.LitePal;
 
 import java.util.List;
 
@@ -25,6 +30,9 @@ public class StadiumsFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
     private StadiumsBusinessLogicInterface stadiumsBusinessLogic=new StadiumsBusiness();
+    StadiumsAdapter stadiumsAdapter;
+    private List<StadiumInfo> stadiumInfoList;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void initControls(View view) {
@@ -37,7 +45,18 @@ public class StadiumsFragment extends BaseFragment {
         /*
             初始化数据时，将所有的场馆加载入recyclerview中
          */
-        loadRecyclerView(stadiumsBusinessLogic.getAllStadiums());
+        stadiumInfoList=stadiumsBusinessLogic.getAllStadiums();
+        stadiumsAdapter=new StadiumsAdapter(stadiumInfoList);
+        recyclerView.setAdapter(stadiumsAdapter);
+
+        swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //刷新操作
+                reLoadRecyclerView(stadiumsBusinessLogic.getAllStadiums());
+            }
+        });
     }
 
     @Override
@@ -45,15 +64,39 @@ public class StadiumsFragment extends BaseFragment {
         return R.layout.fragment_group_stadiums;
     }
 
-
+    public void loadData(List<StadiumInfo> stadiumInfos){
+        this.stadiumInfoList=stadiumInfos;
+    }
     /**
      * 向Recyclerview中填充数据
      * @param stadiumInfoList  场馆集合
      */
-    private void loadRecyclerView(List<StadiumInfo> stadiumInfoList) {
+    private void reLoadRecyclerView(final List<StadiumInfo> stadiumInfoList) {
         if(stadiumInfoList!=null){
-            StadiumsAdapter stadiumsAdapter=new StadiumsAdapter(stadiumInfoList);
-            recyclerView.setAdapter(stadiumsAdapter);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    /*
+                        模拟网络提取数据制造延迟
+                     */
+                    try{
+                        Thread.sleep(2000);
+                    }catch(InterruptedException ex){
+                        LogUtil.e(TAG, ex.getMessage());
+                    }
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //重新获取数据
+                            loadData(stadiumInfoList);
+                            //通知数据发生了改变，重新加载
+                            stadiumsAdapter.notifyDataSetChanged();
+                            //表示刷新结束，并隐藏进度条
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    });
+                }
+            }).start();
         }else{
             LogUtil.e(TAG, "传入的场馆集合为空");
         }

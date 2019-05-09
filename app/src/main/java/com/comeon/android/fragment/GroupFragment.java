@@ -1,8 +1,10 @@
 package com.comeon.android.fragment;
 
+import android.icu.text.Replaceable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,17 +14,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.comeon.android.R;
 import com.comeon.android.controls.TabEntity;
+import com.comeon.android.db.StadiumInfo;
 import com.comeon.android.util.LogUtil;
+import com.comeon.android.util.MyApplication;
 import com.comeon.android.util.Utilities;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
+import java.security.spec.MGF1ParameterSpec;
 import java.util.ArrayList;
+
+import okhttp3.internal.Util;
 
 /**
  * 组团碎片
@@ -45,6 +53,7 @@ public class GroupFragment extends BaseFragment {
     SlidingTabLayout tabLayout;
     EditText search_text;
     ViewPager viewPager;
+    FloatingActionButton btn_selectFilter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,26 +84,14 @@ public class GroupFragment extends BaseFragment {
         tabLayout=(SlidingTabLayout) view.findViewById(R.id.tablayout);
         viewPager=(ViewPager)view.findViewById(R.id.view_pager);
         initTab();
-        /*
-            监听tab选项，切换到相应的碎片
-         */
-        tabLayout.setOnTabSelectListener(new OnTabSelectListener() {
+        search_text=(EditText)view.findViewById(R.id.search_text);
+        btn_selectFilter=(FloatingActionButton)view.findViewById(R.id.btn_selectFilter);
+        btn_selectFilter.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTabSelect(int position) {
-                switch (position){
-                    case 0:
-                        Utilities.replaceFragment(fragmentManager, stadiumsFragment,R.id.view_pager );
-                        break;
-                    case 1:
-                        Utilities.replaceFragment(fragmentManager, groupInfoFragment, R.id.view_pager);
-                        break;
-                }
-            }
-            @Override
-            public void onTabReselect(int position) {
+            public void onClick(View v) {
+                Toast.makeText(MyApplication.getContext(), "你点击了按钮",Toast.LENGTH_SHORT).show();
             }
         });
-        search_text=(EditText)view.findViewById(R.id.search_text);
     }
 
     /**
@@ -136,5 +133,19 @@ public class GroupFragment extends BaseFragment {
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_group;
+    }
+
+
+    /**
+     * 判断当前页面是哪一页
+     * @return  true：场馆页；false：附近邀约页
+     */
+    private boolean getCurrentFragment(){
+        Fragment currentFragment=fragmentManager.findFragmentById(R.id.view_pager);
+        if(currentFragment instanceof StadiumsFragment){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

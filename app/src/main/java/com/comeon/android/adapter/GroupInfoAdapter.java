@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.comeon.android.R;
 import com.comeon.android.controls.GradientTextButton;
 import com.comeon.android.db.AppointmentOrder;
+import com.comeon.android.util.LogUtil;
 import com.comeon.android.util.MyApplication;
 import com.comeon.android.util.Utilities;
 
@@ -21,6 +22,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 组团信息适配器
  */
 public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.ViewHolder> {
+
+    private static final String TAG = "GroupInfoAdapter";
 
     //类成员：附近组团信息的集合
     private List<AppointmentOrder> orders;

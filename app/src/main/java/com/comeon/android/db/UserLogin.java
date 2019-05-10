@@ -11,7 +11,6 @@ import java.util.Date;
 public class UserLogin extends LitePalSupport {
 
     private long id;
-    private String userName;
 
     @Column(nullable = false)
     private String userPhone;
@@ -27,14 +26,6 @@ public class UserLogin extends LitePalSupport {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getUserPhone() {

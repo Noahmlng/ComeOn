@@ -22,7 +22,7 @@ public class SportsTypeDaoImpl implements SportsTypeDao {
     public SportsType findSportsTypeByName(String name) {
         SportsType sportsType = null;
         try {
-            List<SportsType> targetTypes= LitePal.findAll(SportsType.class);
+            List<SportsType> targetTypes= LitePal.where("typeName = ?",name).find(SportsType.class);
             sportsType=targetTypes.get(0);
         } catch (Exception ex) {
             LogUtil.e(TAG, ex.getMessage());

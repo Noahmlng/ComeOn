@@ -34,6 +34,8 @@ public class StadiumsFragment extends BaseFragment {
     private List<StadiumInfo> stadiumInfoList;
     SwipeRefreshLayout swipeRefreshLayout;
 
+    private StadiumInfo selectFilter;
+
     @Override
     protected void initControls(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -54,7 +56,7 @@ public class StadiumsFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 //刷新操作
-                reLoadRecyclerView(stadiumsBusinessLogic.getAllStadiums());
+                reLoadRecyclerView();
             }
         });
     }
@@ -64,14 +66,22 @@ public class StadiumsFragment extends BaseFragment {
         return R.layout.fragment_group_stadiums;
     }
 
-    public void loadData(List<StadiumInfo> stadiumInfos){
-        this.stadiumInfoList=stadiumInfos;
-    }
     /**
-     * 向Recyclerview中填充数据
-     * @param stadiumInfoList  场馆集合
+     * 根据类成员加载数据的方法
      */
-    private void reLoadRecyclerView(final List<StadiumInfo> stadiumInfoList) {
+    public void loadData(){
+        /*
+            没有筛选情况的时候调用加载全部场馆的方法
+         */
+        if(selectFilter==null){
+            this.stadiumInfoList=stadiumsBusinessLogic.getAllStadiums();
+        }
+    }
+
+    /**
+     * 向Recyclerview中重新填充数据
+     */
+    private void reLoadRecyclerView() {
         if(stadiumInfoList!=null){
             new Thread(new Runnable() {
                 @Override
@@ -88,7 +98,7 @@ public class StadiumsFragment extends BaseFragment {
                         @Override
                         public void run() {
                             //重新获取数据
-                            loadData(stadiumInfoList);
+                            loadData();
                             //通知数据发生了改变，重新加载
                             stadiumsAdapter.notifyDataSetChanged();
                             //表示刷新结束，并隐藏进度条

@@ -25,6 +25,8 @@ public class StadiumInfo extends LitePalSupport {
     private String district;
     private String street;
     private String streetNumber;
+    @Column(defaultValue = "0")
+    private int stadiumStatus;
 
     private List<AppointmentOrder> orders;
 
@@ -126,5 +128,13 @@ public class StadiumInfo extends LitePalSupport {
 
     public void setOrders(List<AppointmentOrder> orders) {
         this.orders = orders;
+    }
+
+    public int getStadiumStatus() {
+        return stadiumStatus;
+    }
+
+    public void setStadiumStatus(int stadiumStatus) {
+        this.stadiumStatus = stadiumStatus;
     }
 }

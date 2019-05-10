@@ -3,6 +3,8 @@ package com.comeon.android.util;
 import android.app.Application;
 import android.content.Context;
 
+import com.baidu.mapapi.SDKInitializer;
+
 import org.litepal.LitePal;
 
 /**
@@ -17,6 +19,9 @@ public class MyApplication extends Application {
         super.onCreate();
         LitePal.initialize(this);
         context=getApplicationContext();
+
+        // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
+        SDKInitializer.initialize(context);
     }
 
     public static Context getContext(){

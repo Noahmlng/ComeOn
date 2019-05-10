@@ -144,9 +144,8 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             添加三个用户
          */
             UserLogin ul1 = new UserLogin();
-            ul1.setUserName("Hi");
             ul1.setUserPhone("17620388542");
-            ul1.setLastModifiedTime(new Date());
+            ul1.setUserPassword("123456");
             ul1.setUserStatus(0);
             ul1.save();
 
@@ -156,22 +155,20 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             user1.setDescription("Nothing to specifically to describe");
             user1.setUserBirthday(new Date(2000, 11, 15));
             user1.setHeadIcon(Utilities.decodeResource(R.drawable.init_portrait));
-            user1.setUserNickName("无名氏");
+            user1.setUserNickName("Jack");
             user1.setUserPhone("17620388542");
             user1.setLastModifiedTime(new Date());
+            user1.setRegisterTime(new Date(2016,10,15));
             user1.setUserGender(0);
             user1.save();
 
             UserLoginLog user1_log = new UserLoginLog();
             user1_log.setUserId(user1.getId());
             user1_log.setLoginTime(new Date());
-            user1_log.setLoginStatus(0);
             user1_log.save();
 
             UserLogin ul2 = new UserLogin();
-            ul2.setUserName("Hello");
             ul2.setUserPhone("12345678900");
-            ul2.setUserName("test02");
             ul2.setUserPassword("123456");
             ul2.setLastModifiedTime(new Date());
             ul2.save();
@@ -180,13 +177,12 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             user2.setUserLoginId(ul2.getId());
             user2.setUserBirthday(new Date(1980, 12, 5));
             user2.setHeadIcon(Utilities.decodeResource(R.drawable.init_portrait));
-            user2.setUserNickName("Jack");
             user2.setUserPhone("17988554477");
             user2.setLastModifiedTime(new Date());
+            user2.setRegisterTime(new Date(2017,4,1));
             user2.save();
 
             UserLogin ul3 = new UserLogin();
-            ul3.setUserName("Hey");
             ul3.setUserPhone("12345678912");
             ul3.setUserPassword("123456");
             ul3.setLastModifiedTime(new Date());
@@ -199,6 +195,7 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             user3.setUserPhone("13688975564");
             user3.setUserNickName("Mike");
             user3.setLastModifiedTime(new Date());
+            user3.setRegisterTime(new Date(2014,3,10));
             user3.setUserGender(1);
             user3.save();
 
@@ -429,7 +426,8 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             order2.setOrderParticipants(members);
             order2.setOrderSponsor(user2);
             order2.setOrderStatus(0);
-            order2.setOrderSportsType(sportsTypeDao.findSportsTypeByName("篮球"));
+            type=sportsTypeDao.findSportsTypeByName("篮球");
+            order2.setOrderSportsType(type);
             order2.save();
 
             AppointmentOrder order3 = new AppointmentOrder();
@@ -440,7 +438,8 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             order3.setOrderParticipants(members);
             order3.setOrderSponsor(user3);
             order3.setOrderStatus(1);
-            order3.setOrderSportsType(sportsTypeDao.findSportsTypeByName("羽毛球"));
+            type=sportsTypeDao.findSportsTypeByName("羽毛球");
+            order3.setOrderSportsType(type);
             order3.setOrderLocation("广东省东莞市市辖区建设路一号球场");
             order3.save();
         } catch (Exception ex) {

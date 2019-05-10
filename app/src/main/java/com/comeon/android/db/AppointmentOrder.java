@@ -12,7 +12,7 @@ import java.util.List;
 public class AppointmentOrder extends LitePalSupport {
 
     private String orderName;
-    @Column(defaultValue = "1")
+    @Column(defaultValue = "10")
     private int orderExpectedSize;
     private UserInfo orderSponsor;
     private List<UserInfo> orderParticipants;

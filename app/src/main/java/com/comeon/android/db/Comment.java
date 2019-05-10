@@ -15,6 +15,8 @@ public class Comment extends LitePalSupport {
     private long userId;
     private String commentContent;
     private Date auditTime;
+
+    @Column(ignore = true)
     private int auditStatus;
 
     //用于评价星级
@@ -61,11 +63,4 @@ public class Comment extends LitePalSupport {
         this.auditTime = auditTime;
     }
 
-    public int getAuditStatus() {
-        return auditStatus;
-    }
-
-    public void setAuditStatus(int auditStatus) {
-        this.auditStatus = auditStatus;
-    }
 }

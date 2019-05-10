@@ -14,6 +14,7 @@ public class Friends extends LitePalSupport {
     private long userId;
 
     private String remarks;
+    @Column(defaultValue = "0")
     private int relationshipStatus;
 
     public long getFriendId() {

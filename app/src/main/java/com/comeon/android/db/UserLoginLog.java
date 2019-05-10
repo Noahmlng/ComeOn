@@ -14,11 +14,12 @@ public class UserLoginLog extends LitePalSupport {
     private long userId;
 
     private Date loginTime;
+    @Column(defaultValue = "0")
     private int loginStatus;
 
     //用于记录登录的ip地址（迭代开发部分）
     @Column(ignore = true)
-    private String login_ipAddress;
+    private String loginIp;
 
     public long getUserId() {
         return userId;

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -63,10 +64,6 @@ public class MapAppointmentFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mLocationClient = new LocationClient(getActivity());
-        initLocationSettings();
-        // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
-        SDKInitializer.initialize(MyApplication.getContext());
         //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         SDKInitializer.setCoordType(CoordType.BD09LL);
@@ -76,8 +73,6 @@ public class MapAppointmentFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //申请权限
-        requestPermission();
         //加载个性化地图文件
         setMapCustomFile(getActivity(), "custom_map_config.json");
         View view=inflater.inflate(R.layout.fragment_map_appointment, container, false);
@@ -89,12 +84,18 @@ public class MapAppointmentFragment extends BaseFragment {
         //显示比例尺
         bMapView.showScaleControl(true);
         bMap = bMapView.getMap();
-
-        MapView.setMapCustomEnable(true);
-        //设置我的位置可用
-        bMap.setMyLocationEnabled(true);
         //注册监控地图状态变化的监听器
         bMap.setOnMapStatusChangeListener(new MapStatusChangeListener());
+        //设置我的位置可用
+        bMap.setMyLocationEnabled(true);
+        MapView.setMapCustomEnable(true);
+
+        mLocationClient = new LocationClient(this.getActivity());
+        initLocationSettings();
+        MyLocationListener myLocatioListener=new MyLocationListener();
+        mLocationClient.registerLocationListener(myLocatioListener);
+        mLocationClient.start();
+        LogUtil.d(TAG,"地图管理开启情况："+mLocationClient.isStarted());
 
         bMapUISettings = bMap.getUiSettings();
         //关闭指南针
@@ -103,8 +104,6 @@ public class MapAppointmentFragment extends BaseFragment {
         bMapUISettings.setZoomGesturesEnabled(true);
         //开启平移手势
         bMapUISettings.setScrollGesturesEnabled(true);
-
-
         /*
         根据最后一次的位置，构建我的位置
         第一次进入时，last_location为空，所以进行非空判断
@@ -127,7 +126,6 @@ public class MapAppointmentFragment extends BaseFragment {
     protected int getContentViewId() {
         return R.layout.fragment_map_appointment;
     }
-
 
     /**
      * 将个性化文件写入本地后调用MapView.setCustomMapStylePath加载
@@ -168,13 +166,6 @@ public class MapAppointmentFragment extends BaseFragment {
         }
         //设置自定义样式文件
         MapView.setCustomMapStylePath(moduleName + "/" + fileName);
-    }
-
-    /**
-     * 开始获取位置的请求
-     */
-    private void requestLocation() {
-        mLocationClient.start();
     }
 
     /**
@@ -253,7 +244,7 @@ public class MapAppointmentFragment extends BaseFragment {
         //设置更新位置的间隔
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(1000);
+        option.setScanSpan(5000);
         /*
         设置定位模式
         1、只有在用户的手机GPS定位设置为高精度模式和仅限设备模式才可以使用GPS定位
@@ -264,63 +255,12 @@ public class MapAppointmentFragment extends BaseFragment {
         //获取位置信息一定需要网络，因此即使我们将定位模式指定为Device_Sensors，也会自动开启网络定位功能
         option.setIsNeedAddress(true);
         mLocationClient.setLocOption(option);
-        mLocationClient.registerLocationListener(new MyLocatioListener());
-    }
-
-    /**
-     * 申请权限
-     */
-    private void requestPermission() {
-        List<String> permissionList = new ArrayList<String>();
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.READ_PHONE_STATE);
-        }
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.CAMERA);
-        }
-
-        //如果还有需要申请的权限，则开始发起申请
-        if (!permissionList.isEmpty()) {
-            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(getActivity(), permissions, MAP_PERMISSION_REQUEST_CODE);
-        } else {
-            requestLocation();
-        }
-    }
-
-    /**
-     * 处理返回的权限结果
-     *
-     * @param requestCode  请求码
-     * @param permissions  权限列表
-     * @param grantResults 申请权限的结果
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case MAP_PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0) {
-                    for (int i = 0; i < grantResults.length; i++) {
-                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                            //当用户拒绝授予权限时的操作
-                        }
-                    }
-                    requestLocation();
-                }
-                break;
-        }
     }
 
     /**
      * 内部类的形式监听我的位置情况
      */
-    public class MyLocatioListener implements BDLocationListener {
+    public class MyLocationListener extends BDAbstractLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             //            mapView 销毁后不在处理新接收的位置

@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 
 import com.comeon.android.controls.TabEntity;
+import com.comeon.android.db.UserInfo;
 import com.comeon.android.fragment.FriendsFragment;
 import com.comeon.android.fragment.GroupFragment;
 import com.comeon.android.fragment.MapAppointmentFragment;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     MapAppointmentFragment mapAppointmentFragment = new MapAppointmentFragment();
     GroupFragment groupFragment = new GroupFragment();
 
+    private UserInfo loginUser;
+
     CommonTabLayout tlCommen;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
@@ -50,6 +53,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        loginUser=(UserInfo)getIntent().getParcelableExtra("login_user");
+        if(loginUser!=null){
+            LogUtil.d(TAG, "登录的昵称为："+loginUser.getUserNickName());
+        }
+
         setContentView(R.layout.activity_main);
         ViewUtil.setStatusBarColor(this, Color.rgb(255, 255, 255), false);
         requestPermission();

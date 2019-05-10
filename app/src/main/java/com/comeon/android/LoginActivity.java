@@ -46,6 +46,14 @@ public class LoginActivity extends Activity_Parent implements View.OnClickListen
         //修改当前的状态栏颜色和字体颜色
         ViewUtil.setStatusBarColor(this, Color.rgb(255,255,255),false);
         initControls();
+
+        /**
+         * 如果缓存中有数据，则加载缓存中的数据进入
+         */
+        if(savedInstanceState!=null){
+            editText_userPhone.setText(savedInstanceState.getString("phone"));
+            editText_password.setText(savedInstanceState.getString("password"));
+        }
     }
 
     /**
@@ -99,20 +107,27 @@ public class LoginActivity extends Activity_Parent implements View.OnClickListen
     }
 
     /**
+     * 如果注册碎片因为手机运存不足而意外销毁，则加载缓存中输入的数据
+     * @param outState  装载数据
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("phone",editText_userPhone.getText().toString());
+        outState.putString("password",editText_password.getText().toString());
+    }
+
+    /**
      * 登录验证（非空验证+数据库验证）
      */
     private int login(){
-        String phone=editText_userPhone.getText().toString();
-        String pwd=editText_password.getText().toString();
+        String phone=editText_userPhone.getText().toString().trim();
+        String pwd=editText_password.getText().toString().trim();
         if(phone.length()==0){
             return FAULT_PHONENULL;
         }else if(pwd.length()==0){
             return FAULT_PASSWORDNULL;
         }else{
-            UserLogin loginUser=new UserLogin();
-            loginUser.setUserPhone(phone);
-            loginUser.setUserPassword(pwd);
-
             //开始验证
             ProgressDialog progressDialog=new ProgressDialog(this);
             progressDialog.setTitle("登录验证");
@@ -128,7 +143,7 @@ public class LoginActivity extends Activity_Parent implements View.OnClickListen
             }catch (InterruptedException ex){
                 LogUtil.e(TAG, ex.getMessage());
             }
-            loginedUser=userBusiness.login(loginUser);
+            loginedUser=userBusiness.login(phone, pwd);
             if(loginedUser!=null){
                 loginedUserInfo=loginedUser;
                 return SUCCESS;

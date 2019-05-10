@@ -67,6 +67,20 @@
             android:name=".service.LoadingService"
             android:enabled="true"
             android:exported="true"></service>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.comeon.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <!-- 指定Uri的共享路径 -->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"
+                />
+        </provider>
     </application>
+
+
 
 </manifest>

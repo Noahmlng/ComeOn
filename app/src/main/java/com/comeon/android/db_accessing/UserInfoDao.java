@@ -13,4 +13,6 @@ public interface UserInfoDao {
      * @return  登录的用户基本信息对象 OR null
      */
     UserInfo selectUserByLoginId(long loginId);
+
+    UserInfo insertNewUser(long loginId, String phone);
 }

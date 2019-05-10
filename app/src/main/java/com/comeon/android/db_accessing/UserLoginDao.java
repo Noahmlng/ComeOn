@@ -12,9 +12,9 @@ public interface UserLoginDao {
     /**
      * 新增User数据
      * @param newUser  装载数据的对象
-     * @return  新增的user对象
+     * @return  新增的user对象的id
      */
-    UserLogin insertNewUser(UserLogin newUser);
+    long insertNewUser(UserLogin newUser);
 
     /**
      * 根据手机号，密码查询的方法

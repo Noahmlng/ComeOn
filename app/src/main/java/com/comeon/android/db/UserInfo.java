@@ -23,6 +23,7 @@ public class UserInfo extends LitePalSupport implements Parcelable {
     @Column(defaultValue = "小明")
     private String userNickName;
     private Date userBirthday;
+    @Column(defaultValue = "0")
     private int userGender;
     private byte[] headIcon;
     @Column(defaultValue = "这个人很无聊诶，什么都不说！")

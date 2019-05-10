@@ -155,7 +155,7 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             user1.setDescription("Nothing to specifically to describe");
             user1.setUserBirthday(new Date(2000, 11, 15));
             user1.setHeadIcon(Utilities.decodeResource(R.drawable.init_portrait));
-            user1.setUserNickName("Jack");
+            user1.setUserNickName("Noah");
             user1.setUserPhone("17620388542");
             user1.setLastModifiedTime(new Date());
             user1.setRegisterTime(new Date(2016,10,15));

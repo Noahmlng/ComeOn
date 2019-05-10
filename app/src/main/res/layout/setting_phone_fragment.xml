@@ -18,6 +18,7 @@
                 android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/edittext_background_color_short"
+                android:spinnerMode="dialog"
                 ></Spinner>
 
             <EditText
@@ -53,7 +54,7 @@
             <com.comeon.android.controls.GradientTextButton
                 android:id="@+id/btn_getValidateCode"
                 style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="45dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/edittext_background_color_short"

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="35dp"
-    android:paddingVertical="50dp"
+    android:paddingVertical="30dp"
     android:paddingRight="30dp"
     >
 
@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:id="@+id/nickname"
             android:background="@drawable/edittext_background_color_short"
-            android:hint="默认昵称"
+            android:hint="小明"
             android:layout_weight="1"
             android:textSize="16sp"
             android:maxLines="1"
@@ -70,7 +70,7 @@
                 android:layout_weight="3"
                 android:background="@drawable/edittext_background_color_short"
                 android:gravity="center"
-                android:spinnerMode="dropdown"></Spinner>
+                android:spinnerMode="dialog"></Spinner>
             <Spinner
                 android:id="@+id/birthday_month"
                 android:layout_width="0dp"
@@ -79,7 +79,7 @@
                 android:background="@drawable/edittext_background_color_short"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:spinnerMode="dropdown"
+                android:spinnerMode="dialog"
                 ></Spinner>
             <Spinner
                 android:id="@+id/birthday_day"
@@ -88,7 +88,7 @@
                 android:layout_weight="2"
                 android:background="@drawable/edittext_background_color_short"
                 android:gravity="center"
-                android:spinnerMode="dropdown"
+                android:spinnerMode="dialog"
                 ></Spinner>
 
         </LinearLayout>
@@ -120,9 +120,10 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/male"
+                android:background="@drawable/male_checked"
                 android:id="@+id/sex_male"
                 android:layout_marginRight="50dp"
+                android:checked="true"
                 />
 
             <RadioButton

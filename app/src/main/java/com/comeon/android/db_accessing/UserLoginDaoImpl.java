@@ -15,12 +15,12 @@ public class UserLoginDaoImpl implements UserLoginDao {
     private static final String TAG = "UserLoginDaoImpl";
 
     @Override
-    public UserLogin insertNewUser(UserLogin newUser) {
+    public long insertNewUser(UserLogin newUser) {
         newUser.setLastModifiedTime(new Date());
         newUser.setUserStatus(0);
         newUser.save();
         LogUtil.d(TAG, "新用户的登录id为"+newUser.getId());
-        return newUser;
+        return newUser.getId();
     }
 
     @Override

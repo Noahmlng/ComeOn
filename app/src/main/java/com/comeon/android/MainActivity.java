@@ -2,6 +2,7 @@ package com.comeon.android;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.comeon.android.db.UserInfo;
 import com.comeon.android.fragment.FriendsFragment;
 import com.comeon.android.fragment.GroupFragment;
 import com.comeon.android.fragment.MapAppointmentFragment;
+import com.comeon.android.fragment.MineFragment;
 import com.comeon.android.util.LogUtil;
 import com.comeon.android.util.Utilities;
 import com.comeon.android.util.ViewUtil;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     MapAppointmentFragment mapAppointmentFragment = new MapAppointmentFragment();
     GroupFragment groupFragment = new GroupFragment();
+    MineFragment mineFragment=new MineFragment();
 
     private UserInfo loginUser;
 
@@ -136,6 +139,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case 2:
                         break;
+                    case 3:
+                        break;
+                    case 4:
+                        Utilities.replaceFragment(fragmentManager, mineFragment, R.id.fragment_layout);
+                        break;
                 }
             }
 
@@ -165,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mFragments.add(new FriendsFragment());
             }else if("我的".equals(mTitle)){
                 mTabEntities.add(new TabEntity(mTitle, R.drawable.nav_btn_mine, R.drawable.nav_btn_mine));
-                mFragments.add(new FriendsFragment());
+                mFragments.add(mineFragment);
             }
         }
         tlCommen.setTabData(mTabEntities, this, R.id.fragment_layout, mFragments);

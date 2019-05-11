@@ -3,6 +3,7 @@ package com.comeon.android;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -214,10 +215,15 @@ public class RegistrationActivity extends Activity_Parent implements View.OnClic
                         密码页执行的注册操作：因为传递过来的用户手机号已经验证成功，此处验证密码，验证成功则新增登录用户
                      */
                     if(checkPassword()){
-                        final UserInfo newUser=userBusiness.registration(registerdUser.getUserPhone(), settingPasswordFragment.editText_password.getText().toString().trim());
+                        String phone=registerdUser.getUserPhone();
+                        String password=settingPasswordFragment.editText_password.getText().toString().trim();
+                        final UserInfo newUser=userBusiness.registration(phone, password);
                         this.newUser=newUser;
                         if(newUser!=null){
                             Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+                            //记住登陆数据(UserLogin)
+                            writeInLoginDataInSharePreferences(phone, password);
+                            LogUtil.d(TAG, "正在写入数据.....（手机号："+phone+"；密码："+password+"）");
                             /*
                                 提示用户注册成功！
                                 询问用户是否需要更个性化的服务
@@ -462,6 +468,22 @@ public class RegistrationActivity extends Activity_Parent implements View.OnClic
             default:
                 break;
         }
+    }
+
+    /**
+     * 记住用户功能——将登陆数据写进SharedPreferences文件中
+     * @param phone  登陆用的手机号
+     * @param pwd    登陆密码
+     */
+    private void writeInLoginDataInSharePreferences(String phone, String pwd){
+        SharedPreferences sp=getSharedPreferences("loginData",MODE_PRIVATE);
+        /*
+            写入操作
+         */
+        SharedPreferences.Editor editor=sp.edit();
+        editor.putString("phone",phone);
+        editor.putString("password",pwd);
+        editor.apply();
     }
 }
 

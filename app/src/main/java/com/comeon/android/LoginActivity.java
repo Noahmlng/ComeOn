@@ -2,6 +2,7 @@ package com.comeon.android;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
@@ -146,10 +147,29 @@ public class LoginActivity extends Activity_Parent implements View.OnClickListen
             loginedUser=userBusiness.login(phone, pwd);
             if(loginedUser!=null){
                 loginedUserInfo=loginedUser;
+                //写入登录数据
+                writeInLoginDataInSharePreferences(phone,pwd);
                 return SUCCESS;
             }else{
                return FAULT_INVALID;
             }
         }
+    }
+
+    /**
+     * 记住用户功能——将登陆数据写进SharedPreferences文件中
+     * @param phone  登陆用的手机号
+     * @param pwd    登陆密码
+     */
+    private void writeInLoginDataInSharePreferences(String phone, String pwd){
+        SharedPreferences sp=getSharedPreferences("loginData",MODE_PRIVATE);
+
+        /*
+            写入操作
+         */
+        SharedPreferences.Editor editor=sp.edit();
+        editor.putString("phone",phone);
+        editor.putString("password",pwd);
+        editor.apply();
     }
 }

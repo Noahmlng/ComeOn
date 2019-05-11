@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -21,6 +22,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.baidu.entity.pb.WalkPlan;
+import com.comeon.android.business_logic.UserBusiness;
+import com.comeon.android.business_logic.UserBusinessInterface;
 import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.db.Friends;
 import com.comeon.android.db.Message;
@@ -83,10 +86,25 @@ public class StartActivity extends Activity_Parent implements View.OnClickListen
         //绑定并开启服务
         Intent loadingService = new Intent(StartActivity.this, LoadingService.class);
         startService(loadingService);
-        boolean isSuccess=bindService(loadingService, connection, BIND_AUTO_CREATE);
-        //如果初始数据已存在，则无需额外的加载
+        bindService(loadingService, connection, BIND_AUTO_CREATE);
         if (ContextCompat.checkSelfPermission(StartActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        UserLogin userLogin=loadLoginDataInSharedPreferences();
+        LogUtil.d(TAG, "记住用户的手机号为："+userLogin.getUserPhone()+"；密码为："+userLogin.getUserPassword());
+
+        UserBusinessInterface userBusiness=new UserBusiness();
+        /*
+            使用SharedPreferences文件中登录对象尝试登录
+         */
+        UserInfo loginUser=userBusiness.login(userLogin.getUserPhone(),userLogin.getUserPassword());
+        if(loginUser!=null){
+            LogUtil.d(TAG, "记住用户的昵称为："+loginUser.getUserNickName());
+            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+            //传递已登录的用户数据
+            intent.putExtra("login_user",loginUser);
+            startActivity(intent);
         }
     }
 
@@ -183,5 +201,21 @@ public class StartActivity extends Activity_Parent implements View.OnClickListen
             return true;
         }
         return false;
+    }
+
+    /**
+     * 加载SharedPreferences文件中的登录数据
+     * @return  SharedPreferences文件中的登录对象
+     */
+    private UserLogin loadLoginDataInSharedPreferences(){
+        SharedPreferences loginData=getSharedPreferences("loginData",MODE_PRIVATE);
+
+        String phone=loginData.getString("phone","");
+        String password=loginData.getString("password","");
+
+        UserLogin loginUser=new UserLogin();
+        loginUser.setUserPhone(phone);
+        loginUser.setUserPassword(password);
+        return loginUser;
     }
 }

@@ -1,5 +1,7 @@
 package com.comeon.android.business_logic;
 
+import android.util.Log;
+
 import com.comeon.android.db.UserInfo;
 import com.comeon.android.db.UserLogin;
 import com.comeon.android.db_accessing.UserInfoDao;
@@ -8,6 +10,7 @@ import com.comeon.android.db_accessing.UserLoginDao;
 import com.comeon.android.db_accessing.UserLoginDaoImpl;
 import com.comeon.android.db_accessing.UserLoginLogDao;
 import com.comeon.android.db_accessing.UserLoginLogDaoImpl;
+import com.comeon.android.util.LogUtil;
 
 /**
  * 用户相关业务接口实现类
@@ -25,6 +28,7 @@ public class UserBusiness implements UserBusinessInterface {
         loginUser.setUserPhone(phone);
         loginUser.setUserPassword(password);
         long loginId=userLoginDao.selectUser(loginUser);
+        LogUtil.d(TAG, "当前尝试登录的用户的id为："+loginId);
         if(loginId!=-1){
             UserInfo loginedUser=userInfoDao.selectUserByLoginId(loginId);
             if(loginUser!=null){

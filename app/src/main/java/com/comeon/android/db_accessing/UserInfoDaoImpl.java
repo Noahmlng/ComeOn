@@ -35,6 +35,7 @@ public class UserInfoDaoImpl implements UserInfoDao {
         newUser.setUserNickName("小明");
         newUser.setUserGender(0);
         newUser.setDescription("这个人很无聊诶，什么都不说！");
+        newUser.save();
         return newUser;
     }
 }

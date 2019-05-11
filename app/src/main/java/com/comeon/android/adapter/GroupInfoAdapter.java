@@ -57,7 +57,7 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
             展示数据库的值
          */
         viewHolder.img_headIcon.setImageBitmap(Utilities.translateBytes(order.getOrderSponsor().getHeadIcon()));
-        viewHolder.txt_launchTime.setText(Utilities.calculateTimeGapFromNowInMinutes(order.getOrderLaunchTime()));
+        viewHolder.txt_launchTime.setText("发布于"+Utilities.calculateTimeGapFromNowInMinutes(order.getOrderLaunchTime())+"前");
         /*
             如果用户选择的是场馆信息，则输入场馆的地址
             如果是地址，则直接赋地址值

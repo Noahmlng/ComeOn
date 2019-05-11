@@ -24,6 +24,8 @@ import org.litepal.LitePal;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.time.Month;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -80,6 +82,7 @@ public class Utilities {
 
     /**
      * 将位图转换为byte数组
+     *
      * @param bitmap 传入的bitmap位图对象
      * @return
      */
@@ -106,45 +109,65 @@ public class Utilities {
 
     /**
      * 计算放入时间和现在时间的时间差
-     *
      * @param inputDate
      * @return
      */
     public static String calculateTimeGapFromNowInMinutes(Date inputDate) {
-        Date date = new Date();
-        //毫秒差距
-        long diff = date.getTime() - inputDate.getTime();
-        LogUtil.d(TAG, "差距为：" + diff);
-        LogUtil.d(TAG, "现在正确时间为：" + date.toLocaleString());
-        /*
-            从年开始计算，向下递归
-         */
-        long year = diff / (1000 * 60 * 60 * 24 * 365);
-        long month = diff % (1000 * 60 * 60 * 24 * 365) / (1000 * 60 * 60 * 24 * 30);
-        long day = diff % (1000 * 60 * 60 * 24 * 30) / (1000 * 60 * 60 * 24);
-        long hour = diff % (1000 * 60 * 60 * 24) / (1000 * 60 * 60);
-        long minute = diff % (1000 * 60 * 60) / (1000 * 60);
+        String gapInfo = null;
+        Calendar now = Calendar.getInstance();
 
-        /*
-            拼接为字符串
-         */
-        StringBuilder timeGapStr = new StringBuilder();
-        if (year != 0) {
-            timeGapStr.append(year + "年");
+        int nowYear = now.get(Calendar.YEAR);
+        int nowMonth = now.get(Calendar.MONTH) + 1;
+        int nowDay = now.get(Calendar.DAY_OF_MONTH);
+        int nowHour = now.get(Calendar.HOUR);
+        int nowMinute = now.get(Calendar.MINUTE);
+
+        int nowMinutes=translateDateIntoMinutes(new Date(nowYear, nowMonth, nowDay, nowHour, nowMinute));
+        int inputMinutes=translateDateIntoMinutes(inputDate);
+
+        int minutesDiff=nowMinutes-inputMinutes;
+
+        int diffOnYear=minutesDiff/(60*24*365);
+        int diffOnMonth=minutesDiff%(60*24*365)/(60*24*30);
+        int diffOnDate=minutesDiff%(60*24*30)/(60*24);
+        int diffOnHours=minutesDiff%(60*24)/60;
+        int diffOnMinutes=minutesDiff%(60);
+
+        if(diffOnYear==0){
+            if(diffOnMonth==0){
+                if(diffOnDate==0){
+                    if(diffOnHours==0){
+                        if(diffOnMinutes==0){
+                            return "1分钟";
+                        }else{
+                            return diffOnMinutes+"分钟";
+                        }
+                    }else{
+                        return diffOnHours+"小时";
+                    }
+                }else{
+                    return diffOnDate+"日";
+                }
+            }else{
+                return diffOnMonth+"月";
+            }
+        }else{
+            return diffOnYear+"年";
         }
-        if (month != 0) {
-            timeGapStr.append(month + "月");
-        }
-        if (day != 0) {
-            timeGapStr.append(day + "天");
-        }
-        if (hour != 0) {
-            timeGapStr.append(hour + "小时");
-        }
-        if (minute != 0) {
-            timeGapStr.append(minute + "分钟");
-        }
-        return timeGapStr.toString();
+    }
+
+    /**
+     * 将日期对象转换为分钟值
+     * @param inputDate
+     * @return
+     */
+    public static int translateDateIntoMinutes(Date inputDate){
+        int year = inputDate.getYear();
+        int month = inputDate.getMonth();
+        int date = inputDate.getDate();
+        int hours = inputDate.getHours();
+        int minutes = inputDate.getMinutes();
+        return year*(60*24*365)+month*(60*24*30)+date*(60*24)+hours*(60)+minutes;
     }
 
 

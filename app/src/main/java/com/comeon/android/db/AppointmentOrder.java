@@ -1,5 +1,8 @@
 package com.comeon.android.db;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
@@ -9,8 +12,9 @@ import java.util.List;
 /**
  * 组团订单表
  */
-public class AppointmentOrder extends LitePalSupport {
+public class AppointmentOrder extends LitePalSupport implements Parcelable {
 
+    private long id;
     private String orderName;
     @Column(defaultValue = "10")
     private int orderExpectedSize;
@@ -22,6 +26,52 @@ public class AppointmentOrder extends LitePalSupport {
     private int orderStatus;
     private SportsType orderSportsType;
     private String orderLocation;
+
+    public AppointmentOrder(){}
+
+    protected AppointmentOrder(Parcel in) {
+        orderName = in.readString();
+        orderExpectedSize = in.readInt();
+        orderSponsor = in.readParcelable(UserInfo.class.getClassLoader());
+        orderParticipants = in.createTypedArrayList(UserInfo.CREATOR);
+        orderStatus = in.readInt();
+        orderLocation = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(orderName);
+        dest.writeInt(orderExpectedSize);
+        dest.writeParcelable(orderSponsor, flags);
+        dest.writeTypedList(orderParticipants);
+        dest.writeInt(orderStatus);
+        dest.writeString(orderLocation);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<AppointmentOrder> CREATOR = new Creator<AppointmentOrder>() {
+        @Override
+        public AppointmentOrder createFromParcel(Parcel in) {
+            return new AppointmentOrder(in);
+        }
+
+        @Override
+        public AppointmentOrder[] newArray(int size) {
+            return new AppointmentOrder[size];
+        }
+    };
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getOrderName() {
         return orderName;

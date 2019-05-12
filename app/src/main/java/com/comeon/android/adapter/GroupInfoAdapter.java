@@ -7,13 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.comeon.android.InfoDisplayActivity;
 import com.comeon.android.R;
 import com.comeon.android.controls.GradientTextButton;
 import com.comeon.android.db.AppointmentOrder;
-import com.comeon.android.util.LogUtil;
 import com.comeon.android.util.MyApplication;
 import com.comeon.android.util.Utilities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -26,48 +27,60 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
     private static final String TAG = "GroupInfoAdapter";
 
     //类成员：附近组团信息的集合
-    private List<AppointmentOrder> orders;
+    private ArrayList<AppointmentOrder> orders;
+
+    public ArrayList<AppointmentOrder> getOrders() {
+        return orders;
+    }
 
     /**
      * 构造方法为类成员赋值
+     *
      * @param orders 传入的订单集合
      */
-    public GroupInfoAdapter(List<AppointmentOrder> orders){
-        this.orders=orders;
+    public GroupInfoAdapter(ArrayList<AppointmentOrder> orders) {
+        this.orders = orders;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view=LayoutInflater.from(MyApplication.getContext()).inflate(R.layout.group_info_item, viewGroup, false);
+        View view = LayoutInflater.from(MyApplication.getContext()).inflate(R.layout.group_info_item, viewGroup, false);
+        final ViewHolder viewHolder = new ViewHolder(view);
+
+        //点击进入组团详情页
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //点击进入组团详情页
+                AppointmentOrder onClickOrder = orders.get(viewHolder.getAdapterPosition());
+                ArrayList<AppointmentOrder> orders = new ArrayList<AppointmentOrder>();
+
+                //将点击的order置于第一个
+                orders.add(0, onClickOrder);
+                InfoDisplayActivity.checkOrderInfo(MyApplication.getContext(), orders);
             }
         });
-        ViewHolder viewHolder=new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        AppointmentOrder order=orders.get(i);
+        AppointmentOrder order = orders.get(i);
         /*
             展示数据库的值
          */
         viewHolder.img_headIcon.setImageBitmap(Utilities.translateBytes(order.getOrderSponsor().getHeadIcon()));
-        viewHolder.txt_launchTime.setText("发布于"+Utilities.calculateTimeGapFromNowInMinutes(order.getOrderLaunchTime())+"前");
+        viewHolder.txt_launchTime.setText("发布于" + Utilities.calculateTimeGapFromNowInMinutes(order.getOrderLaunchTime()) + "前");
         /*
             如果用户选择的是场馆信息，则输入场馆的地址
             如果是地址，则直接赋地址值
          */
-        if(order.getOrderStadium()!=null){
-            viewHolder.txt_groupLocation.setText(order.getOrderStadium().getStreet()+order.getOrderStadium().getStreetNumber());
-        }else{
+        if (order.getOrderStadium() != null) {
+            viewHolder.txt_groupLocation.setText(order.getOrderStadium().getStreet() + order.getOrderStadium().getStreetNumber());
+        } else {
             viewHolder.txt_groupLocation.setText(order.getOrderLocation());
         }
-        viewHolder.txt_groupInfo.setText("发出"+order.getOrderSportsType().getTypeName()+"邀约\t需组队"+order.getOrderExpectedSize()+"人");
+        viewHolder.txt_groupInfo.setText("发出" + order.getOrderSportsType().getTypeName() + "邀约\t需组队" + order.getOrderExpectedSize() + "人");
         viewHolder.txt_sponsorName.setText(order.getOrderSponsor().getUserNickName());
     }
 
@@ -76,7 +89,7 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
         return orders.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
         /*
             子项中的控件
          */
@@ -88,11 +101,13 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            img_headIcon=(CircleImageView)itemView.findViewById(R.id.img_sponsorHeadIcon);
-            txt_sponsorName=(TextView)itemView.findViewById(R.id.txt_sponsorName);
-            txt_groupInfo=(TextView)itemView.findViewById(R.id.txt_groupInfo);
-            txt_groupLocation=(TextView)itemView.findViewById(R.id.txt_groupLocation);
-            txt_launchTime=(GradientTextButton)itemView.findViewById(R.id.txt_launchTime);
+            img_headIcon = (CircleImageView) itemView.findViewById(R.id.img_sponsorHeadIcon);
+            txt_sponsorName = (TextView) itemView.findViewById(R.id.txt_sponsorName);
+            txt_groupInfo = (TextView) itemView.findViewById(R.id.txt_groupInfo);
+            txt_groupLocation = (TextView) itemView.findViewById(R.id.txt_groupLocation);
+            txt_launchTime = (GradientTextButton) itemView.findViewById(R.id.txt_launchTime);
         }
     }
+
+
 }

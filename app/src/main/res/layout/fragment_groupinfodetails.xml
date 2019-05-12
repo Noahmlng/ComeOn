@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/head_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:id="@+id/txt_sponsorName"
+        android:layout_below="@id/head_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="13sp"
+        android:id="@+id/txt_sponsorPhone"
+        android:layout_below="@id/txt_sponsorName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_layout"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/txt_sponsorPhone"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        >
+    </FrameLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_sponsorPhone"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/spliter"
+        android:id="@+id/img_spliter"
+        />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:text="参与人"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:id="@+id/txt_tip_participants"
+        android:layout_below="@id/img_spliter"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:id="@+id/recycler_view_participants"
+        android:layout_below="@id/txt_tip_participants"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="40dp"
+        android:paddingRight="30dp"
+        android:scrollbarSize="5dp"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
+        android:scrollbarThumbVertical="@drawable/dropdown_bar"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recycler_view_participants"
+        android:paddingLeft="40dp"
+        android:paddingRight="30dp"
+        android:layout_marginTop="20dp"
+        >
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/sendmessage"
+            android:id="@+id/btn_sendMessage"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/call"
+            android:id="@+id/btn_call"
+            android:layout_toRightOf="@id/btn_sendMessage"
+            android:layout_centerVertical="true"
+            />
+
+        <com.comeon.android.controls.GradientTextButton
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:text="加入组团"
+            android:gravity="center"
+            android:id="@+id/btn_joinGroup"
+            android:background="@color/colorPrimary"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

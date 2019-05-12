@@ -8,14 +8,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.comeon.android.InfoDisplayActivity;
 import com.comeon.android.R;
 import com.comeon.android.db.StadiumInfo;
 import com.comeon.android.util.LogUtil;
 import com.comeon.android.util.MyApplication;
 import com.comeon.android.util.Utilities;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.transform.sax.SAXTransformerFactory;
 
 /**
  * 体育场馆信息适配器
@@ -24,6 +28,8 @@ public class StadiumsAdapter extends RecyclerView.Adapter<StadiumsAdapter.ViewHo
 
     private static final String TAG = "StadiumsAdapter";
     private List<StadiumInfo> stadiums;
+
+    public List<StadiumInfo> getStadiums(){return this.stadiums;};
 
     /**
      * 创建构造方法——初始化场馆集合
@@ -44,14 +50,21 @@ public class StadiumsAdapter extends RecyclerView.Adapter<StadiumsAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.stadium_item, viewGroup, false);
         //获取子项布局中的控件
-        ViewHolder viewHolder=new ViewHolder(view);
+        final ViewHolder viewHolder=new ViewHolder(view);
         /**
          * 处理子项点击事件——弹出场馆详情活动
          */
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //....
+                //点击加载场馆信息
+//                List<StadiumInfo> stadiumInfoList=getStadiums();
+                ArrayList<StadiumInfo> stadiumInfoList=new ArrayList<StadiumInfo>();
+                StadiumInfo onClickStadium=getStadiums().get(viewHolder.getAdapterPosition());
+                stadiumInfoList.add(0, onClickStadium);
+
+                LogUtil.d(TAG, "传入的场馆数："+stadiumInfoList.size());
+                InfoDisplayActivity.checkStadiumsInfo(MyApplication.getContext(), stadiumInfoList);
             }
         });
         return viewHolder;

@@ -1,5 +1,8 @@
 package com.comeon.android.db;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.baidu.location.Address;
 
 import org.litepal.annotation.Column;
@@ -10,7 +13,7 @@ import java.util.List;
 /**
  * 场馆信息表
  */
-public class StadiumInfo extends LitePalSupport {
+public class StadiumInfo extends LitePalSupport implements Parcelable {
 
     private long id;
     private float avgConsumption;
@@ -33,6 +36,57 @@ public class StadiumInfo extends LitePalSupport {
     @Column(ignore = true)
     private byte[] stadiumIcon;
 
+    public StadiumInfo(){}
+
+    protected StadiumInfo(Parcel in) {
+        id = in.readLong();
+        avgConsumption = in.readFloat();
+        stadiumName = in.readString();
+        stadiumContact = in.readString();
+        stadiumDescription = in.readString();
+        province = in.readString();
+        city = in.readString();
+        district = in.readString();
+        street = in.readString();
+        streetNumber = in.readString();
+        stadiumStatus = in.readInt();
+        orders = in.createTypedArrayList(AppointmentOrder.CREATOR);
+        stadiumIcon = in.createByteArray();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeFloat(avgConsumption);
+        dest.writeString(stadiumName);
+        dest.writeString(stadiumContact);
+        dest.writeString(stadiumDescription);
+        dest.writeString(province);
+        dest.writeString(city);
+        dest.writeString(district);
+        dest.writeString(street);
+        dest.writeString(streetNumber);
+        dest.writeInt(stadiumStatus);
+        dest.writeTypedList(orders);
+        dest.writeByteArray(stadiumIcon);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<StadiumInfo> CREATOR = new Creator<StadiumInfo>() {
+        @Override
+        public StadiumInfo createFromParcel(Parcel in) {
+            return new StadiumInfo(in);
+        }
+
+        @Override
+        public StadiumInfo[] newArray(int size) {
+            return new StadiumInfo[size];
+        }
+    };
 
     public long getId() {
         return id;

@@ -70,16 +70,27 @@
             android:layout_height="match_parent"
             tl:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btn_selectFilter"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="30dp"
-            android:elevation="8dp"
-            tl:fabSize="normal"
-            tl:layout_behavior="com.comeon.android.controls.ScrollAwareFABBehaviorDefault"
-            />
+            android:layout_gravity="right|bottom"
+            >
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btn_selectFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="30dp"
+                android:elevation="8dp"
+                android:src="@mipmap/ic_plus"
+                tl:fabSize="normal"
+                tl:rippleColor="@color/colorPrimaryDark"
+                tl:borderWidth="0dp"
+                tl:layout_behavior="com.comeon.android.controls.ScrollAwareFABBehaviorDefault"
+                />
+        </RelativeLayout>
+
     </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

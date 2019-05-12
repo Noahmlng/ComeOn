@@ -36,8 +36,8 @@ public class MineFragment extends BaseFragment {
                 editor.putString("password","");
                 editor.apply();
 
-                Intent goBack=new Intent(getActivity(), StartActivity.class);
-                startActivity(goBack);
+//                Intent goBack=new Intent(getActivity(), StartActivity.class);
+//                startActivity(goBack);
             }
         });
     }

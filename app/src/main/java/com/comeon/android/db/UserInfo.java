@@ -36,7 +36,8 @@ public class UserInfo extends LitePalSupport implements Parcelable {
 
     private List<AppointmentOrder> sponsoredOrder;
 
-    private AppointmentOrder participatedOrder;
+    private List<AttendanceRecord> participatedOrder;
+
     /*
         以下为为迭代开发所提供的字段
      */
@@ -179,11 +180,11 @@ public class UserInfo extends LitePalSupport implements Parcelable {
         this.sponsoredOrder = sponsoredOrder;
     }
 
-    public AppointmentOrder getParticipatedOrder() {
+    public List<AttendanceRecord> getParticipatedOrder() {
         return participatedOrder;
     }
 
-    public void setParticipatedOrder(AppointmentOrder participatedOrder) {
+    public void setParticipatedOrder(List<AttendanceRecord> participatedOrder) {
         this.participatedOrder = participatedOrder;
     }
 

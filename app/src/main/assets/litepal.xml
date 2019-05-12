@@ -40,6 +40,7 @@
         <mapping class="com.comeon.android.db.SportsType"/>
         <mapping class="com.comeon.android.db.StadiumInfo"/>
         <mapping class="com.comeon.android.db.AppointmentOrder"/>
+        <mapping class="com.comeon.android.db.AttendanceRecord"/>
         <mapping class="com.comeon.android.db.Comment"/>
 6    </list>
 

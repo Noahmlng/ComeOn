@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.comeon.android.R;
@@ -26,6 +27,8 @@ import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.security.spec.MGF1ParameterSpec;
 import java.util.ArrayList;
@@ -85,13 +88,15 @@ public class GroupFragment extends BaseFragment {
         viewPager=(ViewPager)view.findViewById(R.id.view_pager);
         initTab();
         search_text=(EditText)view.findViewById(R.id.search_text);
-        btn_selectFilter=(FloatingActionButton)view.findViewById(R.id.btn_selectFilter);
-        btn_selectFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MyApplication.getContext(), "你点击了按钮",Toast.LENGTH_SHORT).show();
-            }
-        });
+//        btn_selectFilter=(FloatingActionButton)view.findViewById(R.id.btn_selectFilter);
+//        btn_selectFilter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(MyApplication.getContext(), "你点击了按钮",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+
     }
 
     /**

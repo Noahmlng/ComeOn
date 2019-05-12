@@ -3,6 +3,7 @@ import android.os.AsyncTask;
 
 import com.comeon.android.R;
 import com.comeon.android.db.AppointmentOrder;
+import com.comeon.android.db.AttendanceRecord;
 import com.comeon.android.db.Friends;
 import com.comeon.android.db.Message;
 import com.comeon.android.db.SportsType;
@@ -400,22 +401,31 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
         /*
             创建三个订单，三人分别发布，都参与
          */
-            List<UserInfo> members = new ArrayList<UserInfo>();
-            members.add(user1);
-            members.add(user2);
-            members.add(user3);
-
             AppointmentOrder order1 = new AppointmentOrder();
             order1.setOrderAppointTime(new Date());
             order1.setOrderExpectedSize(15);
             order1.setOrderLaunchTime(new Date(2019, 4, 19));
             order1.setOrderStadium(stadium1);
             order1.setOrderName("热血足球团");
-            order1.setOrderParticipants(members);
             order1.setOrderSponsor(user1);
             order1.setOrderStatus(0);
             order1.setOrderSportsType(sportsTypeDao.findSportsTypeByName("足球"));
             order1.save();
+
+            AttendanceRecord participant1=new AttendanceRecord();
+            participant1.setOrderId(order1.getId());
+            participant1.setParticipantId(user1.getId());
+            participant1.save();
+
+            AttendanceRecord participant2=new AttendanceRecord();
+            participant2.setOrderId(order1.getId());
+            participant2.setParticipantId(user2.getId());
+            participant2.save();
+
+            AttendanceRecord participant3=new AttendanceRecord();
+            participant3.setOrderId(order1.getId());
+            participant3.setParticipantId(user3.getId());
+            participant3.save();
 
             AppointmentOrder order2 = new AppointmentOrder();
             order2.setOrderAppointTime(new Date(2019, 5, 15));
@@ -423,25 +433,54 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             order2.setOrderLaunchTime(new Date(2019, 4, 2));
             order2.setOrderStadium(stadium4);
             order2.setOrderName("NBA级别篮球局");
-            order2.setOrderParticipants(members);
             order2.setOrderSponsor(user2);
             order2.setOrderStatus(0);
             type=sportsTypeDao.findSportsTypeByName("篮球");
             order2.setOrderSportsType(type);
             order2.save();
 
+            AttendanceRecord participant4=new AttendanceRecord();
+            participant4.setOrderId(order2.getId());
+            participant4.setParticipantId(user1.getId());
+            participant4.save();
+
+            AttendanceRecord participant5=new AttendanceRecord();
+            participant5.setOrderId(order2.getId());
+            participant5.setParticipantId(user2.getId());
+            participant5.save();
+
+            AttendanceRecord participant6=new AttendanceRecord();
+            participant6.setOrderId(order2.getId());
+            participant6.setParticipantId(user3.getId());
+            participant6.save();
+
             AppointmentOrder order3 = new AppointmentOrder();
             order3.setOrderAppointTime(new Date(2018, 10, 5));
             order3.setOrderExpectedSize(2);
             order3.setOrderLaunchTime(new Date(2017, 4, 12));
             order3.setOrderName("打个羽毛球？");
-            order3.setOrderParticipants(members);
             order3.setOrderSponsor(user3);
             order3.setOrderStatus(1);
             type=sportsTypeDao.findSportsTypeByName("羽毛球");
             order3.setOrderSportsType(type);
             order3.setOrderLocation("广东省东莞市市辖区建设路一号球场");
             order3.save();
+
+            AttendanceRecord participant7=new AttendanceRecord();
+            participant7.setOrderId(order3.getId());
+            participant7.setParticipantId(user1.getId());
+            participant7.save();
+
+            AttendanceRecord participant8=new AttendanceRecord();
+            participant8.setOrderId(order3.getId());
+            participant8.setParticipantId(user2.getId());
+            participant8.save();
+
+            AttendanceRecord participant9=new AttendanceRecord();
+            participant9.setOrderId(order3.getId());
+            participant9.setParticipantId(user3.getId());
+            participant9.save();
+
         } catch (Exception ex) {
             LogUtil.e(TAG, "初始化数据出错："+ex.getMessage());
         }

@@ -25,6 +25,7 @@ import com.baidu.entity.pb.WalkPlan;
 import com.comeon.android.business_logic.UserBusiness;
 import com.comeon.android.business_logic.UserBusinessInterface;
 import com.comeon.android.db.AppointmentOrder;
+import com.comeon.android.db.AttendanceRecord;
 import com.comeon.android.db.Friends;
 import com.comeon.android.db.Message;
 import com.comeon.android.db.SportsType;
@@ -81,6 +82,10 @@ public class StartActivity extends Activity_Parent implements View.OnClickListen
         setContentView(R.layout.activity_start);
         //修改当前状态栏的颜色和字体颜色
         ViewUtil.setStatusBarColor(this, Color.rgb(77, 77, 77), true);
+
+        //初始化数据库
+        SQLiteDatabase db=LitePal.getDatabase();
+
         //调用初始化控件的方法
         initControls();
         //绑定并开启服务
@@ -90,6 +95,8 @@ public class StartActivity extends Activity_Parent implements View.OnClickListen
         if (ContextCompat.checkSelfPermission(StartActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
+
+        LogUtil.d(TAG, "参加记录有："+LitePal.count(AttendanceRecord.class)+"条");
 
         UserLogin userLogin=loadLoginDataInSharedPreferences();
         LogUtil.d(TAG, "记住用户的手机号为："+userLogin.getUserPhone()+"；密码为："+userLogin.getUserPassword());

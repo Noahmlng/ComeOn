@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:src="@drawable/rate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:id="@+id/img_rate"
+        />
+
+    <ScrollView
+        android:layout_width="250dp"
+        android:layout_height="185dp"
+        android:layout_below="@id/img_rate"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/stadium_images_layout"
+        android:scrollbarSize="5dp"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
+        android:scrollbarThumbVertical="@drawable/dropdown_bar"
+        >
+
+
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/stadium_images_layout"
+        android:layout_marginTop="30dp"
+        android:id="@+id/txt_stadiumName"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:layout_alignStart="@id/stadium_images_layout"
+        />
+    <TextView
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_stadiumName"
+        android:id="@+id/txt_stadiumAddress"
+        android:textSize="13sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignStart="@id/stadium_images_layout"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_stadiumAddress"
+        android:id="@+id/txt_howtoreachthere"
+        android:layout_marginTop="20dp"
+        android:text="距1号线地铁口步行200m"
+        android:textSize="13sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignLeft="@id/stadium_images_layout"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_howtoreachthere"
+        android:paddingLeft="20dp"
+        android:paddingRight="15dp"
+        android:layout_marginTop="20dp"
+        >
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/sendmessage"
+            android:id="@+id/btn_sendMessage"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/call"
+            android:id="@+id/btn_call"
+            android:layout_toRightOf="@id/btn_sendMessage"
+            android:layout_centerVertical="true"
+            />
+
+        <com.comeon.android.controls.GradientTextButton
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:text="加入组团"
+            android:gravity="center"
+            android:id="@+id/btn_joinGroup"
+            android:background="@color/colorPrimary"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

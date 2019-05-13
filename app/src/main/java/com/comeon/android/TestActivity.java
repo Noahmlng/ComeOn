@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.comeon.android.util.Activity_Parent;
 import com.comeon.android.util.HttpUtil;
 import com.comeon.android.util.LogUtil;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
@@ -19,7 +20,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class TestActivity extends AppCompatActivity {
+public class TestActivity extends Activity_Parent {
     private static final String TAG = "TestActivity";
 
     TextView txt_test;

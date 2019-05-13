@@ -1,11 +1,13 @@
 package com.comeon.android.fragment;
 
+import android.nfc.Tag;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.comeon.android.MainActivity;
 import com.comeon.android.R;
 import com.comeon.android.adapter.GroupInfoAdapter;
 import com.comeon.android.business_logic.OrderBusiness;

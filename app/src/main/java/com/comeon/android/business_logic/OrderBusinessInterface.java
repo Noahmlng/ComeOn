@@ -44,4 +44,17 @@ public interface OrderBusinessInterface {
      * @return
      */
     boolean createNewOrder(UserInfo loginUser, int peopleSize, String groupName, String contact, String location, SportsType selectedSportsType);
+
+
+    /**
+     * 加入组团
+     */
+    boolean participateGroup(UserInfo loginUser, AppointmentOrder order);
+
+    /**
+     * 刷新某个订单的参与者列表
+     * @param order
+     * @return
+     */
+    List<UserInfo> refreshParticipantsList(AppointmentOrder order);
 }

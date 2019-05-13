@@ -34,6 +34,7 @@ public class OrderBusiness implements OrderBusinessInterface {
     private AppointmentOrderDao appointmentOrderDao=new AppointmentOrderDaoImpl();
     private AttendanceRecordDao attendanceRecordDao=new AttendanceRecordDaoImpl();
     private SportsTypeDao sportsTypeDao=new SportsTypeDaoImpl();
+    private AppointmentOrderDaoImpl appointmentOrderDaoImpl=new AppointmentOrderDaoImpl();
 
     @Override
     public ArrayList<AppointmentOrder> getAllOrders() {
@@ -73,6 +74,25 @@ public class OrderBusiness implements OrderBusinessInterface {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public boolean participateGroup(UserInfo loginUser, AppointmentOrder order) {
+        if(attendanceRecordDao.checkIfAlreadyParticipated(loginUser.getId(),order.getId())>0){
+            return false;
+        }else{
+            AttendanceRecord record=new AttendanceRecord();
+            record.setParticipantId(loginUser.getId());
+            record.setOrderId(order.getId());
+
+            attendanceRecordDao.insertNewRecord(record);
+            return true;
+        }
+    }
+
+    @Override
+    public List<UserInfo> refreshParticipantsList(AppointmentOrder order) {
+        return appointmentOrderDaoImpl.getAllParticipantsByOrderId(order.getId());
     }
 
 

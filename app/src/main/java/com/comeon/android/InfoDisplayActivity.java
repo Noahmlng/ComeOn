@@ -19,15 +19,17 @@ import android.widget.Toast;
 
 import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.db.StadiumInfo;
+import com.comeon.android.db.UserInfo;
 import com.comeon.android.fragment.GroupDetailsFragment;
 import com.comeon.android.fragment.StadiumDetailsFragment;
+import com.comeon.android.util.Activity_Parent;
 import com.comeon.android.util.LogUtil;
 import com.comeon.android.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfoDisplayActivity extends AppCompatActivity implements View.OnClickListener {
+public class InfoDisplayActivity extends Activity_Parent implements View.OnClickListener {
     private static final String TAG = "InfoDisplayActivity";
 
     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -42,6 +44,7 @@ public class InfoDisplayActivity extends AppCompatActivity implements View.OnCli
     private MyPageAdapter mAdapter;
     private ArrayList<Fragment> mFragments;
 
+    public UserInfo getLoginUser(){return this.loginUser;}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class InfoDisplayActivity extends AppCompatActivity implements View.OnCli
             mFragments = new ArrayList<Fragment>();
             for (int i = 0; i < orders.size(); i++) {
                 mFragments.add(new GroupDetailsFragment(orders.get(i)));
+                LogUtil.d(TAG, "传入的订单的id为：" + orders.get(i).getId());
             }
             mAdapter = new MyPageAdapter(fragmentManager);
         }
@@ -139,16 +143,15 @@ public class InfoDisplayActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-
     /**
      * 查看组团信息的详情
-     *
      * @param context
      * @param orders  要查看的组团信息组（第一个为点击进入的组团信息）
      */
     public static void checkOrderInfo(Context context, ArrayList<AppointmentOrder> orders) {
         Intent intent = new Intent(context, InfoDisplayActivity.class);
         intent.putParcelableArrayListExtra("orderInfo", orders);
+        LogUtil.d(TAG, "测试id为："+orders.get(0).getId());
         context.startActivity(intent);
     }
 

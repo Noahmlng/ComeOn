@@ -11,10 +11,14 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.comeon.android.db.UserInfo;
+
 /**
  * 全部的活动继承自AllActivities类：统一设置
  */
 public class Activity_Parent extends AppCompatActivity {
+
+    protected static UserInfo loginUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -32,6 +32,7 @@ public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
         for (int i=0; i<orders.size(); i++){
             AppointmentOrder loadedOrder=loadOrder(orders.get(i));
             orders.set(i, loadedOrder);
+            LogUtil.d(TAG, "处理后的orderid为："+orders.get(i).getId());
         }
         Utilities.printAllColumns(AppointmentOrder.class);
         return orders;
@@ -52,6 +53,7 @@ public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
      */
     public List<UserInfo> getAllParticipantsByOrderId(long orderId) {
         List<AttendanceRecord> records=attendanceRecordDao.getParticipantsByOrderId(orderId);
+        LogUtil.d(TAG,"参与当前订单的用户个数有："+records.size());
         List<UserInfo> participants=new ArrayList<UserInfo>();
 
         for(int i=0; i<records.size(); i++){

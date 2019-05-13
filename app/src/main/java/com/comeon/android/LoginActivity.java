@@ -91,6 +91,7 @@ public class LoginActivity extends Activity_Parent implements View.OnClickListen
                         Toast.makeText(this,"手机号或密码输入错误，登录失败",Toast.LENGTH_SHORT).show();
                         break;
                     case SUCCESS:
+                        finish();
                         Intent intent=new Intent(this, MainActivity.class);
                         //传递已登录的用户数据
                         intent.putExtra("login_user",loginedUserInfo);

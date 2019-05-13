@@ -3,6 +3,9 @@ package com.comeon.android.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.Tag;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,10 +14,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.comeon.android.InfoDisplayActivity;
+import com.comeon.android.MainActivity;
 import com.comeon.android.R;
+import com.comeon.android.StartActivity;
 import com.comeon.android.adapter.ParticipantAdapter;
+import com.comeon.android.business_logic.OrderBusiness;
+import com.comeon.android.business_logic.OrderBusinessInterface;
 import com.comeon.android.controls.GradientTextButton;
 import com.comeon.android.db.AppointmentOrder;
+import com.comeon.android.db.UserInfo;
+import com.comeon.android.util.LogUtil;
+import com.comeon.android.util.MyApplication;
 import com.comeon.android.util.Utilities;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -24,6 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 @SuppressLint("ValidFragment")
 public class GroupDetailsFragment extends BaseFragment implements View.OnClickListener {
+    private static final String TAG = "GroupDetailsFragment";
 
     CircleImageView head_icon;
     TextView txt_sponsorName;
@@ -36,8 +48,18 @@ public class GroupDetailsFragment extends BaseFragment implements View.OnClickLi
     ParticipantAdapter participantAdapter;
     private AppointmentOrder group;
 
+    private UserInfo loginUser;
+    private OrderBusinessInterface orderBusiness=new OrderBusiness();
+
     public GroupDetailsFragment(AppointmentOrder group) {
         this.group = group;
+        LogUtil.d(TAG, String.valueOf(group.getId()));
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loginUser=((InfoDisplayActivity)getActivity()).getLoginUser();
     }
 
     @Override
@@ -99,7 +121,21 @@ public class GroupDetailsFragment extends BaseFragment implements View.OnClickLi
                 break;
             case R.id.btn_joinGroup:
                 //加入组团的业务操作
-                Toast.makeText(getActivity(), "加入组团的业务操作", Toast.LENGTH_SHORT).show();
+                /*
+                    先判断是否登录
+                 */
+                if(loginUser==null){
+                    Toast.makeText(MyApplication.getContext(), "游客无法加入组团，请先登录",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (orderBusiness.participateGroup(loginUser,group)){
+                    Toast.makeText(MyApplication.getContext(), "参与组团成功！",Toast.LENGTH_SHORT).show();
+                    //刷新participant列表
+                    participantAdapter = new ParticipantAdapter(orderBusiness.refreshParticipantsList(group));
+                    recyclerView_participants.setAdapter(participantAdapter);
+                }else{
+                    Toast.makeText(MyApplication.getContext(), "您已参加了此订单，记得要准时哦~",Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }

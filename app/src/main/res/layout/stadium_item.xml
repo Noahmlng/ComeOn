@@ -12,6 +12,7 @@
         android:layout_height="100dp"
         android:id="@+id/img_stadium"
         android:scaleType="centerCrop"
+        android:src="@drawable/sample_img"
         />
 
     <LinearLayout

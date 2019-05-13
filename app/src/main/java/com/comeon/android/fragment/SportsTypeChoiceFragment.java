@@ -30,7 +30,6 @@ public class SportsTypeChoiceFragment extends BaseFragment {
     RecyclerView recyclerView;
     private OrderBusinessInterface orderBusiness = new OrderBusiness();
     private long categoryId;
-    private  MainActivity parentActivity;
 
     private List<SportsType> sportsTypeList;
 
@@ -51,7 +50,6 @@ public class SportsTypeChoiceFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        parentActivity=(MainActivity) getActivity();
     }
 
     @Override
@@ -71,8 +69,12 @@ public class SportsTypeChoiceFragment extends BaseFragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        //加载数据
-        sportsTypeAdapter = new SportsTypeAdapter(sportsTypeList, parentActivity.getLoginUser());
+        if(sportsTypeAdapter==null){
+            //加载数据
+            sportsTypeAdapter = new SportsTypeAdapter(sportsTypeList);
+        }else{
+            sportsTypeAdapter.notifyDataSetChanged();
+        }
         recyclerView.setAdapter(sportsTypeAdapter);
     }
 
@@ -84,7 +86,11 @@ public class SportsTypeChoiceFragment extends BaseFragment {
     public void refresh(long categoryId) {
         this.categoryId = categoryId;
         sportsTypeList = orderBusiness.loadSportsTypeInCategory(categoryId);
-        sportsTypeAdapter = new SportsTypeAdapter(sportsTypeList,parentActivity.getLoginUser());
-        recyclerView.setAdapter(sportsTypeAdapter);
+        sportsTypeAdapter = new SportsTypeAdapter(sportsTypeList);
+        if(recyclerView!=null){
+            recyclerView.setAdapter(sportsTypeAdapter);
+        }
+        //        sportsTypeAdapter = new SportsTypeAdapter(sportsTypeList);
+//        recyclerView.setAdapter(sportsTypeAdapter);
     }
 }

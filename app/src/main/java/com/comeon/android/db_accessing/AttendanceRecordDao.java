@@ -28,4 +28,12 @@ public interface AttendanceRecordDao {
      * @return
      */
     List<AttendanceRecord> getOrderIdByParticipantId(long participantId);
+
+    /**
+     * 检查该用户是否已经参加
+     * @param participantId  检测者id
+     * @param orderId     检查的order
+     * @return   返回数据的行数
+     */
+    int checkIfAlreadyParticipated(long participantId, long orderId);
 }

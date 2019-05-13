@@ -2,19 +2,189 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/actionbar_layout"
+        android:layout_marginTop="23dp"
+        android:layout_marginBottom="5dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的"
+            android:textSize="16sp"
+            android:textColor="#B5B5B5"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:id="@+id/head_icon"
+        android:src="@drawable/init_portrait"
+        android:layout_below="@id/actionbar_layout"
+        android:layout_centerHorizontal="true"
         />
-
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/txt_loginUserName"
+        android:layout_below="@id/head_icon"
+        android:layout_marginTop="8dp"
+        android:textSize="15sp"
+        android:textColor="#B5B5B5"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/txt_loginUserDescription"
+        android:layout_below="@id/txt_loginUserName"
+        android:textSize="14sp"
+        android:layout_marginTop="5dp"
+        android:textColor="#DDDDDD"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relative_layout"
+        android:layout_below="@id/txt_loginUserDescription"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:layout_marginTop="15dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_sportsType_layout"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sample_img"
+                android:layout_marginRight="10dp"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/sample_img2"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/myfavor_layout"
+        android:orientation="horizontal"
+        android:layout_below="@id/relative_layout"
+        android:gravity="center_vertical"
+        android:paddingLeft="40dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="15dp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_favor_colorful"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的收藏"
+            android:textSize="14sp"
+            android:layout_marginLeft="15dp"
+            android:textColor="#DDDDDD"
+            android:textStyle="bold"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/personalInfo_layout"
+        android:orientation="horizontal"
+        android:layout_below="@id/myfavor_layout"
+        android:gravity="center_vertical"
+        android:paddingLeft="40dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_personalinfo"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="个人信息"
+            android:textSize="14sp"
+            android:layout_marginLeft="15dp"
+            android:textColor="#DDDDDD"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/setting_layout"
+        android:orientation="horizontal"
+        android:layout_below="@id/personalInfo_layout"
+        android:gravity="center_vertical"
+        android:paddingLeft="40dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_setting"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置"
+            android:textSize="14sp"
+            android:layout_marginLeft="15dp"
+            android:textColor="#DDDDDD"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+
+    <Button
         android:id="@+id/btn_exit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_layout"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:text="注销"
-        android:layout_centerInParent="true"
-        android:background="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:background="@drawable/button_colorful"
+        android:textSize="16sp"
+        android:layout_marginStart="80dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginBottom="30dp"
         />
 
 </RelativeLayout>

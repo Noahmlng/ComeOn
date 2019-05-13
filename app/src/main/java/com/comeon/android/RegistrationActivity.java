@@ -251,6 +251,7 @@ public class RegistrationActivity extends Activity_Parent implements View.OnClic
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
+                                    finish();
                                     //直接跳转至主页面
                                     Intent intent=new Intent(RegistrationActivity.this, MainActivity.class);
                                     //传递已登录的用户数据
@@ -304,6 +305,7 @@ public class RegistrationActivity extends Activity_Parent implements View.OnClic
                         newUser.setHeadIcon(imgBytes);
                     }
                     newUser.save();
+                    finish();
                     Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                     //传递已登录的用户数据
                     intent.putExtra("login_user",newUser);

@@ -27,9 +27,8 @@ import java.util.List;
 public class SportsTypeAdapter extends RecyclerView.Adapter<SportsTypeAdapter.ViewHolder> {
 
     private List<SportsType> sportsTypes;
-    private UserInfo loginUser;
 
-    public SportsTypeAdapter(List<SportsType> sportsTypes, UserInfo loginUser){this.sportsTypes=sportsTypes;this.loginUser=loginUser;}
+    public SportsTypeAdapter(List<SportsType> sportsTypes){this.sportsTypes=sportsTypes;}
 
     @NonNull
     @Override
@@ -44,7 +43,6 @@ public class SportsTypeAdapter extends RecyclerView.Adapter<SportsTypeAdapter.Vi
                 //传递数据到下一个页面
                 Intent intent=new Intent(MyApplication.getContext(), LaunchOrderActivity.class);
                 intent.putExtra("selectedSportsType",sportsType);
-                intent.putExtra("login_user", loginUser);
                 MyApplication.getContext().startActivity(intent);
             }
         });

@@ -32,6 +32,7 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
     }
 
     protected AppointmentOrder(Parcel in) {
+        id=in.readLong();
         orderName = in.readString();
         orderExpectedSize = in.readInt();
         orderSponsor = in.readParcelable(UserInfo.class.getClassLoader());
@@ -43,6 +44,7 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
         dest.writeString(orderName);
         dest.writeInt(orderExpectedSize);
         dest.writeParcelable(orderSponsor, flags);

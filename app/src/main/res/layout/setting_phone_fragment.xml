@@ -50,6 +50,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/edittext_background_color_short"
                 android:maxLength="6"
+                android:inputType="number"
                 android:maxLines="1" />
 
             <com.comeon.android.controls.GradientTextButton

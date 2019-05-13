@@ -11,6 +11,8 @@ import com.comeon.android.InfoDisplayActivity;
 import com.comeon.android.R;
 import com.comeon.android.controls.GradientTextButton;
 import com.comeon.android.db.AppointmentOrder;
+import com.comeon.android.db.UserInfo;
+import com.comeon.android.util.LogUtil;
 import com.comeon.android.util.MyApplication;
 import com.comeon.android.util.Utilities;
 

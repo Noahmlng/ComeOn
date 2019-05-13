@@ -13,9 +13,10 @@ import com.comeon.android.business_logic.OrderBusiness;
 import com.comeon.android.business_logic.OrderBusinessInterface;
 import com.comeon.android.db.SportsType;
 import com.comeon.android.db.UserInfo;
+import com.comeon.android.util.Activity_Parent;
 import com.comeon.android.util.ViewUtil;
 
-public class LaunchOrderActivity extends AppCompatActivity implements View.OnClickListener {
+public class LaunchOrderActivity extends Activity_Parent implements View.OnClickListener {
 
     ImageButton btn_goback;
     Button btn_launchAppointment;
@@ -28,7 +29,6 @@ public class LaunchOrderActivity extends AppCompatActivity implements View.OnCli
     OrderBusinessInterface orderBusiness = new OrderBusiness();
 
     private SportsType selectedSportsType;
-    private UserInfo loginUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,6 @@ public class LaunchOrderActivity extends AppCompatActivity implements View.OnCli
         ViewUtil.setStatusBarColor(this, Color.WHITE, false);
         setContentView(R.layout.activity_launch_order);
         selectedSportsType = (SportsType) getIntent().getParcelableExtra("selectedSportsType");
-        loginUser = (UserInfo) getIntent().getParcelableExtra("login_user");
         initControls();
     }
 
@@ -87,6 +86,7 @@ public class LaunchOrderActivity extends AppCompatActivity implements View.OnCli
     public void launchAppointment() {
         if (loginUser == null) {
             Toast.makeText(this, "不支持游客发起订单", Toast.LENGTH_SHORT).show();
+            finish();
             return;
         }
 

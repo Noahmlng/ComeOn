@@ -25,6 +25,7 @@ import com.comeon.android.fragment.GroupFragment;
 import com.comeon.android.fragment.LaunchOrderFragment;
 import com.comeon.android.fragment.MapAppointmentFragment;
 import com.comeon.android.fragment.MineFragment;
+import com.comeon.android.util.Activity_Parent;
 import com.comeon.android.util.LogUtil;
 import com.comeon.android.util.Utilities;
 import com.comeon.android.util.ViewUtil;
@@ -37,7 +38,7 @@ import com.flyco.tablayout.widget.MsgView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends Activity_Parent implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
 
@@ -47,8 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     GroupFragment groupFragment = new GroupFragment();
     LaunchOrderFragment launchOrderFragment=new LaunchOrderFragment();
     MineFragment mineFragment=new MineFragment();
-
-    private UserInfo loginUser;
 
     public UserInfo getLoginUser(){
         return loginUser;
@@ -63,9 +62,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loginUser=(UserInfo)getIntent().getParcelableExtra("login_user");
+        loginUser= getIntent().getParcelableExtra("login_user");
         if(loginUser!=null){
-            LogUtil.d(TAG, "登录的昵称为："+loginUser.getUserNickName());
+            LogUtil.d(TAG, "当前登录的用户id为："+loginUser.getId());
         }
 
         setContentView(R.layout.activity_main);
@@ -179,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mTabEntities.add(new TabEntity(mTitle, R.drawable.nav_friends_checked, R.drawable.nav_btn_friends));
                 mFragments.add(new FriendsFragment());
             }else if("我的".equals(mTitle)){
-                mTabEntities.add(new TabEntity(mTitle, R.drawable.nav_btn_mine, R.drawable.nav_btn_mine));
+                mTabEntities.add(new TabEntity(mTitle, R.drawable.nav_btn_ming_checked, R.drawable.nav_btn_mine));
                 mFragments.add(mineFragment);
             }
         }

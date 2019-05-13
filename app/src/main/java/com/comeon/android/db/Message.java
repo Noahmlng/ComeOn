@@ -10,10 +10,15 @@ import java.util.Date;
  */
 public class Message extends LitePalSupport {
 
+    public static final int TEXT_SENT=0;
+    public static final int TEXT_RECEIVED=1;
+
     @Column(nullable = false)
     private long friendId;
     @Column(nullable = false)
     private long userId;
+
+    private int type;
 
     private String messageContent;
     private Date sendTime;
@@ -52,5 +57,13 @@ public class Message extends LitePalSupport {
 
     public void setSendTime(Date sendTime) {
         this.sendTime = sendTime;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

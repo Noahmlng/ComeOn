@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.comeon.android.ChatActivity;
 import com.comeon.android.InfoDisplayActivity;
 import com.comeon.android.MainActivity;
 import com.comeon.android.R;
@@ -89,7 +90,7 @@ public class GroupDetailsFragment extends BaseFragment implements View.OnClickLi
         recyclerView_participants = (RecyclerView) view.findViewById(R.id.recycler_view_participants);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView_participants.setLayoutManager(linearLayoutManager);
-        participantAdapter = new ParticipantAdapter(group.getOrderParticipants());
+        participantAdapter = new ParticipantAdapter(group.getOrderParticipants(),loginUser);
         recyclerView_participants.setAdapter(participantAdapter);
 
         //如果选择了体育场馆，则加载出体育场馆
@@ -111,7 +112,14 @@ public class GroupDetailsFragment extends BaseFragment implements View.OnClickLi
         switch (v.getId()) {
             case R.id.btn_sendMessage:
                 //打开与发起者的聊天页面
-                Toast.makeText(getActivity(), "打开与发起者的聊天页面", Toast.LENGTH_SHORT).show();
+                /*
+                排除和自己聊天的情况
+                 */
+                if(group.getOrderSponsor().getId()==loginUser.getId()){
+                    Toast.makeText(MyApplication.getContext(), "无法和自己发起会话",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                ChatActivity.enterChatPage(MyApplication.getContext(), group.getOrderSponsor().getId());
                 break;
             case R.id.btn_call:
                 //给发起者打电话
@@ -131,7 +139,7 @@ public class GroupDetailsFragment extends BaseFragment implements View.OnClickLi
                 if (orderBusiness.participateGroup(loginUser,group)){
                     Toast.makeText(MyApplication.getContext(), "参与组团成功！",Toast.LENGTH_SHORT).show();
                     //刷新participant列表
-                    participantAdapter = new ParticipantAdapter(orderBusiness.refreshParticipantsList(group));
+                    participantAdapter = new ParticipantAdapter(orderBusiness.refreshParticipantsList(group),loginUser);
                     recyclerView_participants.setAdapter(participantAdapter);
                 }else{
                     Toast.makeText(MyApplication.getContext(), "您已参加了此订单，记得要准时哦~",Toast.LENGTH_SHORT).show();

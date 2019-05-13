@@ -170,5 +170,21 @@ public class Utilities {
         return year*(60*24*365)+month*(60*24*30)+date*(60*24)+hours*(60)+minutes;
     }
 
+    /**
+     * 获取现在的时间对象
+     * @return
+     */
+    public static Date getNow(){
+        Calendar now = Calendar.getInstance();
+
+        int nowYear = now.get(Calendar.YEAR);
+        int nowMonth = now.get(Calendar.MONTH) + 1;
+        int nowDay = now.get(Calendar.DAY_OF_MONTH);
+        int nowHour = now.get(Calendar.HOUR);
+        int nowMinute = now.get(Calendar.MINUTE);
+        int nowSecond=now.get(Calendar.SECOND);
+
+        return new Date(nowYear, nowMonth, nowDay, nowHour, nowMinute,nowSecond);
+    }
 
 }

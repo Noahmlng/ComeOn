@@ -84,7 +84,8 @@
         <activity
             android:name=".InfoDisplayActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".LaunchOrderActivity"></activity>
+        <activity android:name=".LaunchOrderActivity" />
+        <activity android:name=".ChatActivity"></activity>
     </application>
 
 </manifest>

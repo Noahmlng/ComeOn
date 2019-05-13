@@ -355,12 +355,30 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             message.setFriendId(user1.getId());
             message.setUserId(user2.getId());
             message.setMessageContent("你好啊，朋友1号");
+            message.setType(Message.TEXT_SENT);
             message.setSendTime(new Date(2018, 11, 15));
             message.save();
 
             message = new Message();
             message.setFriendId(user2.getId());
             message.setUserId(user1.getId());
+            message.setType(Message.TEXT_RECEIVED);
+            message.setMessageContent("你好啊，朋友1号");
+            message.setSendTime(new Date(2018, 11, 15));
+            message.save();
+
+            message = new Message();
+            message.setFriendId(user2.getId());
+            message.setUserId(user1.getId());
+            message.setType(Message.TEXT_SENT);
+            message.setMessageContent("hello,hello");
+            message.setSendTime(new Date(2018, 11, 16));
+            message.save();
+
+            message = new Message();
+            message.setFriendId(user1.getId());
+            message.setUserId(user2.getId());
+            message.setType(Message.TEXT_RECEIVED);
             message.setMessageContent("hello,hello");
             message.setSendTime(new Date(2018, 11, 16));
             message.save();
@@ -369,6 +387,15 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             message.setFriendId(user1.getId());
             message.setUserId(user2.getId());
             message.setMessageContent("你想不想去SHE的“十八”啊");
+            message.setType(Message.TEXT_SENT);
+            message.setSendTime(new Date(2018, 11, 17));
+            message.save();
+
+            message = new Message();
+            message.setFriendId(user2.getId());
+            message.setUserId(user1.getId());
+            message.setMessageContent("你想不想去SHE的“十八”啊");
+            message.setType(Message.TEXT_RECEIVED);
             message.setSendTime(new Date(2018, 11, 17));
             message.save();
 
@@ -376,12 +403,22 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             message.setFriendId(user2.getId());
             message.setUserId(user1.getId());
             message.setMessageContent("我好像去啊，你呢？");
+            message.setType(Message.TEXT_SENT);
             message.setSendTime(new Date(2018, 11, 18));
             message.save();
 
             message = new Message();
-            message.setFriendId(user2.getId());
-            message.setUserId(user1.getId());
+            message.setFriendId(user1.getId());
+            message.setUserId(user2.getId());
+            message.setMessageContent("我好像去啊，你呢？");
+            message.setType(Message.TEXT_RECEIVED);
+            message.setSendTime(new Date(2018, 11, 18));
+            message.save();
+
+            message = new Message();
+            message.setFriendId(user1.getId());
+            message.setUserId(user2.getId());
+            message.setType(Message.TEXT_SENT);
             message.setMessageContent("那还用问，我都这样问你耶");
             message.setSendTime(new Date(2018, 11, 19));
             message.save();
@@ -389,13 +426,39 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             message = new Message();
             message.setFriendId(user2.getId());
             message.setUserId(user1.getId());
+            message.setMessageContent("那还用问，我都这样问你耶");
+            message.setType(Message.TEXT_RECEIVED);
+            message.setSendTime(new Date(2018, 11, 19));
+            message.save();
+
+            message = new Message();
+            message.setFriendId(user2.getId());
+            message.setUserId(user1.getId());
+            message.setType(Message.TEXT_SENT);
             message.setMessageContent("对吼，但我到时候出国要去上学了，看不了.....");
+            message.setSendTime(new Date(2018, 11, 20));
+            message.save();
+
+            message = new Message();
+            message.setFriendId(user1.getId());
+            message.setUserId(user2.getId());
+            message.setType(Message.TEXT_RECEIVED);
+            message.setMessageContent("对吼，但我到时候出国要去上学了，看不了.....");
+            message.setSendTime(new Date(2018, 11, 20));
+            message.save();
+
+            message = new Message();
+            message.setFriendId(user1.getId());
+            message.setUserId(user2.getId());
+            message.setType(Message.TEXT_SENT);
+            message.setMessageContent("那你滚吧~");
             message.setSendTime(new Date(2018, 11, 20));
             message.save();
 
             message = new Message();
             message.setFriendId(user2.getId());
             message.setUserId(user1.getId());
+            message.setType(Message.TEXT_RECEIVED);
             message.setMessageContent("那你滚吧~");
             message.setSendTime(new Date(2018, 11, 20));
             message.save();

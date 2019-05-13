@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.comeon.android.ChatActivity;
 import com.comeon.android.R;
 import com.comeon.android.db.UserInfo;
 import com.comeon.android.util.MyApplication;
@@ -20,9 +21,11 @@ import java.util.List;
  */
 public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.ViewHolder> {
     private List<UserInfo> participants;
+    private UserInfo loginUser;
 
-    public ParticipantAdapter(List<UserInfo> participants){
+    public ParticipantAdapter(List<UserInfo> participants, UserInfo loginUser){
         this.participants=participants;
+        this.loginUser=loginUser;
     }
 
     @NonNull
@@ -42,7 +45,14 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
             @Override
             public void onClick(View v) {
                 //进入到聊天页面的操作.....
-                Toast.makeText(MyApplication.getContext(), "进入到与"+participant.getUserNickName()+"的聊天页面",Toast.LENGTH_SHORT).show();
+                                /*
+                排除和自己聊天的情况
+                 */
+                if(participant.getId()==loginUser.getId()){
+                    Toast.makeText(MyApplication.getContext(), "无法和自己发起会话",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                ChatActivity.enterChatPage(MyApplication.getContext(), participant.getId());
             }
         });
     }

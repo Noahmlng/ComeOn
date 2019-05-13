@@ -47,6 +47,7 @@ public class MainActivity extends Activity_Parent implements View.OnClickListene
     MapAppointmentFragment mapAppointmentFragment = new MapAppointmentFragment();
     GroupFragment groupFragment = new GroupFragment();
     LaunchOrderFragment launchOrderFragment=new LaunchOrderFragment();
+    FriendsFragment friendsFragment=new FriendsFragment();
     MineFragment mineFragment=new MineFragment();
 
     public UserInfo getLoginUser(){
@@ -146,6 +147,7 @@ public class MainActivity extends Activity_Parent implements View.OnClickListene
                         Utilities.replaceFragment(fragmentManager, launchOrderFragment, R.id.fragment_layout);
                         break;
                     case 3:
+                        Utilities.replaceFragment(fragmentManager, friendsFragment, R.id.fragment_layout);
                         break;
                     case 4:
                         Utilities.replaceFragment(fragmentManager, mineFragment, R.id.fragment_layout);
@@ -176,7 +178,7 @@ public class MainActivity extends Activity_Parent implements View.OnClickListene
                 mFragments.add(launchOrderFragment);
             }else if("朋友".equals(mTitle)){
                 mTabEntities.add(new TabEntity(mTitle, R.drawable.nav_friends_checked, R.drawable.nav_btn_friends));
-                mFragments.add(new FriendsFragment());
+                mFragments.add(friendsFragment);
             }else if("我的".equals(mTitle)){
                 mTabEntities.add(new TabEntity(mTitle, R.drawable.nav_btn_ming_checked, R.drawable.nav_btn_mine));
                 mFragments.add(mineFragment);

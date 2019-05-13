@@ -1,5 +1,6 @@
 package com.comeon.android.business_logic;
 
+import com.comeon.android.db.Message;
 import com.comeon.android.db.SportsType;
 import com.comeon.android.db.UserInfo;
 import com.comeon.android.db.UserLogin;
@@ -34,5 +35,35 @@ public interface UserBusinessInterface {
      */
     UserInfo registration(String phone, String password);
 
+    /**
+     * 获取一个用户的所有好友
+     * @param userId  该用户的id
+     * @return  所有好友的信息集合
+     */
+    List<UserInfo> getAllFriends(long userId);
 
+    /**
+     * 获取两个用户间最后一条消息记录内容
+     * @param userId  用户id
+     * @param friendId  好友id
+     * @return  记录内容
+     */
+    String getLastMessageContent(long userId, long friendId);
+
+    /**
+     * 获取两个用户间的所有聊天记录
+     * @param userId
+     * @param friendId
+     * @return
+     */
+    List<Message> loadAllMessages(long userId, long friendId);
+
+    /**
+     * 发送信息
+     * @param userId
+     * @param friendId
+     * @param content
+     * @return 发送出的信息
+     */
+    Message sendMessage(long userId, long friendId, String content);
 }

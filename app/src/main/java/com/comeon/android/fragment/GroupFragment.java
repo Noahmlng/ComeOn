@@ -1,39 +1,21 @@
 package com.comeon.android.fragment;
 
-import android.icu.text.Replaceable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.comeon.android.R;
-import com.comeon.android.controls.TabEntity;
-import com.comeon.android.db.StadiumInfo;
-import com.comeon.android.util.LogUtil;
-import com.comeon.android.util.MyApplication;
-import com.comeon.android.util.Utilities;
-import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.flyco.tablayout.listener.CustomTabEntity;
-import com.flyco.tablayout.listener.OnTabSelectListener;
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
-import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
-import java.security.spec.MGF1ParameterSpec;
 import java.util.ArrayList;
-
-import okhttp3.internal.Util;
 
 /**
  * 组团碎片
@@ -44,19 +26,16 @@ public class GroupFragment extends BaseFragment {
 
     //创建碎片管理对象
     public FragmentManager fragmentManager;
-
-    //设置适配器
-    private MyPageAdapter mAdapter;
-    private ArrayList<Fragment> mFragments;
-    private String[] mTitles = {"场馆", "附近邀约"};
-
-    private StadiumsFragment stadiumsFragment=new StadiumsFragment();
-    private GroupInfoFragment groupInfoFragment=new GroupInfoFragment();
-
     SlidingTabLayout tabLayout;
     EditText search_text;
     ViewPager viewPager;
     FloatingActionButton btn_selectFilter;
+    //设置适配器
+    private MyPageAdapter mAdapter;
+    private ArrayList<Fragment> mFragments;
+    private String[] mTitles = {"场馆", "附近邀约"};
+    private StadiumsFragment stadiumsFragment = new StadiumsFragment();
+    private GroupInfoFragment groupInfoFragment = new GroupInfoFragment();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,17 +44,17 @@ public class GroupFragment extends BaseFragment {
             Activity中嵌套Fragment设置适配器管理：getSupportFragmentManager();
             Fragment中嵌套Fragment设置适配器管理  getChildFragmentManager();
          */
-        fragmentManager= this.getChildFragmentManager();
+        fragmentManager = this.getChildFragmentManager();
         mFragments = new ArrayList<Fragment>();
         mFragments.add(stadiumsFragment);
         mFragments.add(groupInfoFragment);
         //实例化适配器（构造方法：放入碎片管理对象）
-        mAdapter=new MyPageAdapter(fragmentManager);
+        mAdapter = new MyPageAdapter(fragmentManager);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_group, container, false);
+        View view = inflater.inflate(R.layout.fragment_group, container, false);
         initControls(view);
         return view;
     }
@@ -83,18 +62,18 @@ public class GroupFragment extends BaseFragment {
     /**
      * 初始化控件
      */
-    protected void initControls(View view){
-        tabLayout=(SlidingTabLayout) view.findViewById(R.id.tablayout);
-        viewPager=(ViewPager)view.findViewById(R.id.view_pager);
+    protected void initControls(View view) {
+        tabLayout = (SlidingTabLayout) view.findViewById(R.id.tablayout);
+        viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         initTab();
-        search_text=(EditText)view.findViewById(R.id.search_text);
-//        btn_selectFilter=(FloatingActionButton)view.findViewById(R.id.btn_selectFilter);
-//        btn_selectFilter.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MyApplication.getContext(), "你点击了按钮",Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        search_text = (EditText) view.findViewById(R.id.search_text);
+        //        btn_selectFilter=(FloatingActionButton)view.findViewById(R.id.btn_selectFilter);
+        //        btn_selectFilter.setOnClickListener(new View.OnClickListener() {
+        //            @Override
+        //            public void onClick(View v) {
+        //                Toast.makeText(MyApplication.getContext(), "你点击了按钮",Toast.LENGTH_SHORT).show();
+        //            }
+        //        });
 
 
     }
@@ -109,10 +88,29 @@ public class GroupFragment extends BaseFragment {
         tabLayout.setViewPager(viewPager);
     }
 
+    @Override
+    protected int getContentViewId() {
+        return R.layout.fragment_group;
+    }
+
+    /**
+     * 判断当前页面是哪一页
+     *
+     * @return true：场馆页；false：附近邀约页
+     */
+    private boolean getCurrentFragment() {
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.view_pager);
+        if (currentFragment instanceof StadiumsFragment) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * 适配器帮助读取tablayout中的值
      */
-    private class MyPageAdapter extends FragmentPagerAdapter{
+    private class MyPageAdapter extends FragmentPagerAdapter {
 
         public MyPageAdapter(FragmentManager fm) {
             super(fm);
@@ -131,26 +129,7 @@ public class GroupFragment extends BaseFragment {
 
         @Override
         public int getCount() {
-            return  mFragments.size();
-        }
-    }
-
-    @Override
-    protected int getContentViewId() {
-        return R.layout.fragment_group;
-    }
-
-
-    /**
-     * 判断当前页面是哪一页
-     * @return  true：场馆页；false：附近邀约页
-     */
-    private boolean getCurrentFragment(){
-        Fragment currentFragment=fragmentManager.findFragmentById(R.id.view_pager);
-        if(currentFragment instanceof StadiumsFragment){
-            return true;
-        }else{
-            return false;
+            return mFragments.size();
         }
     }
 }

@@ -48,9 +48,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/MainActivityTheme"
             android:launchMode="singleTask"
-            />
+            android:theme="@style/MainActivityTheme" />
         <activity
             android:name=".LoginActivity"
             android:theme="@style/MainActivityTheme" />
@@ -63,7 +62,7 @@
             android:enabled="true"
             android:process=":remote" />
 
-        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".TestActivity" />
 
         <service
             android:name=".service.LoadingService"
@@ -82,9 +81,10 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".InfoDisplayActivity"
-            android:launchMode="singleTop"
-            ></activity>
+        <activity
+            android:name=".InfoDisplayActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".LaunchOrderActivity"></activity>
     </application>
 
 </manifest>

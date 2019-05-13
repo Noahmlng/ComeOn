@@ -22,6 +22,7 @@ import com.comeon.android.controls.TabEntity;
 import com.comeon.android.db.UserInfo;
 import com.comeon.android.fragment.FriendsFragment;
 import com.comeon.android.fragment.GroupFragment;
+import com.comeon.android.fragment.LaunchOrderFragment;
 import com.comeon.android.fragment.MapAppointmentFragment;
 import com.comeon.android.fragment.MineFragment;
 import com.comeon.android.util.LogUtil;
@@ -44,9 +45,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     MapAppointmentFragment mapAppointmentFragment = new MapAppointmentFragment();
     GroupFragment groupFragment = new GroupFragment();
+    LaunchOrderFragment launchOrderFragment=new LaunchOrderFragment();
     MineFragment mineFragment=new MineFragment();
 
     private UserInfo loginUser;
+
+    public UserInfo getLoginUser(){
+        return loginUser;
+    }
 
     CommonTabLayout tlCommen;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
@@ -138,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Utilities.replaceFragment(fragmentManager, groupFragment, R.id.fragment_layout);
                         break;
                     case 2:
+                        Utilities.replaceFragment(fragmentManager, launchOrderFragment, R.id.fragment_layout);
                         break;
                     case 3:
                         break;
@@ -167,9 +174,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mFragments.add(groupFragment);
             }else if("发布组团".equals(mTitle)){
                 mTabEntities.add(new TabEntity(mTitle, R.drawable.nav_btn_launch_appointment, R.drawable.nav_btn_launch_appointment));
-                mFragments.add(new FriendsFragment());
+                mFragments.add(launchOrderFragment);
             }else if("朋友".equals(mTitle)){
-                mTabEntities.add(new TabEntity(mTitle, R.drawable.nav_btn_friends, R.drawable.nav_btn_friends));
+                mTabEntities.add(new TabEntity(mTitle, R.drawable.nav_friends_checked, R.drawable.nav_btn_friends));
                 mFragments.add(new FriendsFragment());
             }else if("我的".equals(mTitle)){
                 mTabEntities.add(new TabEntity(mTitle, R.drawable.nav_btn_mine, R.drawable.nav_btn_mine));

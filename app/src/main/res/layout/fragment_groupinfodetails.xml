@@ -75,12 +75,12 @@
         android:layout_below="@id/txt_tip_participants"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:paddingLeft="40dp"
-        android:paddingRight="30dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="30dp"
         android:scrollbarSize="5dp"
         android:scrollbars="vertical"
-        android:scrollbarStyle="insideInset"
-        android:scrollbarThumbVertical="@drawable/dropdown_bar"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbarThumbVertical="@drawable/dropdown_bar_white"
         />
 
     <RelativeLayout

@@ -1,46 +1,31 @@
 package com.comeon.android.fragment;
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.comeon.android.R;
 import com.comeon.android.adapter.GroupInfoAdapter;
 import com.comeon.android.business_logic.OrderBusiness;
 import com.comeon.android.business_logic.OrderBusinessInterface;
 import com.comeon.android.db.AppointmentOrder;
-import com.comeon.android.db_accessing.AppointmentOrderDao;
-import com.comeon.android.db_accessing.AppointmentOrderDaoImpl;
 import com.comeon.android.util.LogUtil;
-import com.comeon.android.util.MyApplication;
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
-import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
-import org.litepal.LitePal;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 附近邀约信息碎片
  */
 public class GroupInfoFragment extends BaseFragment {
     private static final String TAG = "GroupInfoFragment";
-
+    GroupInfoAdapter groupInfoAdapter;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton floatingActionButton;
-
     private OrderBusinessInterface orderBusiness = new OrderBusiness();
     private ArrayList<AppointmentOrder> orders;
-    GroupInfoAdapter groupInfoAdapter;
-
     private AppointmentOrder selectFilter;
 
     @Override

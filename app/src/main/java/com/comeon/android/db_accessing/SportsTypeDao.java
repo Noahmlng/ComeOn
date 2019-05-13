@@ -5,6 +5,7 @@ import com.comeon.android.util.LogUtil;
 
 import org.litepal.LitePal;
 
+import java.nio.channels.spi.SelectorProvider;
 import java.util.List;
 
 /**
@@ -18,4 +19,11 @@ public interface SportsTypeDao {
      * @return 运动类型对象
      */
     SportsType findSportsTypeByName(String name);
+
+    /**
+     * 获取某种分类（categoryid）下的所有类型
+     * @param categoryId
+     * @return
+     */
+    List<SportsType> getSportsTypesByCategoryId(long categoryId);
 }

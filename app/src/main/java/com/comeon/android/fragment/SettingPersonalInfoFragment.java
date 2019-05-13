@@ -1,7 +1,6 @@
 package com.comeon.android.fragment;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,13 +16,10 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
-import com.bumptech.glide.util.LogTime;
 import com.comeon.android.R;
-import com.comeon.android.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -241,7 +237,7 @@ public class SettingPersonalInfoFragment extends Fragment {
             if (pre_selectedMonth == now.get(Calendar.MONTH) + 1) {
                 return true;
             }
-        }else if(pre_selectedYear == Calendar.getInstance().get(Calendar.YEAR) && selectedYear == Calendar.getInstance().get(Calendar.YEAR)){
+        } else if (pre_selectedYear == Calendar.getInstance().get(Calendar.YEAR) && selectedYear == Calendar.getInstance().get(Calendar.YEAR)) {
             /*
                   判断之前未选中本月、现在切换到本月的时候需要刷新
              */

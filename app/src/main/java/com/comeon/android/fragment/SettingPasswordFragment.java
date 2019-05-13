@@ -19,7 +19,7 @@ public class SettingPasswordFragment extends BaseFragment {
 
     @Override
     protected void initControls(View view) {
-        editText_password=(EditText)view.findViewById(R.id.password);
-        editText_checkPassword=(EditText)view.findViewById(R.id.check_password);
+        editText_password = (EditText) view.findViewById(R.id.password);
+        editText_checkPassword = (EditText) view.findViewById(R.id.check_password);
     }
 }

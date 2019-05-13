@@ -1,7 +1,6 @@
 package com.comeon.android.fragment;
 
 import android.annotation.TargetApi;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -29,13 +27,11 @@ import java.util.Random;
  * 注册：设置手机号码页碎片
  */
 public class SettingPhoneFragment extends Fragment implements View.OnClickListener {
-    private UserBusinessInterface userBusiness = new UserBusiness();
-
     public GradientTextButton btn_getValidateCode;
     public Spinner phone_index;
     public EditText editText_phone;
     public EditText editText_validateCode;
-
+    private UserBusinessInterface userBusiness = new UserBusiness();
     private String testCode;
 
     @Nullable

@@ -21,7 +21,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(getContentViewId(),container,false);
+        mRootView = inflater.inflate(getContentViewId(), container, false);
         initControls(mRootView);
         return mRootView;
     }
@@ -32,7 +32,9 @@ public abstract class BaseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    protected void initControls(View view){}
+    protected void initControls(View view) {
+    }
+
     protected abstract int getContentViewId();
 
     @Override

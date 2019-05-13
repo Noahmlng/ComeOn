@@ -30,6 +30,7 @@
                 android:layout_weight="1"
                 android:maxLines="1"
                 android:maxLength="11"
+                android:inputType="number"
                 />
 
         </LinearLayout>

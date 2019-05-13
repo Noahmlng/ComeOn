@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/actionbar_layout"
+        android:layout_marginTop="23dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="编辑组团"
+            android:textSize="15sp"
+            android:textColor="#B5B5B5"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btn_goback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_goback" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionbar_layout"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="60dp"
+            android:gravity="center_vertical"
+            android:layout_marginTop="40dp"
+            android:id="@+id/peoplesize_layout"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_people"
+                android:layout_marginRight="15dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="人数"
+                android:textSize="14sp"
+                android:textColor="#B5B5B5"
+                android:textStyle="bold"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_minus"
+                android:id="@+id/btn_reducePeople"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="55dp"
+                />
+
+            <EditText
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edittext_peoplesize"
+                android:background="@drawable/edittext_background_square"
+                android:layout_marginLeft="10dp"
+                android:maxLines="1"
+                android:maxLength="2"
+                android:inputType="number"
+                android:text="2"
+                android:textSize="12sp"
+                android:imeOptions="actionNext"
+                android:gravity="center"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_plus_grey"
+                android:id="@+id/btn_addPeople"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="10dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="60dp"
+            android:gravity="center_vertical"
+            android:id="@+id/sponsor_layout"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/groupname_layout"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_phone"
+                android:layout_marginRight="20dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="电话"
+                android:textSize="14sp"
+                android:textColor="#B5B5B5"
+                android:textStyle="bold"
+                />
+
+            <EditText
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edittext_phone"
+                android:background="@drawable/edittext_background_square"
+                android:layout_marginLeft="40dp"
+                android:maxLines="1"
+                android:maxLength="11"
+                android:textSize="13sp"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="60dp"
+            android:gravity="center_vertical"
+            android:id="@+id/groupname_layout"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/peoplesize_layout"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_groupname"
+                android:layout_marginRight="17dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="团名"
+                android:textSize="14sp"
+                android:textColor="#B5B5B5"
+                android:textStyle="bold"
+                />
+
+            <EditText
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edittext_groupName"
+                android:background="@drawable/edittext_background_square"
+                android:layout_marginLeft="40dp"
+                android:maxLines="1"
+                android:textSize="12sp"
+                android:maxLength="10"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="65dp"
+            android:gravity="center_vertical"
+            android:id="@+id/location_layout"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/sponsor_layout"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_locate"
+                android:layout_marginRight="20dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="球场"
+                android:textSize="14sp"
+                android:textColor="#B5B5B5"
+                android:textStyle="bold"
+                android:layout_marginLeft="3dp"
+                />
+
+            <EditText
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edittext_location"
+                android:background="@drawable/edittext_background_square"
+                android:layout_marginLeft="40dp"
+                android:maxLines="2"
+                android:textSize="13sp"
+                android:imeOptions="actionDone"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_launchAppointment"
+            android:layout_width="170dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/location_layout"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_colorful"
+            android:text="COME ON !"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="50dp"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

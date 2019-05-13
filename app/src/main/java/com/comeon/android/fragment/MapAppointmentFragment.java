@@ -1,23 +1,15 @@
 package com.comeon.android.fragment;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.CoordType;
@@ -33,32 +25,24 @@ import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 import com.comeon.android.R;
 import com.comeon.android.util.LogUtil;
-import com.comeon.android.util.MyApplication;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 地图组团的碎片
  */
 public class MapAppointmentFragment extends BaseFragment {
 
+    public static final int MAP_PERMISSION_REQUEST_CODE = 1;
+    private static final String TAG = "MapAppointmentFragment";
+    private static boolean isFirst = true;
+    public LocationClient mLocationClient;
     MapView bMapView;
     BaiduMap bMap;
     UiSettings bMapUISettings;
-
-    public LocationClient mLocationClient;
-
-    public static final int MAP_PERMISSION_REQUEST_CODE = 1;
-
-    private static final String TAG = "MapAppointmentFragment";
-
-    private static boolean isFirst = true;
-
     private MapStatus last_status;
 
     @Override
@@ -75,7 +59,7 @@ public class MapAppointmentFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //加载个性化地图文件
         setMapCustomFile(getActivity(), "custom_map_config.json");
-        View view=inflater.inflate(R.layout.fragment_map_appointment, container, false);
+        View view = inflater.inflate(R.layout.fragment_map_appointment, container, false);
         //填充布局
         bMapView = view.findViewById(R.id.bmapView);
         //设置百度地图logo的位置
@@ -92,10 +76,10 @@ public class MapAppointmentFragment extends BaseFragment {
 
         mLocationClient = new LocationClient(this.getActivity());
         initLocationSettings();
-        MyLocationListener myLocatioListener=new MyLocationListener();
+        MyLocationListener myLocatioListener = new MyLocationListener();
         mLocationClient.registerLocationListener(myLocatioListener);
         mLocationClient.start();
-        LogUtil.d(TAG,"地图管理开启情况："+mLocationClient.isStarted());
+        LogUtil.d(TAG, "地图管理开启情况：" + mLocationClient.isStarted());
 
         bMapUISettings = bMap.getUiSettings();
         //关闭指南针
@@ -223,6 +207,7 @@ public class MapAppointmentFragment extends BaseFragment {
 
     /**
      * 将地图焦点放置与location
+     *
      * @param location  位置装载器（经纬度）
      * @param zoomValue 放大缩小的比例尺值
      */

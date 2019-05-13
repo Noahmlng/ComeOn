@@ -14,6 +14,8 @@ import org.litepal.LitePal;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,8 +30,8 @@ public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
     public ArrayList<AppointmentOrder> getAllOrders() {
         ArrayList<AppointmentOrder> orders = (ArrayList<AppointmentOrder>) LitePal.findAll(AppointmentOrder.class);
         for (int i=0; i<orders.size(); i++){
-            AppointmentOrder order=loadOrder(orders.get(i));
-            orders.set(i, order);
+            AppointmentOrder loadedOrder=loadOrder(orders.get(i));
+            orders.set(i, loadedOrder);
         }
         Utilities.printAllColumns(AppointmentOrder.class);
         return orders;
@@ -41,6 +43,7 @@ public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
         order=loadOrder(order);
         return order;
     }
+
 
     /**
      * 通过id获取特定的order
@@ -64,13 +67,13 @@ public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
         try {
             Cursor cursor = LitePal.findBySQL("select * from AppointmentOrder where id = "+order.getId());
             while (cursor.moveToNext()) {
-                SportsType sportsType = LitePal.find(SportsType.class, cursor.getInt(cursor.getColumnIndex("sportstype_id")));
+                SportsType sportsType = LitePal.find(SportsType.class, cursor.getLong(cursor.getColumnIndex("sportstype_id")));
                 order.setOrderSportsType(sportsType);
 
-                UserInfo sponsor = LitePal.find(UserInfo.class, cursor.getInt(cursor.getColumnIndex("userinfo_id")));
+                UserInfo sponsor = LitePal.find(UserInfo.class, cursor.getLong(cursor.getColumnIndex("userinfo_id")));
                 order.setOrderSponsor(sponsor);
 
-                StadiumInfo stadium = LitePal.find(StadiumInfo.class, cursor.getInt(cursor.getColumnIndex("stadiuminfo_id")));
+                StadiumInfo stadium = LitePal.find(StadiumInfo.class, cursor.getLong(cursor.getColumnIndex("stadiuminfo_id")));
                 order.setOrderStadium(stadium);
 
                 order.setOrderParticipants(getAllParticipantsByOrderId(order.getId()));
@@ -79,5 +82,16 @@ public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
             LogUtil.e(TAG, ex.getMessage());
         }
         return order;
+    }
+
+
+    @Override
+    public AppointmentOrder insertNewOrder(AppointmentOrder newOrder) {
+        newOrder.setOrderSponsor(LitePal.find(UserInfo.class, newOrder.getOrderSponsor().getId()));
+        newOrder.setOrderSportsType(LitePal.find(SportsType.class, newOrder.getOrderSportsType().getId()));
+        newOrder.setOrderLaunchTime(new Date(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH)+1,Calendar.getInstance().get(Calendar.DATE),Calendar.getInstance().get(Calendar.HOUR),Calendar.getInstance().get(Calendar.MINUTE),Calendar.getInstance().get(Calendar.SECOND)));
+        newOrder.setOrderStatus(0);
+        newOrder.save();
+        return newOrder;
     }
 }

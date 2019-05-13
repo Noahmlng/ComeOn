@@ -16,5 +16,17 @@ public interface AppointmentOrderDao {
      */
     ArrayList<AppointmentOrder> getAllOrders();
 
+    /**
+     * 根据订单id获取特定的order对象
+     * @param orderId
+     * @return  赋好了sportsType、StadiumInfo、Sponsor的对象
+     */
     AppointmentOrder getSpecificOrderById(long orderId);
+
+    /**
+     * 新增订单
+     * @param newOrder
+     * @return  新增订单对象
+     */
+    AppointmentOrder insertNewOrder(AppointmentOrder newOrder);
 }

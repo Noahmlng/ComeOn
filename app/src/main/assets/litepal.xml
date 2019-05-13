@@ -37,6 +37,7 @@
         <mapping class="com.comeon.android.db.UserLoginLog"/>
         <mapping class="com.comeon.android.db.Friends"/>
         <mapping class="com.comeon.android.db.Message"/>
+        <mapping class="com.comeon.android.db.Category"/>
         <mapping class="com.comeon.android.db.SportsType"/>
         <mapping class="com.comeon.android.db.StadiumInfo"/>
         <mapping class="com.comeon.android.db.AppointmentOrder"/>

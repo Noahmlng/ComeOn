@@ -12,7 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.comeon.android.db.AppointmentOrder;
@@ -34,8 +36,7 @@ public class InfoDisplayActivity extends AppCompatActivity implements View.OnCli
     ViewPager viewPager;
     ImageButton btn_goBack;
     ImageButton btn_share;
-    ImageButton btn_favor;
-    private int btn_favorClickCount=0;
+    RadioButton btn_favor;
 
     //设置适配器
     private MyPageAdapter mAdapter;
@@ -86,12 +87,22 @@ public class InfoDisplayActivity extends AppCompatActivity implements View.OnCli
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         btn_goBack = (ImageButton) findViewById(R.id.btn_goback);
         btn_share = (ImageButton) findViewById(R.id.btn_share);
-        btn_favor = (ImageButton) findViewById(R.id.btn_favor);
+        btn_favor = (RadioButton) findViewById(R.id.btn_favor);
+        btn_favor.setButtonDrawable(R.mipmap.ic_favor);
 
         //绑定点击事件
         btn_goBack.setOnClickListener(this);
         btn_share.setOnClickListener(this);
-        btn_favor.setOnClickListener(this);
+        btn_favor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    btn_favor.setButtonDrawable(R.mipmap.ic_favor_checked);
+                }else{
+                    btn_favor.setButtonDrawable(R.mipmap.ic_favor);
+                }
+            }
+        });
     }
 
     @Override
@@ -104,16 +115,6 @@ public class InfoDisplayActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.btn_share:
                 Toast.makeText(this, "暂不支持分享功能", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.btn_favor:
-                if (btn_favorClickCount==0){
-                    Toast.makeText(this, "已加入收藏", Toast.LENGTH_SHORT).show();
-                    btn_favorClickCount++;
-                }else if(btn_favorClickCount==1){
-                    btn_favor.setImageResource(R.mipmap.ic_favor);
-                    Toast.makeText(this, "已取消收藏", Toast.LENGTH_SHORT).show();
-                    btn_favorClickCount=0;
-                }
                 break;
         }
     }

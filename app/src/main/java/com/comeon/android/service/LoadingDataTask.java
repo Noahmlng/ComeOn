@@ -1,5 +1,6 @@
 package com.comeon.android.service;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.comeon.android.R;
 import com.comeon.android.db.AppointmentOrder;
@@ -155,7 +156,7 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             user1.setAcceptedDistance(5000f);
             user1.setDescription("Nothing to specifically to describe");
             user1.setUserBirthday(new Date(2000, 11, 15));
-            user1.setHeadIcon(Utilities.decodeResource(R.drawable.init_portrait));
+            user1.setHeadIcon(Utilities.decodeResource(R.drawable.head_icon_sample2));
             user1.setUserNickName("Noah");
             user1.setUserPhone("17620388542");
             user1.setLastModifiedTime(new Date());
@@ -177,7 +178,7 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             UserInfo user2 = new UserInfo();
             user2.setUserLoginId(ul2.getId());
             user2.setUserBirthday(new Date(1980, 12, 5));
-            user2.setHeadIcon(Utilities.decodeResource(R.drawable.init_portrait));
+            user2.setHeadIcon(Utilities.decodeResource(R.drawable.head_icon_sample1));
             user2.setUserPhone("17988554477");
             user2.setLastModifiedTime(new Date());
             user2.setRegisterTime(new Date(2017,4,1));
@@ -192,7 +193,7 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             UserInfo user3 = new UserInfo();
             user3.setUserLoginId(ul3.getId());
             user3.setUserBirthday(new Date(1940, 2, 8));
-            user3.setHeadIcon(Utilities.decodeResource(R.drawable.init_portrait));
+            user3.setHeadIcon(Utilities.decodeResource(R.drawable.head_icon_sample3));
             user3.setUserPhone("13688975564");
             user3.setUserNickName("Mike");
             user3.setLastModifiedTime(new Date());
@@ -215,6 +216,7 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             stadium1.setStreet("建设路");
             stadium1.setStreetNumber("02号");
             SportsType type=sportsTypeDao.findSportsTypeByName("足球");
+            LogUtil.d(TAG, type.getTypeName());
             stadium1.setSportsType(type);
             stadium1.save();
 
@@ -409,6 +411,7 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             order1.setOrderName("热血足球团");
             order1.setOrderSponsor(user1);
             order1.setOrderStatus(0);
+            order1.setOrderContact(order1.getOrderSponsor().getUserPhone());
             order1.setOrderSportsType(sportsTypeDao.findSportsTypeByName("足球"));
             order1.save();
 
@@ -435,6 +438,7 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             order2.setOrderName("NBA级别篮球局");
             order2.setOrderSponsor(user2);
             order2.setOrderStatus(0);
+            order2.setOrderContact(order2.getOrderSponsor().getUserPhone());
             type=sportsTypeDao.findSportsTypeByName("篮球");
             order2.setOrderSportsType(type);
             order2.save();
@@ -461,6 +465,7 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             order3.setOrderName("打个羽毛球？");
             order3.setOrderSponsor(user3);
             order3.setOrderStatus(1);
+            order3.setOrderContact(order3.getOrderSponsor().getUserPhone());
             type=sportsTypeDao.findSportsTypeByName("羽毛球");
             order3.setOrderSportsType(type);
             order3.setOrderLocation("广东省东莞市市辖区建设路一号球场");

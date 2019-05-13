@@ -15,7 +15,6 @@ import com.comeon.android.util.MyApplication;
 import com.comeon.android.util.Utilities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

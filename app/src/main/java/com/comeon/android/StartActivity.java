@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -26,6 +27,7 @@ import com.comeon.android.business_logic.UserBusiness;
 import com.comeon.android.business_logic.UserBusinessInterface;
 import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.db.AttendanceRecord;
+import com.comeon.android.db.Category;
 import com.comeon.android.db.Friends;
 import com.comeon.android.db.Message;
 import com.comeon.android.db.SportsType;
@@ -92,6 +94,13 @@ public class StartActivity extends Activity_Parent implements View.OnClickListen
         Intent loadingService = new Intent(StartActivity.this, LoadingService.class);
         startService(loadingService);
         bindService(loadingService, connection, BIND_AUTO_CREATE);
+
+        LogUtil.d(TAG, "当前订单数："+LitePal.count(AppointmentOrder.class));
+
+        Cursor cursor=LitePal.findBySQL("select sportstype_id from AppointmentOrder");
+        while(cursor.moveToNext()){
+            LogUtil.d(TAG, "运动类型id为："+cursor.getLong(0));
+        }
         if (ContextCompat.checkSelfPermission(StartActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
@@ -179,19 +188,37 @@ public class StartActivity extends Activity_Parent implements View.OnClickListen
      * 加载运动类型初始数据
      */
     private void loadSportsType() {
+        Category sports=new Category("球类");
+        sports.save();
+
+        Category exercise=new Category("健身");
+        exercise.save();
+
+        Category aerobic=new Category("有氧运动");
+        aerobic.save();
+
+        Category anaerobic=new Category("无氧运动");
+        anaerobic.save();
+
+        Category entertainment=new Category("娱乐");
+        entertainment.save();
+
+        Category relax=new Category("柔和");
+        relax.save();
+
         List<SportsType> sportsTypes = new ArrayList<SportsType>();
-        sportsTypes.add(new SportsType("足球"));
-        sportsTypes.add(new SportsType("篮球"));
-        sportsTypes.add(new SportsType("排球"));
-        sportsTypes.add(new SportsType("手球"));
-        sportsTypes.add(new SportsType("棒球"));
-        sportsTypes.add(new SportsType("乒乓球"));
-        sportsTypes.add(new SportsType("羽毛球"));
-        sportsTypes.add(new SportsType("网球"));
-        sportsTypes.add(new SportsType("高尔夫球"));
-        sportsTypes.add(new SportsType("跑步"));
-        sportsTypes.add(new SportsType("健身"));
-        sportsTypes.add(new SportsType("瑜伽"));
+        sportsTypes.add(new SportsType("足球",sports));
+        sportsTypes.add(new SportsType("篮球",sports));
+        sportsTypes.add(new SportsType("排球",sports));
+        sportsTypes.add(new SportsType("手球",sports));
+        sportsTypes.add(new SportsType("棒球",sports));
+        sportsTypes.add(new SportsType("乒乓球",sports));
+        sportsTypes.add(new SportsType("羽毛球",sports));
+        sportsTypes.add(new SportsType("网球",sports));
+        sportsTypes.add(new SportsType("高尔夫球",sports));
+        sportsTypes.add(new SportsType("跑步",aerobic));
+        sportsTypes.add(new SportsType("健身",exercise));
+        sportsTypes.add(new SportsType("瑜伽",relax));
         LitePal.saveAll(sportsTypes);
     }
 

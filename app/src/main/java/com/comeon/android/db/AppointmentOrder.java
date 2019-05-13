@@ -26,8 +26,10 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
     private int orderStatus;
     private SportsType orderSportsType;
     private String orderLocation;
+    private String orderContact;
 
-    public AppointmentOrder(){}
+    public AppointmentOrder() {
+    }
 
     protected AppointmentOrder(Parcel in) {
         orderName = in.readString();
@@ -36,6 +38,7 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
         orderParticipants = in.createTypedArrayList(UserInfo.CREATOR);
         orderStatus = in.readInt();
         orderLocation = in.readString();
+        orderContact = in.readString();
     }
 
     @Override
@@ -46,6 +49,7 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
         dest.writeTypedList(orderParticipants);
         dest.writeInt(orderStatus);
         dest.writeString(orderLocation);
+        dest.writeString(orderContact);
     }
 
     @Override
@@ -151,5 +155,13 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
 
     public void setOrderLocation(String orderLocation) {
         this.orderLocation = orderLocation;
+    }
+
+    public String getOrderContact() {
+        return orderContact;
+    }
+
+    public void setOrderContact(String orderContact) {
+        this.orderContact = orderContact;
     }
 }

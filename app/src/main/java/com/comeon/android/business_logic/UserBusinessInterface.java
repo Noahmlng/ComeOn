@@ -1,7 +1,10 @@
 package com.comeon.android.business_logic;
 
+import com.comeon.android.db.SportsType;
 import com.comeon.android.db.UserInfo;
 import com.comeon.android.db.UserLogin;
+
+import java.util.List;
 
 /**
  * 用户相关业务接口
@@ -30,4 +33,6 @@ public interface UserBusinessInterface {
      * @return  登录用户 OR null
      */
     UserInfo registration(String phone, String password);
+
+
 }

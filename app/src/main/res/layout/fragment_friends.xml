@@ -56,7 +56,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="请输入关键字"
             android:maxLines="1"
             android:textSize="13sp" />
     </LinearLayout>

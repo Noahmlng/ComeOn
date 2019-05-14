@@ -15,5 +15,6 @@ public interface StadiumInfoDao {
      */
     List<StadiumInfo> getAllStadiums();
 
+    List<StadiumInfo> selectStadiumsByName(String stadiumName);
 
 }

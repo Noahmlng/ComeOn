@@ -29,4 +29,5 @@ public interface AppointmentOrderDao {
      * @return  新增订单对象
      */
     AppointmentOrder insertNewOrder(AppointmentOrder newOrder);
+
 }

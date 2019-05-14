@@ -62,6 +62,7 @@ public class ChatActivity extends Activity_Parent implements View.OnClickListene
         txt_friendName.setText(LitePal.find(UserInfo.class,friendId).getUserNickName());
 
         editText_messageContent=(EditText)findViewById(R.id.txt_sendContent);
+        editText_messageContent.setBackgroundResource(R.drawable.search_edittext);
 
         btn_goback=(ImageButton)findViewById(R.id.btn_goback);
         btn_speak=(ImageButton)findViewById(R.id.btn_speak);

@@ -9,5 +9,16 @@ import java.util.List;
  */
 public interface StadiumsBusinessLogicInterface {
 
+    /**
+     * 获取所有的场馆对象
+     * @return
+     */
     List<StadiumInfo> getAllStadiums();
+
+    /**
+     * 根据场馆的名字碎片获取场馆集合
+     * @param stadiumName
+     * @return
+     */
+    List<StadiumInfo> getStadiumsByName(String stadiumName);
 }

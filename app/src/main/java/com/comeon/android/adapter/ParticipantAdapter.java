@@ -23,22 +23,22 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     private List<UserInfo> participants;
     private UserInfo loginUser;
 
-    public ParticipantAdapter(List<UserInfo> participants, UserInfo loginUser){
-        this.participants=participants;
-        this.loginUser=loginUser;
+    public ParticipantAdapter(List<UserInfo> participants, UserInfo loginUser) {
+        this.participants = participants;
+        this.loginUser = loginUser;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.participant_item, viewGroup, false);
-        ViewHolder viewHolder=new ViewHolder(itemView);
+        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.participant_item, viewGroup, false);
+        ViewHolder viewHolder = new ViewHolder(itemView);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        final UserInfo participant=participants.get(i);
+        final UserInfo participant = participants.get(i);
 
         viewHolder.txt_participantName.setText(participant.getUserNickName());
         viewHolder.btn_sendMessage.setOnClickListener(new View.OnClickListener() {
@@ -48,8 +48,12 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
                                 /*
                 排除和自己聊天的情况
                  */
-                if(participant.getId()==loginUser.getId()){
-                    Toast.makeText(MyApplication.getContext(), "无法和自己发起会话",Toast.LENGTH_SHORT).show();
+                if (loginUser == null) {
+                    Toast.makeText(MyApplication.getContext(), "游客无法发起会话", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (participant.getId() == loginUser.getId()) {
+                    Toast.makeText(MyApplication.getContext(), "无法和自己发起会话", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 ChatActivity.enterChatPage(MyApplication.getContext(), participant.getId());
@@ -59,18 +63,21 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
     @Override
     public int getItemCount() {
-        return participants.size();
+        if (participants != null) {
+            return participants.size();
+        }
+        return 0;
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView txt_participantName;
         ImageButton btn_sendMessage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txt_participantName=(TextView)itemView.findViewById(R.id.txt_participantName);
-            btn_sendMessage=(ImageButton)itemView.findViewById(R.id.btn_sendMessage);
+            txt_participantName = (TextView) itemView.findViewById(R.id.txt_participantName);
+            btn_sendMessage = (ImageButton) itemView.findViewById(R.id.btn_sendMessage);
         }
     }
 }

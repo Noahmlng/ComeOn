@@ -44,4 +44,9 @@ public class StadiumInfoDaoImpl implements StadiumInfoDao {
         LogUtil.e(TAG, "数组共有："+stadiumInfoList.size()+"条场馆数据");
         return stadiumInfoList;
     }
+
+    @Override
+    public List<StadiumInfo> selectStadiumsByName(String stadiumName) {
+        return LitePal.where("stadiumName like %?%",stadiumName).find(StadiumInfo.class);
+    }
 }

@@ -115,6 +115,10 @@ public class GroupDetailsFragment extends BaseFragment implements View.OnClickLi
                 /*
                 排除和自己聊天的情况
                  */
+                if (loginUser==null){
+                    Toast.makeText(MyApplication.getContext(), "游客无法发起会话",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(group.getOrderSponsor().getId()==loginUser.getId()){
                     Toast.makeText(MyApplication.getContext(), "无法和自己发起会话",Toast.LENGTH_SHORT).show();
                     return;

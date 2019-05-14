@@ -24,4 +24,10 @@ public class StadiumsBusiness implements StadiumsBusinessLogicInterface {
     public List<StadiumInfo> getAllStadiums() {
         return stadiumInfoDao.getAllStadiums();
     }
+
+    @Override
+    public List<StadiumInfo> getStadiumsByName(String stadiumName) {
+        List<StadiumInfo> stadiumInfoList=stadiumInfoDao.getAllStadiums();
+        return null;
+    }
 }

@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +69,22 @@ public class GroupFragment extends BaseFragment {
         viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         initTab();
         search_text = (EditText) view.findViewById(R.id.search_text);
+        search_text.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //输入结束后的动态模糊查询
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
         //        btn_selectFilter=(FloatingActionButton)view.findViewById(R.id.btn_selectFilter);
         //        btn_selectFilter.setOnClickListener(new View.OnClickListener() {
         //            @Override
@@ -74,8 +92,6 @@ public class GroupFragment extends BaseFragment {
         //                Toast.makeText(MyApplication.getContext(), "你点击了按钮",Toast.LENGTH_SHORT).show();
         //            }
         //        });
-
-
     }
 
     /**

@@ -90,7 +90,10 @@ public class StadiumsAdapter extends RecyclerView.Adapter<StadiumsAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return stadiums.size();
+        if(stadiums!=null){
+            return stadiums.size();
+        }
+        return 0;
     }
 
     /**

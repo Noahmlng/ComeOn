@@ -87,7 +87,10 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
 
     @Override
     public int getItemCount() {
-        return orders.size();
+        if(orders!=null){
+            return orders.size();
+        }
+        return 0;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

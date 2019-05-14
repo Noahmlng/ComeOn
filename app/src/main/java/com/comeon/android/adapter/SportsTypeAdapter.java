@@ -57,7 +57,10 @@ public class SportsTypeAdapter extends RecyclerView.Adapter<SportsTypeAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return sportsTypes.size();
+        if(sportsTypes!=null){
+            return sportsTypes.size();
+        }
+        return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

@@ -452,16 +452,16 @@ public class RegistrationActivity extends Activity_Parent implements View.OnClic
                         if(Build.VERSION.SDK_INT >= 19){
                             //4.4以上的系统使用这个方法处理图片
                             String imagePath=settingHeadIconFragment.handleImageOnKitKat(data);
-//                            Bitmap bitmap=BitmapFactory.decodeFile(imagePath);
-//                            settingHeadIconFragment.head_icon.setImageBitmap(bitmap);
-//                            imgBytes=Utilities.translateBitmapToBytes(BitmapFactory.decodeFile(imagePath));
+                            Bitmap bitmap=BitmapFactory.decodeFile(imagePath);
+                            settingHeadIconFragment.head_icon.setImageBitmap(bitmap);
+                            imgBytes=Utilities.translateBitmapToBytes(BitmapFactory.decodeFile(imagePath));
                             Glide.with(this).load(imagePath).into(settingHeadIconFragment.head_icon);
                         }else{
                             //4.4以下的系统使用这个方法处理图片
                             String imagePath=settingHeadIconFragment.handleImageBeforeKitKat(data);
-//                            Bitmap bitmap=BitmapFactory.decodeFile(imagePath);
-//                            settingHeadIconFragment.head_icon.setImageBitmap(bitmap);
-//                            imgBytes=Utilities.translateBitmapToBytes(BitmapFactory.decodeFile(imagePath));
+                            Bitmap bitmap=BitmapFactory.decodeFile(imagePath);
+                            settingHeadIconFragment.head_icon.setImageBitmap(bitmap);
+                            imgBytes=Utilities.translateBitmapToBytes(BitmapFactory.decodeFile(imagePath));
                             Glide.with(this).load(imagePath).into(settingHeadIconFragment.head_icon);
                         }
                     }

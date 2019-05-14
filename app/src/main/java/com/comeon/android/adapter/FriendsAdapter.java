@@ -63,14 +63,19 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         UserInfo friend =friends.get(i);
-        viewHolder.head_icon.setImageBitmap(Utilities.translateBytes(friend.getHeadIcon()));
-        viewHolder.txt_lastMessage.setText(userBusiness.getLastMessageContent(loginUser.getId(), friend.getId()));
-        viewHolder.txt_friendName.setText(friend.getUserNickName());
+        if(friend!=null){
+            viewHolder.head_icon.setImageBitmap(Utilities.translateBytes(friend.getHeadIcon()));
+            viewHolder.txt_lastMessage.setText(userBusiness.getLastMessageContent(loginUser.getId(), friend.getId()));
+            viewHolder.txt_friendName.setText(friend.getUserNickName());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return friends.size();
+        if (friends!=null){
+            return friends.size();
+        }
+        return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

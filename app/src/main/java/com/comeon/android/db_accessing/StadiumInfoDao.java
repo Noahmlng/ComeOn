@@ -15,6 +15,10 @@ public interface StadiumInfoDao {
      */
     List<StadiumInfo> getAllStadiums();
 
-    List<StadiumInfo> selectStadiumsByName(String stadiumName);
-
+    /**
+     * 根据条件查询场馆信息
+     * @param condition  装载条件的场馆对象
+     * @return  符合条件的场馆信息
+     */
+    List<StadiumInfo> getStadiumsWithCondition(StadiumInfo condition);
 }

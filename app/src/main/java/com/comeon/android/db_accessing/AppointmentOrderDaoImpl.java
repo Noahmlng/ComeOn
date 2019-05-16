@@ -28,7 +28,7 @@ public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
 
     @Override
     public ArrayList<AppointmentOrder> getAllOrders() {
-        ArrayList<AppointmentOrder> orders = (ArrayList<AppointmentOrder>) LitePal.findAll(AppointmentOrder.class);
+        ArrayList<AppointmentOrder> orders = (ArrayList<AppointmentOrder>) LitePal.order("orderLaunchTime").find(AppointmentOrder.class);
         for (int i=0; i<orders.size(); i++){
             AppointmentOrder loadedOrder=loadOrder(orders.get(i));
             orders.set(i, loadedOrder);
@@ -51,6 +51,7 @@ public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
      * @param orderId
      * @return
      */
+    @Override
     public List<UserInfo> getAllParticipantsByOrderId(long orderId) {
         List<AttendanceRecord> records=attendanceRecordDao.getParticipantsByOrderId(orderId);
         LogUtil.d(TAG,"参与当前订单的用户个数有："+records.size());
@@ -64,6 +65,76 @@ public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
         return participants;
     }
 
+
+
+    @Override
+    public AppointmentOrder insertNewOrder(AppointmentOrder newOrder) {
+        newOrder.setOrderSponsor(LitePal.find(UserInfo.class, newOrder.getOrderSponsor().getId()));
+        newOrder.setOrderSportsType(LitePal.find(SportsType.class, newOrder.getOrderSportsType().getId()));
+        newOrder.setOrderLaunchTime(new Date(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH)+1,Calendar.getInstance().get(Calendar.DATE),Calendar.getInstance().get(Calendar.HOUR),Calendar.getInstance().get(Calendar.MINUTE),Calendar.getInstance().get(Calendar.SECOND)));
+        newOrder.setOrderStatus(0);
+        newOrder.save();
+        return newOrder;
+    }
+
+    @Override
+    public List<AppointmentOrder> getOrdersWithCondition(AppointmentOrder conditionObj) {
+        List<AppointmentOrder> ordersQualified=null;
+
+        /*
+            先拼接条件字符串
+         */
+        List<String> conditionValues=new ArrayList<String>();//装载条件的值
+
+        StringBuilder conditionStr=new StringBuilder("1 = 1 ");  //条件字符串
+        if(conditionObj.getOrderName()!=null){//1、根据组团名称的模糊查询
+            conditionStr.append("and orderName like ? ");
+            conditionValues.add("%"+conditionObj.getOrderName()+"%");
+        }
+
+//        if (conditionObj.getOrderSponsor()!=null){
+//            conditionStr.append("and orderSponsor_id in (?)");
+//            conditionValues.add("%"+conditionObj.getOrderName()+"%");
+//        }
+
+        if(conditionObj.getOrderSportsType()!=null){//2、根据运动类型进行查询
+            conditionStr.append("and sportsType_id = ? ");
+            conditionValues.add(String.valueOf(conditionObj.getOrderSportsType().getId()));
+        }
+
+        /*
+            进行查询
+         */
+        if(conditionValues.size()>0){
+            String[] conditions=new String[conditionValues.size()];
+            conditions=conditionValues.toArray(conditions);
+            switch (conditions.length){
+                case 1:
+                    ordersQualified=LitePal.where(conditionStr.toString(), conditions[0]).find(AppointmentOrder.class);
+                    break;
+                case 2:
+                    ordersQualified=LitePal.where(conditionStr.toString(), conditions[0],conditions[conditions.length-1]).find(AppointmentOrder.class);
+                    break;
+            }
+            /*
+                处理从数据库提取的数据
+             */
+            for (int i=0; i<ordersQualified.size(); i++){
+                AppointmentOrder loadedOrder=loadOrder(ordersQualified.get(i));
+                ordersQualified.set(i, loadedOrder);
+            }
+        }else{
+            ordersQualified=getAllOrders();
+        }
+        return ordersQualified;
+    }
+
+
+    /**
+     * 根据面向对象的思想加载一个数据库提取的订单信息
+     * @param orderFromDB  从数据体局的订单
+     * @return  加载后的订单信息
+     */
     public AppointmentOrder loadOrder(AppointmentOrder orderFromDB){
         AppointmentOrder order=orderFromDB;
         try {
@@ -78,22 +149,11 @@ public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
                 StadiumInfo stadium = LitePal.find(StadiumInfo.class, cursor.getLong(cursor.getColumnIndex("stadiuminfo_id")));
                 order.setOrderStadium(stadium);
 
-                order.setOrderParticipants(getAllParticipantsByOrderId(order.getId()));
+                //                order.setOrderParticipants(getAllParticipantsByOrderId(order.getId()));   因为存在动态操作，所以不在此处进行加载
             }
         } catch (Exception ex) {
             LogUtil.e(TAG, ex.getMessage());
         }
         return order;
-    }
-
-
-    @Override
-    public AppointmentOrder insertNewOrder(AppointmentOrder newOrder) {
-        newOrder.setOrderSponsor(LitePal.find(UserInfo.class, newOrder.getOrderSponsor().getId()));
-        newOrder.setOrderSportsType(LitePal.find(SportsType.class, newOrder.getOrderSportsType().getId()));
-        newOrder.setOrderLaunchTime(new Date(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH)+1,Calendar.getInstance().get(Calendar.DATE),Calendar.getInstance().get(Calendar.HOUR),Calendar.getInstance().get(Calendar.MINUTE),Calendar.getInstance().get(Calendar.SECOND)));
-        newOrder.setOrderStatus(0);
-        newOrder.save();
-        return newOrder;
     }
 }

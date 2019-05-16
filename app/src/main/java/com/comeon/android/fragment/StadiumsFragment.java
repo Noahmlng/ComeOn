@@ -27,6 +27,14 @@ public class StadiumsFragment extends BaseFragment {
     private List<StadiumInfo> stadiumInfoList;
     private StadiumInfo selectFilter;
 
+    public StadiumInfo getSelectFilter() {
+        return selectFilter;
+    }
+
+    public void setSelectFilter(StadiumInfo selectFilter) {
+        this.selectFilter = selectFilter;
+    }
+
     @Override
     protected void initControls(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -46,8 +54,25 @@ public class StadiumsFragment extends BaseFragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //刷新操作
-                reLoadRecyclerView();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                    /*
+                        模拟网络提取数据制造延迟
+                     */
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException ex) {
+                            LogUtil.e(TAG, ex.getMessage());
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                reloadRecyclerView();
+                            }
+                        });
+                    }
+                }).start();
             }
         });
     }
@@ -64,42 +89,33 @@ public class StadiumsFragment extends BaseFragment {
         /*
             没有筛选情况的时候调用加载全部场馆的方法
          */
-        if (selectFilter == null) {
-            this.stadiumInfoList = stadiumsBusinessLogic.getAllStadiums();
+        if (stadiumInfoList != null) {
+            if (selectFilter == null) {
+                this.stadiumInfoList.clear();
+                this.stadiumInfoList.addAll(stadiumsBusinessLogic.getAllStadiums());
+            } else {
+                this.stadiumInfoList.clear();
+                List<StadiumInfo> qualifiedStadiums = stadiumsBusinessLogic.getStadiumsWithConditions(selectFilter);
+                if (qualifiedStadiums != null) {
+                    LogUtil.d(TAG, "有"+qualifiedStadiums.size()+"个符合条件的场馆");
+                    this.stadiumInfoList.addAll(qualifiedStadiums);
+                }
+            }
         }
+
     }
 
     /**
      * 向Recyclerview中重新填充数据
      */
-    private void reLoadRecyclerView() {
+    public void reloadRecyclerView() {
+        //重新获取数据
+        loadData();
         if (stadiumInfoList != null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    /*
-                        模拟网络提取数据制造延迟
-                     */
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException ex) {
-                        LogUtil.e(TAG, ex.getMessage());
-                    }
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            //重新获取数据
-                            loadData();
-                            //通知数据发生了改变，重新加载
-                            stadiumsAdapter.notifyDataSetChanged();
-                            //表示刷新结束，并隐藏进度条
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
-                    });
-                }
-            }).start();
-        } else {
-            LogUtil.e(TAG, "传入的场馆集合为空");
+            //通知数据发生了改变，重新加载
+            stadiumsAdapter.notifyDataSetChanged();
+            //表示刷新结束，并隐藏进度条
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 }

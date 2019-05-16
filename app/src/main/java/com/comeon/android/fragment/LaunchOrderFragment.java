@@ -7,6 +7,8 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.comeon.android.R;
+import com.comeon.android.db.Category;
+import com.comeon.android.util.LogUtil;
 
 import java.util.ArrayList;
 
@@ -18,19 +20,19 @@ public class LaunchOrderFragment extends BaseFragment {
 
     //碎片中管理碎片则使用getChildFragmentManager()
     FragmentManager fragmentManager;
-    SportsTypeChoiceFragment sportsTypeChoiceFragment;
+    SportsTypeChoiceFragment sportsTypeChoiceFragment=new SportsTypeChoiceFragment();
+    CategoryChoiceFragment categoryChoiceFragment=new CategoryChoiceFragment();
     ViewPager viewPager;
     //设置适配器
     private MyPageAdapter mAdapter;
     private ArrayList<Fragment> mFragments;
 
     public void addFragment(long categoryId) {
+        LogUtil.d(TAG, "当前有："+mFragments.size()+"个碎片");
+        sportsTypeChoiceFragment.refresh(categoryId);
         if (mFragments.size() == 1) {
-            sportsTypeChoiceFragment = new SportsTypeChoiceFragment(categoryId);
             mFragments.add(sportsTypeChoiceFragment);
             mAdapter.notifyDataSetChanged();
-        } else {
-            sportsTypeChoiceFragment.refresh(categoryId);
         }
         viewPager.setCurrentItem(1);
     }
@@ -44,13 +46,12 @@ public class LaunchOrderFragment extends BaseFragment {
     protected void initControls(View view) {
         viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         mFragments = new ArrayList<Fragment>();
-        mFragments.add(new CategoryChoiceFragment());
+        mFragments.add(categoryChoiceFragment);
 
         fragmentManager = getChildFragmentManager();
         mAdapter = new MyPageAdapter(fragmentManager);
         viewPager.setAdapter(mAdapter);
     }
-
 
     /**
      * 适配器帮助切换viewPager中的值

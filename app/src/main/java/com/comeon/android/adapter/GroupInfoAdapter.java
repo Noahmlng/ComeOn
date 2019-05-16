@@ -82,7 +82,7 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
             viewHolder.txt_groupLocation.setText(order.getOrderLocation());
         }
         viewHolder.txt_groupInfo.setText("发出" + order.getOrderSportsType().getTypeName() + "邀约\t需组队" + order.getOrderExpectedSize() + "人");
-        viewHolder.txt_sponsorName.setText(order.getOrderSponsor().getUserNickName());
+        viewHolder.txt_groupName.setText(order.getOrderName());
     }
 
     @Override
@@ -98,7 +98,7 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
             子项中的控件
          */
         CircleImageView img_headIcon;
-        TextView txt_sponsorName;
+        TextView txt_groupName;
         TextView txt_groupInfo;
         TextView txt_groupLocation;
         GradientTextButton txt_launchTime;
@@ -106,7 +106,7 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img_headIcon = (CircleImageView) itemView.findViewById(R.id.img_sponsorHeadIcon);
-            txt_sponsorName = (TextView) itemView.findViewById(R.id.txt_sponsorName);
+            txt_groupName = (TextView) itemView.findViewById(R.id.txt_groupName);
             txt_groupInfo = (TextView) itemView.findViewById(R.id.txt_groupInfo);
             txt_groupLocation = (TextView) itemView.findViewById(R.id.txt_groupLocation);
             txt_launchTime = (GradientTextButton) itemView.findViewById(R.id.txt_launchTime);

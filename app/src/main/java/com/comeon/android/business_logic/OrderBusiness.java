@@ -39,7 +39,12 @@ public class OrderBusiness implements OrderBusinessInterface {
     @Override
     public ArrayList<AppointmentOrder> getAllOrders() {
         ArrayList<AppointmentOrder> orders=appointmentOrderDao.getAllOrders();
-        return orders;
+        //进行逆序处理
+        ArrayList<AppointmentOrder> ordersDesc=new ArrayList<AppointmentOrder>();
+        for(int i=orders.size()-1; i>=0; i--){
+            ordersDesc.add(orders.get(i));
+        }
+        return ordersDesc;
     }
 
     @Override
@@ -84,15 +89,19 @@ public class OrderBusiness implements OrderBusinessInterface {
             AttendanceRecord record=new AttendanceRecord();
             record.setParticipantId(loginUser.getId());
             record.setOrderId(order.getId());
-
             attendanceRecordDao.insertNewRecord(record);
             return true;
         }
     }
 
     @Override
-    public List<UserInfo> refreshParticipantsList(AppointmentOrder order) {
+    public List<UserInfo> loadParticipantsList(AppointmentOrder order) {
         return appointmentOrderDaoImpl.getAllParticipantsByOrderId(order.getId());
+    }
+
+    @Override
+    public List<AppointmentOrder> getOrdersWithCondition(AppointmentOrder condition) {
+        return appointmentOrderDao.getOrdersWithCondition(condition);
     }
 
 

@@ -3,6 +3,7 @@ package com.comeon.android.fragment;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.comeon.android.LaunchOrderActivity;
 import com.comeon.android.R;
 import com.comeon.android.util.LogUtil;
 
@@ -18,8 +19,8 @@ public class CategoryChoiceFragment extends BaseFragment implements View.OnClick
     ImageButton btn_categoryAnaerobic;
     ImageButton btn_categoryEntertainment;
     ImageButton btn_categoryRelax;
-
     private LaunchOrderFragment launchOrderFragment;
+
 
     @Override
     protected int getContentViewId() {
@@ -28,7 +29,7 @@ public class CategoryChoiceFragment extends BaseFragment implements View.OnClick
 
     @Override
     protected void initControls(View view) {
-        launchOrderFragment = (LaunchOrderFragment) getParentFragment();
+        launchOrderFragment = (LaunchOrderFragment)getParentFragment();
         btn_categoryAerobic = (ImageButton) view.findViewById(R.id.btn_categoryAerobic);
         btn_categorySports = (ImageButton) view.findViewById(R.id.btn_categorySports);
         btn_categoryExercise = (ImageButton) view.findViewById(R.id.btn_categoryExercise);

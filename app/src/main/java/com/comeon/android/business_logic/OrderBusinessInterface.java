@@ -3,6 +3,7 @@ package com.comeon.android.business_logic;
 import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.db.SportsType;
 import com.comeon.android.db.UserInfo;
+import com.comeon.android.db_accessing.AppointmentOrderDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,5 +57,12 @@ public interface OrderBusinessInterface {
      * @param order
      * @return
      */
-    List<UserInfo> refreshParticipantsList(AppointmentOrder order);
+    List<UserInfo> loadParticipantsList(AppointmentOrder order);
+
+    /**
+     * 查询符合条件的组团邀约
+     * @param condition  带有条件的装载对象
+     * @return  符合条件的组团邀约集合
+     */
+    List<AppointmentOrder> getOrdersWithCondition(AppointmentOrder condition);
 }

@@ -25,9 +25,12 @@ import com.comeon.android.business_logic.OrderBusinessInterface;
 import com.comeon.android.controls.GradientTextButton;
 import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.db.UserInfo;
+import com.comeon.android.db_accessing.AppointmentOrderDao;
 import com.comeon.android.util.LogUtil;
 import com.comeon.android.util.MyApplication;
 import com.comeon.android.util.Utilities;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -48,6 +51,7 @@ public class GroupDetailsFragment extends BaseFragment implements View.OnClickLi
     GradientTextButton btn_joinGroup;
     ParticipantAdapter participantAdapter;
     private AppointmentOrder group;
+    List<UserInfo> participantList;
 
     private UserInfo loginUser;
     private OrderBusinessInterface orderBusiness=new OrderBusiness();
@@ -90,7 +94,10 @@ public class GroupDetailsFragment extends BaseFragment implements View.OnClickLi
         recyclerView_participants = (RecyclerView) view.findViewById(R.id.recycler_view_participants);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView_participants.setLayoutManager(linearLayoutManager);
-        participantAdapter = new ParticipantAdapter(group.getOrderParticipants(),loginUser);
+
+//        participantList=group.getOrderParticipants();  因为本页面有修改的操作，不能直接读取传入的信息，应该每次进入时都进行加载
+        participantList=orderBusiness.loadParticipantsList(group);
+        participantAdapter = new ParticipantAdapter(participantList,loginUser);
         recyclerView_participants.setAdapter(participantAdapter);
 
         //如果选择了体育场馆，则加载出体育场馆
@@ -143,8 +150,10 @@ public class GroupDetailsFragment extends BaseFragment implements View.OnClickLi
                 if (orderBusiness.participateGroup(loginUser,group)){
                     Toast.makeText(MyApplication.getContext(), "参与组团成功！",Toast.LENGTH_SHORT).show();
                     //刷新participant列表
-                    participantAdapter = new ParticipantAdapter(orderBusiness.refreshParticipantsList(group),loginUser);
-                    recyclerView_participants.setAdapter(participantAdapter);
+                    participantList.add(loginUser);
+                    participantAdapter.notifyItemChanged(participantList.size()-1);
+                    //滚动显示到最后一个参与者
+                    recyclerView_participants.scrollToPosition(participantList.size()-1);
                 }else{
                     Toast.makeText(MyApplication.getContext(), "您已参加了此订单，记得要准时哦~",Toast.LENGTH_SHORT).show();
                 }

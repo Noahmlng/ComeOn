@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.comeon.android.R;
+import com.comeon.android.db.AppointmentOrder;
+import com.comeon.android.db.StadiumInfo;
+import com.comeon.android.util.LogUtil;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -32,12 +35,16 @@ public class GroupFragment extends BaseFragment {
     EditText search_text;
     ViewPager viewPager;
     FloatingActionButton btn_selectFilter;
+    //条件装载器
+    StadiumInfo stadium_condition;
+    AppointmentOrder order_condition;
     //设置适配器
     private MyPageAdapter mAdapter;
     private ArrayList<Fragment> mFragments;
     private String[] mTitles = {"场馆", "附近邀约"};
     private StadiumsFragment stadiumsFragment = new StadiumsFragment();
     private GroupInfoFragment groupInfoFragment = new GroupInfoFragment();
+    private boolean isInStadiumFragment = true; //监控当前在哪个页面碎片
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +75,35 @@ public class GroupFragment extends BaseFragment {
         tabLayout = (SlidingTabLayout) view.findViewById(R.id.tablayout);
         viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         initTab();
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                switch (i) {
+                    case 0:
+                        isInStadiumFragment = true;
+                        search_text.setHint("请输入场馆名称");
+                        refreshContent(search_text.getText().toString().trim());//在切换碎片时，也要根据搜索框内容进行判断
+                        break;
+                    case 1:
+                        isInStadiumFragment = false;
+                        search_text.setHint("请输入邀约团名");
+                        refreshContent(search_text.getText().toString().trim());//在切换碎片时，也要根据搜索框内容进行判断
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
         search_text = (EditText) view.findViewById(R.id.search_text);
         search_text.addTextChangedListener(new TextWatcher() {
             @Override
@@ -77,12 +113,13 @@ public class GroupFragment extends BaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //输入结束后的动态模糊查询
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                refreshContent(s.toString().trim());
             }
+
         });
 
         //        btn_selectFilter=(FloatingActionButton)view.findViewById(R.id.btn_selectFilter);
@@ -110,16 +147,41 @@ public class GroupFragment extends BaseFragment {
     }
 
     /**
-     * 判断当前页面是哪一页
-     *
-     * @return true：场馆页；false：附近邀约页
+     * 刷新场馆、订单的内容
      */
-    private boolean getCurrentFragment() {
-        Fragment currentFragment = fragmentManager.findFragmentById(R.id.view_pager);
-        if (currentFragment instanceof StadiumsFragment) {
-            return true;
+    public void refreshContent(String inputText) {
+        //输入结束后的动态模糊查询
+                /*
+                    先判断当前的碎片，再执行相应的操作
+                 */
+        if (isInStadiumFragment) {
+            LogUtil.d(TAG, "当前文字为：" + inputText + "；长度为：" + inputText.length());
+            if (inputText.length() > 0) {
+                LogUtil.d(TAG, "当前在场馆碎片进行查询");
+                //场馆页操作
+                stadium_condition = new StadiumInfo();
+                stadium_condition.setStadiumName(inputText);
+                stadiumsFragment.setSelectFilter(stadium_condition);
+                stadiumsFragment.reloadRecyclerView();
+            } else {
+                //全加载
+                stadium_condition = null;
+                stadiumsFragment.setSelectFilter(stadium_condition);
+                stadiumsFragment.reloadRecyclerView();
+            }
         } else {
-            return false;
+            if (inputText.length() > 0) {
+                LogUtil.d(TAG, "当前在附近邀约碎片进行查询");
+                order_condition = new AppointmentOrder();
+                order_condition.setOrderName(inputText);
+                groupInfoFragment.setSelectFilter(order_condition);
+                groupInfoFragment.reloadRecyclerView();
+            } else {
+                //全加载
+                order_condition = null;
+                groupInfoFragment.setSelectFilter(order_condition);
+                groupInfoFragment.reloadRecyclerView();
+            }
         }
     }
 

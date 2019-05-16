@@ -1,6 +1,7 @@
 package com.comeon.android.db_accessing;
 
 import com.comeon.android.db.AppointmentOrder;
+import com.comeon.android.db.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,4 +31,18 @@ public interface AppointmentOrderDao {
      */
     AppointmentOrder insertNewOrder(AppointmentOrder newOrder);
 
+
+    /**
+     * 条件查询订单信息
+     * @param conditionObj  装载条件的订单对象
+     * @return  符合条件的订单对象
+     */
+    List<AppointmentOrder> getOrdersWithCondition(AppointmentOrder conditionObj);
+
+    /**
+     * 根据邀约号，加载此邀约的所有参与者
+     * @param orderId  订单号
+     * @return   参与者集合
+     */
+    List<UserInfo> getAllParticipantsByOrderId(long orderId);
 }

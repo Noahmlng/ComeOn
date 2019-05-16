@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.comeon.android.MainActivity;
 import com.comeon.android.R;
 import com.comeon.android.adapter.SportsTypeAdapter;
 import com.comeon.android.business_logic.OrderBusiness;
@@ -29,23 +28,8 @@ public class SportsTypeChoiceFragment extends BaseFragment {
     SportsTypeAdapter sportsTypeAdapter;
     RecyclerView recyclerView;
     private OrderBusinessInterface orderBusiness = new OrderBusiness();
-    private long categoryId;
 
     private List<SportsType> sportsTypeList;
-
-    public SportsTypeChoiceFragment(long categoryId) {
-        this.categoryId = categoryId;
-        sportsTypeList = orderBusiness.loadSportsTypeInCategory(categoryId);
-        LogUtil.d(TAG, "当前种类有" + sportsTypeList.size() + "种");
-    }
-
-    public long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(long categoryId) {
-        this.categoryId = categoryId;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +43,8 @@ public class SportsTypeChoiceFragment extends BaseFragment {
 
     @Override
     protected void initControls(View view) {
+//        sportsTypeList = orderBusiness.loadSportsTypeInCategory(categoryId);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         //添加自定义的分割线
         DividerItemDecoration divider = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
@@ -69,13 +55,11 @@ public class SportsTypeChoiceFragment extends BaseFragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        if(sportsTypeAdapter==null){
-            //加载数据
-            sportsTypeAdapter = new SportsTypeAdapter(sportsTypeList);
-        }else{
-            sportsTypeAdapter.notifyDataSetChanged();
-        }
+        //加载数据
+        sportsTypeAdapter = new SportsTypeAdapter(sportsTypeList);
+
         recyclerView.setAdapter(sportsTypeAdapter);
+        LogUtil.d(TAG, "正在填充数据");
     }
 
     /**
@@ -84,13 +68,12 @@ public class SportsTypeChoiceFragment extends BaseFragment {
      * @param categoryId
      */
     public void refresh(long categoryId) {
-        this.categoryId = categoryId;
-        sportsTypeList = orderBusiness.loadSportsTypeInCategory(categoryId);
-        sportsTypeAdapter = new SportsTypeAdapter(sportsTypeList);
-        if(recyclerView!=null){
-            recyclerView.setAdapter(sportsTypeAdapter);
+        if (sportsTypeList == null) {
+            sportsTypeList = orderBusiness.loadSportsTypeInCategory(categoryId);
+        } else {
+            sportsTypeList.clear();
+            sportsTypeList.addAll(orderBusiness.loadSportsTypeInCategory(categoryId));
+            sportsTypeAdapter.notifyDataSetChanged();
         }
-        //        sportsTypeAdapter = new SportsTypeAdapter(sportsTypeList);
-//        recyclerView.setAdapter(sportsTypeAdapter);
     }
 }

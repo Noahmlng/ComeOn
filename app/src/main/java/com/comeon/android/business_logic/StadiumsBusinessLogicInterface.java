@@ -17,8 +17,8 @@ public interface StadiumsBusinessLogicInterface {
 
     /**
      * 根据场馆的名字碎片获取场馆集合
-     * @param stadiumName
+     * @param condition  装载条件的对象
      * @return
      */
-    List<StadiumInfo> getStadiumsByName(String stadiumName);
+    List<StadiumInfo> getStadiumsWithConditions(StadiumInfo condition);
 }

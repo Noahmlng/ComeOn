@@ -41,7 +41,7 @@ public class ScrollAwareFABBehaviorDefault  extends FloatingActionButton.Behavio
     private void animateOut(FloatingActionButton fab) {
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
         int bottomMargin = layoutParams.bottomMargin;
-        fab.animate().translationY(fab.getHeight() + bottomMargin).setInterpolator(new LinearInterpolator()).start();
+        fab.animate().translationY(fab.getHeight() + bottomMargin+10).setInterpolator(new LinearInterpolator()).start();
     }
 
     // FAB移入屏幕动画（显示动画）

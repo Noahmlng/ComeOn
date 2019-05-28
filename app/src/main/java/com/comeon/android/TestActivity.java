@@ -1,7 +1,5 @@
 package com.comeon.android;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +8,6 @@ import android.widget.TextView;
 
 import com.comeon.android.util.Activity_Parent;
 import com.comeon.android.util.HttpUtil;
-import com.comeon.android.util.LogUtil;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
@@ -71,7 +68,6 @@ public class TestActivity extends Activity_Parent {
         ImageView itemIcon2 = new ImageView(this);
         itemIcon2.setImageResource(R.mipmap.ic_plus);
         SubActionButton button2 = itemBuidler2.setContentView(itemIcon2).build();
-
 
         SubActionButton.Builder itemBuidler3 = new SubActionButton.Builder(this);
         ImageView itemIcon3 = new ImageView(this);

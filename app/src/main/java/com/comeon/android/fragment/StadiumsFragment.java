@@ -1,5 +1,6 @@
 package com.comeon.android.fragment;
 
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -75,6 +76,23 @@ public class StadiumsFragment extends BaseFragment {
                 }).start();
             }
         });
+
+                /*
+        设置滑动时，actionMenu隐藏子菜单
+         */
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                GroupFragment groupFragment=(GroupFragment)getParentFragment();
+                if(dy>0){
+                    LogUtil.d(TAG, "dy>0");
+                    groupFragment.actionMenu.close(true);
+                }else{
+                    LogUtil.d(TAG, "dy<0");
+                }
+            }
+        });
     }
 
     @Override
@@ -90,11 +108,10 @@ public class StadiumsFragment extends BaseFragment {
             没有筛选情况的时候调用加载全部场馆的方法
          */
         if (stadiumInfoList != null) {
+            this.stadiumInfoList.clear();
             if (selectFilter == null) {
-                this.stadiumInfoList.clear();
                 this.stadiumInfoList.addAll(stadiumsBusinessLogic.getAllStadiums());
             } else {
-                this.stadiumInfoList.clear();
                 List<StadiumInfo> qualifiedStadiums = stadiumsBusinessLogic.getStadiumsWithConditions(selectFilter);
                 if (qualifiedStadiums != null) {
                     LogUtil.d(TAG, "有"+qualifiedStadiums.size()+"个符合条件的场馆");

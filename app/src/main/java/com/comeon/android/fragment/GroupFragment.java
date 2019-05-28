@@ -13,12 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.comeon.android.R;
 import com.comeon.android.db.AppointmentOrder;
+import com.comeon.android.db.SportsType;
 import com.comeon.android.db.StadiumInfo;
+import com.comeon.android.db_accessing.SportsTypeDao;
+import com.comeon.android.db_accessing.SportsTypeDaoImpl;
 import com.comeon.android.util.LogUtil;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
 
@@ -31,6 +37,7 @@ public class GroupFragment extends BaseFragment {
 
     //创建碎片管理对象
     public FragmentManager fragmentManager;
+    public FloatingActionMenu actionMenu;
     SlidingTabLayout tabLayout;
     EditText search_text;
     ViewPager viewPager;
@@ -45,6 +52,16 @@ public class GroupFragment extends BaseFragment {
     private StadiumsFragment stadiumsFragment = new StadiumsFragment();
     private GroupInfoFragment groupInfoFragment = new GroupInfoFragment();
     private boolean isInStadiumFragment = true; //监控当前在哪个页面碎片
+
+    /*
+        用静态常量标记运动类型编号
+     */
+    public static final int ST_EMPTY=-1;
+    public static final int ST_BASKETBALL=2;
+    public static final int ST_SOCCER=1;
+    public static final int ST_RUN=0;
+
+    int sportsChoice = ST_EMPTY; //保存已选择的运动类型编号
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,7 +96,6 @@ public class GroupFragment extends BaseFragment {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-
             }
 
             @Override
@@ -88,14 +104,14 @@ public class GroupFragment extends BaseFragment {
                     case 0:
                         isInStadiumFragment = true;
                         search_text.setHint("请输入场馆名称");
-                        refreshContent(search_text.getText().toString().trim());//在切换碎片时，也要根据搜索框内容进行判断
                         break;
                     case 1:
                         isInStadiumFragment = false;
                         search_text.setHint("请输入邀约团名");
-                        refreshContent(search_text.getText().toString().trim());//在切换碎片时，也要根据搜索框内容进行判断
                         break;
                 }
+                refreshContentBySportsType(sportsChoice);//切换碎片时，也根据选定的运动类型进行刷新
+                refreshContent(search_text.getText().toString().trim());//在切换碎片时，也要根据搜索框内容进行判断
             }
 
             @Override
@@ -122,13 +138,8 @@ public class GroupFragment extends BaseFragment {
 
         });
 
-        //        btn_selectFilter=(FloatingActionButton)view.findViewById(R.id.btn_selectFilter);
-        //        btn_selectFilter.setOnClickListener(new View.OnClickListener() {
-        //            @Override
-        //            public void onClick(View v) {
-        //                Toast.makeText(MyApplication.getContext(), "你点击了按钮",Toast.LENGTH_SHORT).show();
-        //            }
-        //        });
+        btn_selectFilter = (FloatingActionButton) view.findViewById(R.id.btn_selectFilter);
+        initCircularMenu();
     }
 
     /**
@@ -140,6 +151,74 @@ public class GroupFragment extends BaseFragment {
         //设置Tab与ViewPager关联
         tabLayout.setViewPager(viewPager);
     }
+
+    /**
+     * 加载CircularFloatingActionMenu
+     */
+    private void initCircularMenu() {
+        ImageView fabIconNew = new ImageView(this.getActivity());
+        fabIconNew.setImageResource(R.mipmap.ic_plus);
+
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this.getActivity());
+        ImageView itemIcon1 = new ImageView(this.getActivity());
+        itemIcon1.setImageResource(R.mipmap.ic_plus);
+        SubActionButton subActionButton1 = itemBuilder.setContentView(itemIcon1).build();
+        subActionButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sportsChoice = ST_EMPTY;
+                refreshContentBySportsType(sportsChoice);
+            }
+        });
+
+        ImageView itemIcon2 = new ImageView(this.getActivity());
+        itemIcon2.setImageResource(R.mipmap.ic_basketball);
+        SubActionButton subActionButton2 = itemBuilder.setContentView(itemIcon2).build();
+        subActionButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sportsChoice = ST_BASKETBALL;
+                refreshContentBySportsType(sportsChoice);
+            }
+        });
+
+        ImageView itemIcon3 = new ImageView(this.getActivity());
+        itemIcon3.setImageResource(R.mipmap.ic_football);
+        SubActionButton subActionButton3 = itemBuilder.setContentView(itemIcon3).build();
+        subActionButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sportsChoice = ST_SOCCER;
+                refreshContentBySportsType(sportsChoice);
+            }
+        });
+
+        ImageView itemIcon4 = new ImageView(this.getActivity());
+        itemIcon4.setImageResource(R.mipmap.ic_run);
+        SubActionButton subActionButton4 = itemBuilder.setContentView(itemIcon4).build();
+        subActionButton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sportsChoice = ST_RUN;
+                refreshContentBySportsType(sportsChoice);
+            }
+        });
+
+        actionMenu = new FloatingActionMenu.Builder(this.getActivity()).addSubActionView(subActionButton1).addSubActionView(subActionButton2).addSubActionView(subActionButton3).addSubActionView(subActionButton4).attachTo(btn_selectFilter).build();
+        actionMenu.setStateChangeListener(new FloatingActionMenu.MenuStateChangeListener() {
+            @Override
+            public void onMenuOpened(FloatingActionMenu floatingActionMenu) {
+
+            }
+
+            @Override
+            public void onMenuClosed(FloatingActionMenu floatingActionMenu) {
+
+            }
+        });
+
+    }
+
 
     @Override
     protected int getContentViewId() {
@@ -159,30 +238,89 @@ public class GroupFragment extends BaseFragment {
             if (inputText.length() > 0) {
                 LogUtil.d(TAG, "当前在场馆碎片进行查询");
                 //场馆页操作
-                stadium_condition = new StadiumInfo();
+                if (stadium_condition == null) {
+                    stadium_condition = new StadiumInfo();
+                }
                 stadium_condition.setStadiumName(inputText);
-                stadiumsFragment.setSelectFilter(stadium_condition);
-                stadiumsFragment.reloadRecyclerView();
             } else {
-                //全加载
-                stadium_condition = null;
-                stadiumsFragment.setSelectFilter(stadium_condition);
-                stadiumsFragment.reloadRecyclerView();
+                if (stadium_condition != null) {
+                    if (stadium_condition.getSportsType() == null) {
+                        stadium_condition = null;//当没有搜索关键字，并且没有选择种类时，则全加载
+                    } else {
+                        stadium_condition.setStadiumName(null);//当已经选择了运动种类，则保留运动种类的筛选结果
+                    }
+                }
             }
+            stadiumsFragment.setSelectFilter(stadium_condition);
+            stadiumsFragment.reloadRecyclerView();
         } else {
             if (inputText.length() > 0) {
                 LogUtil.d(TAG, "当前在附近邀约碎片进行查询");
-                order_condition = new AppointmentOrder();
+                if (order_condition == null) {
+                    order_condition = new AppointmentOrder();
+                }
                 order_condition.setOrderName(inputText);
-                groupInfoFragment.setSelectFilter(order_condition);
-                groupInfoFragment.reloadRecyclerView();
             } else {
-                //全加载
-                order_condition = null;
-                groupInfoFragment.setSelectFilter(order_condition);
-                groupInfoFragment.reloadRecyclerView();
+                if (order_condition != null) {
+                    if (order_condition.getOrderSportsType() == null) {
+                        //当没有搜索关键字，并且没有选择种类时，则全加载
+                        order_condition = null;
+                    } else {
+                        order_condition.setOrderName(null);
+                    }
+                }
             }
+            groupInfoFragment.setSelectFilter(order_condition);
+            groupInfoFragment.reloadRecyclerView();
         }
+    }
+
+    /**
+     * 根据传递的运动类型刷新集合
+     * @param choice   传入的运动类型编号
+     */
+    private void refreshContentBySportsType(int choice) {
+        SportsTypeDao sportsTypeDao = new SportsTypeDaoImpl();//用于使用名字查询SportsType
+        SportsType selectedSportsType = null;
+        //choice从上往下顺，-1：清空；0：跑步；1：足球；2：篮球
+        switch (choice) {
+            case ST_EMPTY:
+                selectedSportsType = null;
+                break;
+            case ST_RUN:
+                selectedSportsType = sportsTypeDao.findSportsTypeByName("跑步");
+                break;
+            case ST_SOCCER:
+                selectedSportsType = sportsTypeDao.findSportsTypeByName("足球");
+                break;
+            case ST_BASKETBALL:
+                selectedSportsType = sportsTypeDao.findSportsTypeByName("篮球");
+                break;
+        }
+        /*
+            执行刷新操作
+         */
+        if (isInStadiumFragment) {
+            if (stadium_condition == null) {
+                stadium_condition = new StadiumInfo();
+            }
+            stadium_condition.setSportsType(selectedSportsType);
+            stadiumsFragment.setSelectFilter(stadium_condition);
+            stadiumsFragment.reloadRecyclerView();
+        } else {
+            if (order_condition == null) {
+                order_condition = new AppointmentOrder();
+            }
+            order_condition.setOrderSportsType(selectedSportsType);
+            groupInfoFragment.setSelectFilter(order_condition);
+            groupInfoFragment.reloadRecyclerView();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        actionMenu.close(false);
     }
 
     /**

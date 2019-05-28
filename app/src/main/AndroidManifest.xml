@@ -62,7 +62,9 @@
             android:enabled="true"
             android:process=":remote" />
 
-        <activity android:name=".TestActivity" />
+        <activity android:name=".TestActivity" >
+
+        </activity>
 
         <service
             android:name=".service.LoadingService"

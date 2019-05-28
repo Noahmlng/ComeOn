@@ -1,9 +1,12 @@
 package com.comeon.android.fragment;
 
+import android.nfc.Tag;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.comeon.android.R;
 import com.comeon.android.adapter.GroupInfoAdapter;
@@ -12,6 +15,8 @@ import com.comeon.android.business_logic.OrderBusinessInterface;
 import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.db.StadiumInfo;
 import com.comeon.android.util.LogUtil;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +29,7 @@ public class GroupInfoFragment extends BaseFragment {
     GroupInfoAdapter groupInfoAdapter;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
+    com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton floatingActionButton;
 
     private OrderBusinessInterface orderBusiness = new OrderBusiness();
     private ArrayList<AppointmentOrder> orders;
@@ -51,6 +57,23 @@ public class GroupInfoFragment extends BaseFragment {
         orders = orderBusiness.getAllOrders();
         groupInfoAdapter = new GroupInfoAdapter(orders);
         recyclerView.setAdapter(groupInfoAdapter);
+
+        /*
+        设置滑动时，actionMenu隐藏子菜单
+         */
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                GroupFragment groupFragment=(GroupFragment)getParentFragment();
+                if(dy>0){
+                    LogUtil.d(TAG, "dy>0");
+                    groupFragment.actionMenu.close(true);
+                }else{
+                    LogUtil.d(TAG, "dy<0");
+                }
+            }
+        });
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

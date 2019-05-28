@@ -3,15 +3,12 @@ package com.comeon.android;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -27,7 +24,6 @@ import com.comeon.android.util.LogUtil;
 import com.comeon.android.util.ViewUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class InfoDisplayActivity extends Activity_Parent implements View.OnClickListener {
     private static final String TAG = "InfoDisplayActivity";
@@ -44,7 +40,34 @@ public class InfoDisplayActivity extends Activity_Parent implements View.OnClick
     private MyPageAdapter mAdapter;
     private ArrayList<Fragment> mFragments;
 
-    public UserInfo getLoginUser(){return this.loginUser;}
+    /**
+     * 查看组团信息的详情
+     *
+     * @param context
+     * @param orders  要查看的组团信息组（第一个为点击进入的组团信息）
+     */
+    public static void checkOrderInfo(Context context, ArrayList<AppointmentOrder> orders) {
+        Intent intent = new Intent(context, InfoDisplayActivity.class);
+        intent.putParcelableArrayListExtra("orderInfo", orders);
+        LogUtil.d(TAG, "测试id为：" + orders.get(0).getId());
+        context.startActivity(intent);
+    }
+
+    /**
+     * 查看场馆信息的详情
+     *
+     * @param context
+     * @param stadiumInfos 要查看的场馆信息组（第一个为点击进入的场馆信息）
+     */
+    public static void checkStadiumsInfo(Context context, ArrayList<StadiumInfo> stadiumInfos) {
+        Intent intent = new Intent(context, InfoDisplayActivity.class);
+        intent.putParcelableArrayListExtra("stadiumInfo", stadiumInfos);
+        context.startActivity(intent);
+    }
+
+    public UserInfo getLoginUser() {
+        return this.loginUser;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +123,9 @@ public class InfoDisplayActivity extends Activity_Parent implements View.OnClick
         btn_favor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     btn_favor.setButtonDrawable(R.mipmap.ic_favor_checked);
-                }else{
+                } else {
                     btn_favor.setButtonDrawable(R.mipmap.ic_favor);
                 }
             }
@@ -114,7 +137,7 @@ public class InfoDisplayActivity extends Activity_Parent implements View.OnClick
         switch (v.getId()) {
             case R.id.btn_goback:
                 finish();
-                Intent intent=new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_share:
@@ -141,29 +164,5 @@ public class InfoDisplayActivity extends Activity_Parent implements View.OnClick
         public int getCount() {
             return mFragments.size();
         }
-    }
-
-    /**
-     * 查看组团信息的详情
-     * @param context
-     * @param orders  要查看的组团信息组（第一个为点击进入的组团信息）
-     */
-    public static void checkOrderInfo(Context context, ArrayList<AppointmentOrder> orders) {
-        Intent intent = new Intent(context, InfoDisplayActivity.class);
-        intent.putParcelableArrayListExtra("orderInfo", orders);
-        LogUtil.d(TAG, "测试id为："+orders.get(0).getId());
-        context.startActivity(intent);
-    }
-
-    /**
-     * 查看场馆信息的详情
-     *
-     * @param context
-     * @param stadiumInfos 要查看的场馆信息组（第一个为点击进入的场馆信息）
-     */
-    public static void checkStadiumsInfo(Context context, ArrayList<StadiumInfo> stadiumInfos) {
-        Intent intent = new Intent(context, InfoDisplayActivity.class);
-        intent.putParcelableArrayListExtra("stadiumInfo", stadiumInfos);
-        context.startActivity(intent);
     }
 }

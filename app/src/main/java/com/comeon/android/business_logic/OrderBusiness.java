@@ -101,7 +101,13 @@ public class OrderBusiness implements OrderBusinessInterface {
 
     @Override
     public List<AppointmentOrder> getOrdersWithCondition(AppointmentOrder condition) {
-        return appointmentOrderDao.getOrdersWithCondition(condition);
+        List<AppointmentOrder> orders=appointmentOrderDao.getOrdersWithCondition(condition);
+        //进行逆序处理
+        List<AppointmentOrder> ordersDesc=new ArrayList<AppointmentOrder>();
+        for(int i=orders.size()-1; i>=0; i--){
+            ordersDesc.add(orders.get(i));
+        }
+        return ordersDesc;
     }
 
 

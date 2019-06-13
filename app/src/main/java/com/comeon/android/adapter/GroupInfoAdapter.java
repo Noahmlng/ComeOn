@@ -1,7 +1,14 @@
 package com.comeon.android.adapter;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +16,8 @@ import android.widget.TextView;
 
 import com.comeon.android.InfoDisplayActivity;
 import com.comeon.android.R;
+import com.comeon.android.business_logic.OrderBusiness;
+import com.comeon.android.business_logic.OrderBusinessInterface;
 import com.comeon.android.controls.GradientTextButton;
 import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.db.UserInfo;
@@ -17,6 +26,7 @@ import com.comeon.android.util.MyApplication;
 import com.comeon.android.util.Utilities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -26,6 +36,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.ViewHolder> {
 
     private static final String TAG = "GroupInfoAdapter";
+    private OrderBusinessInterface orderBusiness=new OrderBusiness();
 
     //类成员：附近组团信息的集合
     private ArrayList<AppointmentOrder> orders;
@@ -81,8 +92,51 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
         } else {
             viewHolder.txt_groupLocation.setText(order.getOrderLocation());
         }
-        viewHolder.txt_groupInfo.setText("发出" + order.getOrderSportsType().getTypeName() + "邀约\t需组队" + order.getOrderExpectedSize() + "人");
+
+        /*
+            展示组团的类型以及仍需组团的人数
+         */
+        List<UserInfo> participants=orderBusiness.loadParticipantsList(order); //参与者的List
+        int memberGapCount=order.getOrderExpectedSize()-participants.size();//记录缺口人数
+        String typeName=order.getOrderSportsType().getTypeName();//记录订单的运动类型
+
+        /*
+            用SpannableString给文字做特殊处理
+         */
+
+        //1、处理运动类型文字
+        SpannableStringBuilder typeSizeTip=new SpannableStringBuilder("发出" + typeName+"邀约\t  ");
+        typeSizeTip.setSpan(new ForegroundColorSpan(Color.RED),2, 2+typeName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //为组团的运动类型加上前景色
+        typeSizeTip.setSpan(new StyleSpan(Typeface.BOLD),2, 2+typeName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //给组团的运动类型加粗处理
+
+
+        //2、处理缺口人数文字
+        /*
+            如果缺口人数为正，则显示“仍需……人”；
+            如果缺口人数为负或者0，则显示“已成功组团（……人）”。
+         */
+        if(memberGapCount>0){
+            typeSizeTip.append("仍需" +memberGapCount + "人");
+            int length=(memberGapCount>=10)?2:1; //记录缺口人数的数字长度
+            typeSizeTip.setSpan(new ForegroundColorSpan(Color.RED),2+typeName.length()+7, 2+typeName.length()+7+length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //为组团的缺口人数加上前景色
+            typeSizeTip.setSpan(new StyleSpan(Typeface.BOLD),2+typeName.length()+7, 2+typeName.length()+7+length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //给组团的缺口人数加粗处理
+        }else{
+            typeSizeTip.append("已成功组团（" +participants.size() + "人）");
+            int length=(participants.size()>=10)?2:1; //记录已成功组团的人数的数字长度
+            typeSizeTip.setSpan(new ForegroundColorSpan(Color.RED),2+typeName.length()+11, 2+typeName.length()+11+length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //为组团的缺口人数加上前景色
+            typeSizeTip.setSpan(new StyleSpan(Typeface.BOLD),2+typeName.length()+11, 2+typeName.length()+11+length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //给组团的缺口人数加粗处理
+        }
+        viewHolder.txt_groupInfo.setText(typeSizeTip);
+
         viewHolder.txt_groupName.setText(order.getOrderName());
+
+        /*
+        展示组团进度的功能：
+            根据memberGapCount的符号来做出不同的UI展示
+            1. 人数未到预计人数
+            2. 人数刚好到达预计人数
+            3. 人数超过预计人数
+         */
     }
 
     @Override

@@ -19,6 +19,7 @@ import com.comeon.android.db_accessing.UserInfoDaoImpl;
 import com.comeon.android.util.LogUtil;
 
 import org.litepal.LitePal;
+import org.litepal.util.LitePalLog;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -109,6 +110,5 @@ public class OrderBusiness implements OrderBusinessInterface {
         }
         return ordersDesc;
     }
-
 
 }

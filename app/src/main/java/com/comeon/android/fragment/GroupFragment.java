@@ -57,9 +57,18 @@ public class GroupFragment extends BaseFragment {
         用静态常量标记运动类型编号
      */
     public static final int ST_EMPTY=-1;
-    public static final int ST_BASKETBALL=2;
-    public static final int ST_SOCCER=1;
-    public static final int ST_RUN=0;
+    public static final int ST_BASKETBALL=1;
+    public static final int ST_SOCCER=2;
+    public static final int ST_RUN=3;
+    public static final int ST_BADMINTON=4;
+
+    /*
+        4个ImageView记录icon
+     */
+    ImageView ic_basketball;
+    ImageView ic_soccer;
+    ImageView ic_run;
+    ImageView ic_badminton;
 
     int sportsChoice = ST_EMPTY; //保存已选择的运动类型编号
 
@@ -160,47 +169,47 @@ public class GroupFragment extends BaseFragment {
         fabIconNew.setImageResource(R.mipmap.ic_plus);
 
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this.getActivity());
-        ImageView itemIcon1 = new ImageView(this.getActivity());
-        itemIcon1.setImageResource(R.mipmap.ic_plus);
-        SubActionButton subActionButton1 = itemBuilder.setContentView(itemIcon1).build();
+        ic_basketball=new ImageView(this.getActivity());
+        ic_basketball.setImageResource(R.mipmap.ic_basketball);
+        SubActionButton subActionButton1 = itemBuilder.setContentView(ic_basketball).build();
         subActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sportsChoice = ST_EMPTY;
-                refreshContentBySportsType(sportsChoice);
+                refreshContentBySportsTypeOnUI(sportsChoice, ST_BASKETBALL);
+                refreshItemIcon(sportsChoice, ST_BASKETBALL);
             }
         });
 
-        ImageView itemIcon2 = new ImageView(this.getActivity());
-        itemIcon2.setImageResource(R.mipmap.ic_basketball);
-        SubActionButton subActionButton2 = itemBuilder.setContentView(itemIcon2).build();
+        ic_soccer= new ImageView(this.getActivity());
+        ic_soccer.setImageResource(R.mipmap.ic_football);
+        SubActionButton subActionButton2 = itemBuilder.setContentView(ic_soccer).build();
         subActionButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sportsChoice = ST_BASKETBALL;
-                refreshContentBySportsType(sportsChoice);
+                refreshContentBySportsTypeOnUI(sportsChoice, ST_SOCCER);
+                refreshItemIcon(sportsChoice, ST_SOCCER);
             }
         });
 
-        ImageView itemIcon3 = new ImageView(this.getActivity());
-        itemIcon3.setImageResource(R.mipmap.ic_football);
-        SubActionButton subActionButton3 = itemBuilder.setContentView(itemIcon3).build();
+        ic_run = new ImageView(this.getActivity());
+        ic_run.setImageResource(R.mipmap.ic_run);
+        SubActionButton subActionButton3 = itemBuilder.setContentView(ic_run).build();
         subActionButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sportsChoice = ST_SOCCER;
-                refreshContentBySportsType(sportsChoice);
+                refreshContentBySportsTypeOnUI(sportsChoice, ST_RUN);
+                refreshItemIcon(sportsChoice, ST_RUN);
             }
         });
 
-        ImageView itemIcon4 = new ImageView(this.getActivity());
-        itemIcon4.setImageResource(R.mipmap.ic_run);
-        SubActionButton subActionButton4 = itemBuilder.setContentView(itemIcon4).build();
+        ic_badminton = new ImageView(this.getActivity());
+        ic_badminton.setImageResource(R.mipmap.ic_badminton);
+        SubActionButton subActionButton4 = itemBuilder.setContentView(ic_badminton).build();
         subActionButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sportsChoice = ST_RUN;
-                refreshContentBySportsType(sportsChoice);
+                refreshContentBySportsTypeOnUI(sportsChoice, ST_BADMINTON);
+                refreshItemIcon(sportsChoice, ST_BADMINTON);
             }
         });
 
@@ -223,6 +232,60 @@ public class GroupFragment extends BaseFragment {
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_group;
+    }
+
+    /**
+     * 控制FloatingActionMenu上的imageview切换
+     * @param pastChoice
+     * @param currentChoice
+     */
+    public void refreshItemIcon(int pastChoice, int currentChoice){
+        switch (pastChoice){
+            case ST_EMPTY:
+                break;
+            case ST_BASKETBALL:
+                ic_basketball.setImageResource(R.mipmap.ic_basketball);
+                break;
+            case ST_SOCCER:
+                ic_soccer.setImageResource(R.mipmap.ic_football);
+                break;
+            case ST_RUN:
+                ic_run.setImageResource(R.mipmap.ic_run);
+                break;
+            case ST_BADMINTON:
+                ic_badminton.setImageResource(R.mipmap.ic_badminton);
+                break;
+        }
+
+        switch (currentChoice){
+            case ST_BASKETBALL:
+                ic_basketball.setImageResource(R.mipmap.ic_basketball_selected);
+                break;
+            case ST_SOCCER:
+                ic_soccer.setImageResource(R.mipmap.ic_football_selected);
+                break;
+            case ST_RUN:
+                ic_run.setImageResource(R.mipmap.ic_run_selected);
+                break;
+            case ST_BADMINTON:
+                ic_badminton.setImageResource(R.mipmap.ic_badminton_selected);
+                break;
+        }
+    }
+
+    /**
+     * 控制FloatingActionMenu上的数据集切换
+     * @param pastChoice
+     * @param currentChoice
+     */
+    public void refreshContentBySportsTypeOnUI(int pastChoice, int currentChoice){
+        if(pastChoice==currentChoice){
+            refreshContentBySportsType(ST_EMPTY);
+            sportsChoice=ST_EMPTY;
+            return;
+        }
+        refreshContentBySportsType(currentChoice);
+        sportsChoice=currentChoice;
     }
 
     /**
@@ -282,7 +345,6 @@ public class GroupFragment extends BaseFragment {
     private void refreshContentBySportsType(int choice) {
         SportsTypeDao sportsTypeDao = new SportsTypeDaoImpl();//用于使用名字查询SportsType
         SportsType selectedSportsType = null;
-        //choice从上往下顺，-1：清空；0：跑步；1：足球；2：篮球
         switch (choice) {
             case ST_EMPTY:
                 selectedSportsType = null;
@@ -296,7 +358,11 @@ public class GroupFragment extends BaseFragment {
             case ST_BASKETBALL:
                 selectedSportsType = sportsTypeDao.findSportsTypeByName("篮球");
                 break;
+            case ST_BADMINTON:
+                selectedSportsType = sportsTypeDao.findSportsTypeByName("羽毛球");
+                break;
         }
+
         /*
             执行刷新操作
          */

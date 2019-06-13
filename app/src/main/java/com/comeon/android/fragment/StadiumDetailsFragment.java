@@ -49,11 +49,13 @@ public class StadiumDetailsFragment extends BaseFragment implements View.OnClick
 
         //加载三个按钮
         btn_sendMessage = (ImageButton) view.findViewById(R.id.btn_sendMessage);
+        btn_sendMessage.setVisibility(View.GONE);
+
         btn_call = (ImageButton) view.findViewById(R.id.btn_call);
         btn_joinGroup = (GradientTextButton) view.findViewById(R.id.btn_joinGroup);
 
         //绑定点击事件
-        btn_sendMessage.setOnClickListener(this);
+//        btn_sendMessage.setOnClickListener(this);
         btn_call.setOnClickListener(this);
         btn_joinGroup.setOnClickListener(this);
     }
@@ -62,18 +64,16 @@ public class StadiumDetailsFragment extends BaseFragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sendMessage:
-                //打开与发起者的聊天页面
-                Toast.makeText(getActivity(), "打开与发起者的聊天页面", Toast.LENGTH_SHORT).show();
+                //给场馆方发信息
                 break;
             case R.id.btn_call:
-                //给发起者打电话
+                //给场馆方打电话
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:" + stadiumInfo.getStadiumContact()));
                 startActivity(intent);
                 break;
             case R.id.btn_joinGroup:
-                //加入组团的业务操作
-                Toast.makeText(getActivity(), "加入组团的业务操作", Toast.LENGTH_SHORT).show();
+                //进入添加组团页
                 break;
         }
     }

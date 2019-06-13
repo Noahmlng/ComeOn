@@ -1,12 +1,15 @@
 package com.comeon.android.fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -14,12 +17,18 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.animation.Animation;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.LogoPosition;
+import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
@@ -309,6 +318,33 @@ public class MapAppointmentFragment extends BaseFragment {
             //记录下最后一次的状态
             last_status = status;
         }
+    }
+
+    /**
+     * 生成marker的icon
+     * @return
+     */
+    private BitmapDescriptor getMarkerBitMapDescriptor(){
+        return BitmapDescriptorFactory.fromResource(R.mipmap.marker);
+    }
+
+
+    /**
+     * 在地图上生成组团位置标注
+     * @param llA  位置坐标
+     */
+    private void markAppointment(LatLng llA){
+        Marker marker=null;//1、定义一个Marker
+        MarkerOptions markerOptions=new MarkerOptions().position(llA).icon(getMarkerBitMapDescriptor()); //2、设置marker的选项（位置和icon）
+        marker=(Marker)bMap.addOverlay(markerOptions);//3、添加障碍物
+    }
+
+
+    /**
+     * 加载相关的订单
+     */
+    private void loadRelatedOrders(){
+
     }
 
 

@@ -50,12 +50,7 @@ public class MineFragment extends BaseFragment {
                                 /*
                     清除SharedPreferences文件中的数据
                  */
-                SharedPreferences sp = getActivity().getSharedPreferences("data", getActivity().MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("phone", "");
-                editor.putString("password", "");
-                editor.apply();
-                loginUser=null;
+                clearSharedPreferences();
                 getActivity().finish();
             }
         });
@@ -68,5 +63,16 @@ public class MineFragment extends BaseFragment {
             txt_userName.setText(loginUser.getUserNickName());
             txt_description.setText(loginUser.getDescription());
         }
+    }
+
+    /**
+     * 清空SharedPreferences文件中的用户信息
+     */
+    private void clearSharedPreferences(){
+        SharedPreferences sp = getActivity().getSharedPreferences("loginData", getActivity().MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.clear();
+        editor.commit();
+        loginUser=null;
     }
 }

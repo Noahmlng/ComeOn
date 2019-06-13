@@ -3,6 +3,8 @@ package com.comeon.android.db;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.baidu.mapapi.model.LatLng;
+
 import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
@@ -28,6 +30,10 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
     private String orderLocation;
     private String orderContact;
 
+
+    private double longitude; //代表位置的经度
+    private double latitude; //代表位置的纬度
+
     public AppointmentOrder() {
     }
 
@@ -40,6 +46,8 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
         orderStatus = in.readInt();
         orderLocation = in.readString();
         orderContact = in.readString();
+        longitude=in.readDouble();
+        latitude=in.readDouble();
     }
 
     @Override
@@ -52,6 +60,8 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
         dest.writeInt(orderStatus);
         dest.writeString(orderLocation);
         dest.writeString(orderContact);
+        dest.writeDouble(longitude);
+        dest.writeDouble(latitude);
     }
 
     @Override
@@ -165,5 +175,21 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
 
     public void setOrderContact(String orderContact) {
         this.orderContact = orderContact;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

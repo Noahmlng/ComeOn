@@ -15,12 +15,14 @@ public interface OrderBusinessInterface {
 
     /**
      * 获取所有订单
+     *
      * @return
      */
     ArrayList<AppointmentOrder> getAllOrders();
 
     /**
      * 通过id获取特定的order
+     *
      * @param orderId
      * @return
      */
@@ -28,6 +30,7 @@ public interface OrderBusinessInterface {
 
     /**
      * 加载某个种类的所有所属的运动分类
+     *
      * @param categoryId
      * @return
      */
@@ -36,12 +39,13 @@ public interface OrderBusinessInterface {
 
     /**
      * 发布新的组团信息
-     * @param loginUser  登录用户为发起者
-     * @param peopleSize   组团人数
-     * @param groupName   团名
-     * @param contact     订单联系电话
-     * @param location   地址
-     * @param selectedSportsType  选中的运动类型
+     *
+     * @param loginUser          登录用户为发起者
+     * @param peopleSize         组团人数
+     * @param groupName          团名
+     * @param contact            订单联系电话
+     * @param location           地址
+     * @param selectedSportsType 选中的运动类型
      * @return
      */
     boolean createNewOrder(UserInfo loginUser, int peopleSize, String groupName, String contact, String location, SportsType selectedSportsType);
@@ -54,6 +58,7 @@ public interface OrderBusinessInterface {
 
     /**
      * 刷新某个订单的参与者列表
+     *
      * @param order
      * @return
      */
@@ -61,8 +66,10 @@ public interface OrderBusinessInterface {
 
     /**
      * 查询符合条件的组团邀约
-     * @param condition  带有条件的装载对象
-     * @return  符合条件的组团邀约集合
+     *
+     * @param condition 带有条件的装载对象
+     * @return 符合条件的组团邀约集合
      */
     List<AppointmentOrder> getOrdersWithCondition(AppointmentOrder condition);
+
 }

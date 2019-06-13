@@ -31,6 +31,9 @@ public class StadiumInfo extends LitePalSupport implements Parcelable {
     @Column(defaultValue = "0")
     private int stadiumStatus;
 
+    private double longitude; //代表位置的经度
+    private double latitude; //代表位置的纬度
+
     private List<AppointmentOrder> orders;
 
     @Column(ignore = true)
@@ -52,6 +55,8 @@ public class StadiumInfo extends LitePalSupport implements Parcelable {
         stadiumStatus = in.readInt();
         orders = in.createTypedArrayList(AppointmentOrder.CREATOR);
         stadiumIcon = in.createByteArray();
+        longitude=in.readDouble();
+        latitude=in.readDouble();
     }
 
     @Override
@@ -69,6 +74,8 @@ public class StadiumInfo extends LitePalSupport implements Parcelable {
         dest.writeInt(stadiumStatus);
         dest.writeTypedList(orders);
         dest.writeByteArray(stadiumIcon);
+        dest.writeDouble(longitude);
+        dest.writeDouble(latitude);
     }
 
     @Override
@@ -190,5 +197,21 @@ public class StadiumInfo extends LitePalSupport implements Parcelable {
 
     public void setStadiumStatus(int stadiumStatus) {
         this.stadiumStatus = stadiumStatus;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 }

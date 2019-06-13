@@ -55,7 +55,6 @@ public class InfoDisplayActivity extends Activity_Parent implements View.OnClick
 
     /**
      * 查看场馆信息的详情
-     *
      * @param context
      * @param stadiumInfos 要查看的场馆信息组（第一个为点击进入的场馆信息）
      */

@@ -175,8 +175,8 @@ public class GroupFragment extends BaseFragment {
         subActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshContentBySportsTypeOnUI(sportsChoice, ST_BASKETBALL);
                 refreshItemIcon(sportsChoice, ST_BASKETBALL);
+                refreshContentBySportsTypeOnUI(sportsChoice, ST_BASKETBALL);
             }
         });
 
@@ -186,8 +186,8 @@ public class GroupFragment extends BaseFragment {
         subActionButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshContentBySportsTypeOnUI(sportsChoice, ST_SOCCER);
                 refreshItemIcon(sportsChoice, ST_SOCCER);
+                refreshContentBySportsTypeOnUI(sportsChoice, ST_SOCCER);
             }
         });
 
@@ -197,8 +197,8 @@ public class GroupFragment extends BaseFragment {
         subActionButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshContentBySportsTypeOnUI(sportsChoice, ST_RUN);
                 refreshItemIcon(sportsChoice, ST_RUN);
+                refreshContentBySportsTypeOnUI(sportsChoice, ST_RUN);
             }
         });
 
@@ -208,8 +208,8 @@ public class GroupFragment extends BaseFragment {
         subActionButton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshContentBySportsTypeOnUI(sportsChoice, ST_BADMINTON);
                 refreshItemIcon(sportsChoice, ST_BADMINTON);
+                refreshContentBySportsTypeOnUI(sportsChoice, ST_BADMINTON);
             }
         });
 
@@ -240,6 +240,7 @@ public class GroupFragment extends BaseFragment {
      * @param currentChoice
      */
     public void refreshItemIcon(int pastChoice, int currentChoice){
+        LogUtil.d(TAG, "pastChoice："+pastChoice+"；currentChoice："+currentChoice);
         switch (pastChoice){
             case ST_EMPTY:
                 break;
@@ -257,20 +258,26 @@ public class GroupFragment extends BaseFragment {
                 break;
         }
 
-        switch (currentChoice){
-            case ST_BASKETBALL:
-                ic_basketball.setImageResource(R.mipmap.ic_basketball_selected);
-                break;
-            case ST_SOCCER:
-                ic_soccer.setImageResource(R.mipmap.ic_football_selected);
-                break;
-            case ST_RUN:
-                ic_run.setImageResource(R.mipmap.ic_run_selected);
-                break;
-            case ST_BADMINTON:
-                ic_badminton.setImageResource(R.mipmap.ic_badminton_selected);
-                break;
+        /*
+            进行判断，如果和先前选择相同，则取消颜色不进行颜色的加深
+         */
+        if(pastChoice!=currentChoice){
+            switch (currentChoice){
+                case ST_BASKETBALL:
+                    ic_basketball.setImageResource(R.mipmap.ic_basketball_selected);
+                    break;
+                case ST_SOCCER:
+                    ic_soccer.setImageResource(R.mipmap.ic_football_selected);
+                    break;
+                case ST_RUN:
+                    ic_run.setImageResource(R.mipmap.ic_run_selected);
+                    break;
+                case ST_BADMINTON:
+                    ic_badminton.setImageResource(R.mipmap.ic_badminton_selected);
+                    break;
+            }
         }
+
     }
 
     /**

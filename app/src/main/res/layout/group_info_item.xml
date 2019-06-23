@@ -46,7 +46,6 @@
             android:textStyle="bold"
             />
 
-
     </LinearLayout>
 
     <com.comeon.android.controls.GradientTextButton

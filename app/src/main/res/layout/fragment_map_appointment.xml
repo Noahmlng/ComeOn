@@ -1,63 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.baidu.mapapi.map.MapView
         android:id="@+id/bmapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        />
+        android:clickable="true" />
 
     <!--<android.support.v7.widget.CardView-->
-        <!--android:layout_width="300dp"-->
-        <!--android:layout_marginTop="40dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:background="@drawable/whitebar"-->
-        <!--app:cardCornerRadius="13dp"-->
-        <!--app:cardElevation="5dp"-->
-        <!--&gt;-->
+    <!--android:layout_width="300dp"-->
+    <!--android:layout_marginTop="80dp"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--app:cardCornerRadius="13dp"-->
+    <!--app:cardElevation="5dp"-->
+    <!--&gt;-->
 
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:paddingHorizontal="15dp"-->
-<!--&gt;-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:paddingHorizontal="15dp">-->
 
-            <!--<ImageButton-->
-                <!--android:id="@+id/btn_search"-->
-                <!--android:layout_width="25dp"-->
-                <!--android:layout_height="25dp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:background="@mipmap/ic_search"-->
-                <!--/>-->
+    <!--<ImageButton-->
+    <!--android:id="@+id/btn_search"-->
+    <!--android:layout_width="25dp"-->
+    <!--android:layout_height="25dp"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:background="@mipmap/ic_search" />-->
 
-            <!--<EditText-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:hint="运动类型、场地、手机"-->
-                <!--android:textSize="13sp"-->
-                <!--android:layout_marginHorizontal="20dp"-->
-                <!--android:maxLines="1"-->
-                <!--android:id="@+id/search_text"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:background="@null"-->
-                <!--/>-->
+    <!--<EditText-->
+    <!--android:id="@+id/search_text"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_marginHorizontal="20dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@null"-->
+    <!--android:hint="运动类型、场地、手机"-->
+    <!--android:maxLines="1"-->
+    <!--android:textSize="13sp" />-->
 
-            <!--<ImageButton-->
-                <!--android:id="@+id/btn_scan"-->
-                <!--android:layout_width="25dp"-->
-                <!--android:layout_height="25dp"-->
-                <!--android:background="@mipmap/ic_scan"-->
-                <!--android:layout_gravity="center"-->
-                <!--/>-->
+    <!--<ImageButton-->
+    <!--android:id="@+id/btn_scan"-->
+    <!--android:layout_width="25dp"-->
+    <!--android:layout_height="25dp"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:background="@mipmap/ic_scan" />-->
 
-        <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
     <!--</android.support.v7.widget.CardView>-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/actionbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="23dp"
+            android:background="@android:color/white"
+            android:paddingEnd="30dp">
+
+            <com.comeon.android.controls.GradientTextButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:text="Come on Friends"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/mapappointment_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:elevation="5dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/gradient_border"
+            android:focusable="true"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:id="@+id/mapappointment_image"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:src="@drawable/sample_img"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@id/mapappointment_image"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/txt_groupName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    >
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/ic_call"
+                        />
+                    <TextView
+                        android:id="@+id/txt_mapappointment_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13.5sp"
+/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    >
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/marker"
+                        />
+                    <TextView
+                        android:id="@+id/txt_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13.5sp"
+/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:layout_below="@id/mapappointment_image"
+                >
+                
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="导航"
+                    android:id="@+id/btn_navigate"
+                    android:background="@drawable/button_smallcorners"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:layout_marginRight="15dp"
+                    />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="COME ON"
+                    android:id="@+id/btn_enterDetails"
+                    android:background="@drawable/button_smallcorners"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
 
 </android.support.design.widget.CoordinatorLayout>

@@ -87,18 +87,18 @@ public class MapAppointmentFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //加载个性化地图文件
-//        setMapCustomFile(getActivity(), "custom_map_config.json");
+        //        setMapCustomFile(getActivity(), "custom_map_config.json");
         View view = inflater.inflate(R.layout.fragment_map_appointment, container, false);
         /*
             加载基础控件
          */
-        appoinmentLayout=(RelativeLayout)view.findViewById(R.id.mapappointment_layout);
-        appoinmentImage=(ImageView)view.findViewById(R.id.mapappointment_image);
-        appointmentName=(TextView)view.findViewById(R.id.txt_groupName);
-        appointmentContact=(TextView)view.findViewById(R.id.txt_mapappointment_phone);
-        appointmentDistance=(TextView)view.findViewById(R.id.txt_distance);
-        btn_comeON=(Button)view.findViewById(R.id.btn_enterDetails);
-        btn_navigate=(Button)view.findViewById(R.id.btn_navigate);
+        appoinmentLayout = (RelativeLayout) view.findViewById(R.id.mapappointment_layout);
+        appoinmentImage = (ImageView) view.findViewById(R.id.mapappointment_image);
+        appointmentName = (TextView) view.findViewById(R.id.txt_groupName);
+        appointmentContact = (TextView) view.findViewById(R.id.txt_mapappointment_phone);
+        appointmentDistance = (TextView) view.findViewById(R.id.txt_distance);
+        btn_comeON = (Button) view.findViewById(R.id.btn_enterDetails);
+        btn_navigate = (Button) view.findViewById(R.id.btn_navigate);
 
         /*
             加载地图
@@ -316,7 +316,7 @@ public class MapAppointmentFragment extends BaseFragment {
             info.putParcelable("order", orderList.get(i));
 
             //4、为overlay设置属性
-            OverlayOptions option = new MarkerOptions().position(new LatLng(orderList.get(i).getOrderStadium().getLatitude(), orderList.get(i).getOrderStadium().getLongitude())).icon(getMarkerBitMapDescriptor())
+            OverlayOptions option = new MarkerOptions().position(new LatLng(orderList.get(i).getLatitude(), orderList.get(i).getLongitude())).icon(getMarkerBitMapDescriptor())
                     .animateType(MarkerOptions.MarkerAnimateType.jump)
                     .extraInfo(info);
 
@@ -340,6 +340,24 @@ public class MapAppointmentFragment extends BaseFragment {
     }
 
     /**
+     * 处理放入的距离计算数据
+     *
+     * @param actualDistance 计算的距离数据
+     * @return UI显示的距离约值
+     */
+    private String workWithDistanceData(double actualDistance) {
+        if (actualDistance < 1000) {
+            return Math.round(actualDistance) + "m";  //四舍五入取整
+        } else if (actualDistance < 10000) {
+            int kmDigit = (int) actualDistance % 1000; //只取整（千米值）
+            long mDigit = (int) actualDistance / 1000 % 100;  ///百米值
+            return kmDigit + "." + mDigit + "km";
+        } else {
+            return "大于10km";
+        }
+    }
+
+    /**
      * 内部类的形式监听我的位置情况
      */
     public class MyLocationListener extends BDAbstractLocationListener {
@@ -357,7 +375,7 @@ public class MapAppointmentFragment extends BaseFragment {
                 MapStatus.Builder builder = new MapStatus.Builder();
                 last_status = builder.target(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).zoom(15.5f).build();
             }
-            currentPosition=new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
+            currentPosition = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
             buildSignal(bdLocation);
             LogUtil.e(TAG, bdLocation.getAddress().address);
         }
@@ -432,8 +450,10 @@ public class MapAppointmentFragment extends BaseFragment {
              */
             final AppointmentOrder order = marker.getExtraInfo().getParcelable("order");
             appointmentName.setText(order.getOrderName());
-            appointmentContact.setText(order.getOrderSponsor().getUserPhone());
-            double actualDistance=DistanceUtil.getDistance(new LatLng(order.getLatitude(),order.getLongitude()),currentPosition);
+            if (order.getOrderContact()!=null){
+                appointmentContact.setText(order.getOrderContact());
+            }
+            double actualDistance = DistanceUtil.getDistance(new LatLng(order.getLatitude(), order.getLongitude()), currentPosition);
             appointmentDistance.setText(workWithDistanceData(actualDistance));
 
             btn_comeON.setOnClickListener(new View.OnClickListener() {
@@ -456,26 +476,9 @@ public class MapAppointmentFragment extends BaseFragment {
     }
 
     /**
-     * 处理放入的距离计算数据
-     * @param actualDistance  计算的距离数据
-     * @return  UI显示的距离约值
-     */
-    private String workWithDistanceData(double actualDistance){
-        if (actualDistance<1000){
-            return Math.round(actualDistance)+"m";  //四舍五入取整
-        }else if(actualDistance<10000){
-            int kmDigit=(int)actualDistance%1000; //只取整（千米值）
-            long mDigit=Math.round(actualDistance/1000%100);  ///取四舍五入后的m值
-            return kmDigit+"."+mDigit+"km";
-        }else{
-            return "大于10km";
-        }
-    }
-
-    /**
      * 设置地图的基础点击事件
      */
-    class baiduMapOnClickListener implements BaiduMap.OnMapClickListener{
+    class baiduMapOnClickListener implements BaiduMap.OnMapClickListener {
         @Override
         public void onMapClick(LatLng latLng) {
             appoinmentLayout.setVisibility(View.GONE);

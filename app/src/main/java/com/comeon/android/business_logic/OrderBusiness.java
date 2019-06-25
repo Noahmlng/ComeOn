@@ -17,6 +17,7 @@ import com.comeon.android.db_accessing.SportsTypeDaoImpl;
 import com.comeon.android.db_accessing.UserInfoDao;
 import com.comeon.android.db_accessing.UserInfoDaoImpl;
 import com.comeon.android.util.LogUtil;
+import com.comeon.android.util.Utilities;
 
 import org.litepal.LitePal;
 import org.litepal.util.LitePalLog;
@@ -60,6 +61,9 @@ public class OrderBusiness implements OrderBusinessInterface {
 
     @Override
     public boolean createNewOrder(UserInfo loginUser, int peopleSize, String groupName, String contact, String location, SportsType selectedSportsType) {
+        /*
+            尚未实现
+         */
         try {
             AppointmentOrder newOrder = new AppointmentOrder();
             newOrder.setOrderName(groupName);
@@ -68,7 +72,7 @@ public class OrderBusiness implements OrderBusinessInterface {
             newOrder.setOrderLocation(location);
             newOrder.setOrderSponsor(loginUser);
             newOrder.setOrderSportsType(selectedSportsType);
-            appointmentOrderDao.insertNewOrder(newOrder);
+//            appointmentOrderDao.insertNewOrder(newOrder);
 
             //添加发起者为第一个参与者
             AttendanceRecord record = new AttendanceRecord();
@@ -78,6 +82,24 @@ public class OrderBusiness implements OrderBusinessInterface {
             return true;
         }catch(Exception ex){
             ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean createNewOrder(UserInfo loginUser, int peopleSize, String groupName, String contact, StadiumInfo stadiumInfo) {
+        try {
+            AppointmentOrder newOrder=appointmentOrderDao.insertNewOrder(loginUser, peopleSize, groupName, contact, stadiumInfo);
+
+            //添加发起者为第一个参与者
+            AttendanceRecord record = new AttendanceRecord();
+            record.setOrderId(newOrder.getId());
+            record.setParticipantId(loginUser.getId());
+            attendanceRecordDao.insertNewRecord(record);
+            return true;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            LogUtil.e(TAG, "发起订单出错："+ex.getMessage());
             return false;
         }
     }

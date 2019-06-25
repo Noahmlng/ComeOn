@@ -20,13 +20,18 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
     private String orderName;
     @Column(defaultValue = "10")
     private int orderExpectedSize;
-    private UserInfo orderSponsor;
+    private UserInfo orderSponsor; //之后要改为Id
+    private long orderSponsorId;
+
     private List<UserInfo> orderParticipants;
-    private StadiumInfo orderStadium;
+    private StadiumInfo orderStadium;  //可能不需要
+
     private Date orderLaunchTime;
     private Date orderAppointTime;
     private int orderStatus;
-    private SportsType orderSportsType;
+    private SportsType orderSportsType; //之后要改为Id
+    private long orderSportsTypeId;
+
     private String orderLocation;
     private String orderContact;
 
@@ -37,17 +42,22 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
     public AppointmentOrder() {
     }
 
+
     protected AppointmentOrder(Parcel in) {
-        id=in.readLong();
+        id = in.readLong();
         orderName = in.readString();
         orderExpectedSize = in.readInt();
         orderSponsor = in.readParcelable(UserInfo.class.getClassLoader());
+        orderSponsorId = in.readLong();
         orderParticipants = in.createTypedArrayList(UserInfo.CREATOR);
+        orderStadium = in.readParcelable(StadiumInfo.class.getClassLoader());
         orderStatus = in.readInt();
+        orderSportsType = in.readParcelable(SportsType.class.getClassLoader());
+        orderSportsTypeId = in.readLong();
         orderLocation = in.readString();
         orderContact = in.readString();
-        longitude=in.readDouble();
-        latitude=in.readDouble();
+        longitude = in.readDouble();
+        latitude = in.readDouble();
     }
 
     @Override
@@ -56,8 +66,12 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
         dest.writeString(orderName);
         dest.writeInt(orderExpectedSize);
         dest.writeParcelable(orderSponsor, flags);
+        dest.writeLong(orderSponsorId);
         dest.writeTypedList(orderParticipants);
+        dest.writeParcelable(orderStadium, flags);
         dest.writeInt(orderStatus);
+        dest.writeParcelable(orderSportsType, flags);
+        dest.writeLong(orderSportsTypeId);
         dest.writeString(orderLocation);
         dest.writeString(orderContact);
         dest.writeDouble(longitude);
@@ -191,5 +205,21 @@ public class AppointmentOrder extends LitePalSupport implements Parcelable {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public long getOrderSponsorId() {
+        return orderSponsorId;
+    }
+
+    public void setOrderSponsorId(long orderSponsorId) {
+        this.orderSponsorId = orderSponsorId;
+    }
+
+    public long getOrderSportsTypeId() {
+        return orderSportsTypeId;
+    }
+
+    public void setOrderSportsTypeId(long orderSportsTypeId) {
+        this.orderSportsTypeId = orderSportsTypeId;
     }
 }

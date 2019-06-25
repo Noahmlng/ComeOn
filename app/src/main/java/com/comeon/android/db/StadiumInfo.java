@@ -22,7 +22,9 @@ public class StadiumInfo extends LitePalSupport implements Parcelable {
     @Column(nullable = false)
     private String stadiumContact;
     private String stadiumDescription;
-    private SportsType sportsType;
+    private SportsType sportsType;  //后该做id
+    private long sportsTypeId;
+
     private String province;
     private String city;
     private String district;
@@ -41,22 +43,23 @@ public class StadiumInfo extends LitePalSupport implements Parcelable {
 
     public StadiumInfo(){}
 
+
     protected StadiumInfo(Parcel in) {
         id = in.readLong();
         avgConsumption = in.readFloat();
         stadiumName = in.readString();
         stadiumContact = in.readString();
         stadiumDescription = in.readString();
+        sportsType = in.readParcelable(SportsType.class.getClassLoader());
+        sportsTypeId = in.readLong();
         province = in.readString();
         city = in.readString();
         district = in.readString();
         street = in.readString();
         streetNumber = in.readString();
         stadiumStatus = in.readInt();
-        orders = in.createTypedArrayList(AppointmentOrder.CREATOR);
-        stadiumIcon = in.createByteArray();
-        longitude=in.readDouble();
-        latitude=in.readDouble();
+        longitude = in.readDouble();
+        latitude = in.readDouble();
     }
 
     @Override
@@ -66,14 +69,14 @@ public class StadiumInfo extends LitePalSupport implements Parcelable {
         dest.writeString(stadiumName);
         dest.writeString(stadiumContact);
         dest.writeString(stadiumDescription);
+        dest.writeParcelable(sportsType, flags);
+        dest.writeLong(sportsTypeId);
         dest.writeString(province);
         dest.writeString(city);
         dest.writeString(district);
         dest.writeString(street);
         dest.writeString(streetNumber);
         dest.writeInt(stadiumStatus);
-        dest.writeTypedList(orders);
-        dest.writeByteArray(stadiumIcon);
         dest.writeDouble(longitude);
         dest.writeDouble(latitude);
     }
@@ -213,5 +216,13 @@ public class StadiumInfo extends LitePalSupport implements Parcelable {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public long getSportsTypeId() {
+        return sportsTypeId;
+    }
+
+    public void setSportsTypeId(long sportsTypeId) {
+        this.sportsTypeId = sportsTypeId;
     }
 }

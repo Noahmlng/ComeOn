@@ -65,13 +65,22 @@ public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
         return participants;
     }
 
-
-
     @Override
-    public AppointmentOrder insertNewOrder(AppointmentOrder newOrder) {
-        newOrder.setOrderSponsor(LitePal.find(UserInfo.class, newOrder.getOrderSponsor().getId()));
-        newOrder.setOrderSportsType(LitePal.find(SportsType.class, newOrder.getOrderSportsType().getId()));
-        newOrder.setOrderLaunchTime(new Date(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH)+1,Calendar.getInstance().get(Calendar.DATE),Calendar.getInstance().get(Calendar.HOUR),Calendar.getInstance().get(Calendar.MINUTE),Calendar.getInstance().get(Calendar.SECOND)));
+    public AppointmentOrder insertNewOrder(UserInfo loginUser, int peopleSize, String groupName, String contact, StadiumInfo stadiumInfo) {
+        AppointmentOrder newOrder = new AppointmentOrder();
+        newOrder.setOrderAppointTime(new Date(2019,8,30)); //暂时未处理约定时间
+        newOrder.setOrderExpectedSize(peopleSize);
+        newOrder.setOrderName(groupName);
+        newOrder.setOrderContact(contact);
+        newOrder.setOrderSponsor(loginUser);
+        newOrder.setOrderSponsorId(loginUser.getId());
+//        newOrder.setOrderSportsType(stadiumInfo.getSportsType());
+//        newOrder.setOrderSportsTypeId(stadiumInfo.getSportsType().getId());
+        newOrder.setOrderSportsTypeId(stadiumInfo.getSportsTypeId());
+        newOrder.setLongitude(stadiumInfo.getLongitude());
+        newOrder.setLatitude(stadiumInfo.getLatitude());
+        newOrder.setOrderLocation(stadiumInfo.getStreet()+stadiumInfo.getStreetNumber());
+        newOrder.setOrderLaunchTime(Utilities.getNow());
         newOrder.setOrderStatus(0);
         newOrder.save();
         return newOrder;
@@ -140,14 +149,21 @@ public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
         try {
             Cursor cursor = LitePal.findBySQL("select * from AppointmentOrder where id = "+order.getId());
             while (cursor.moveToNext()) {
+                LogUtil.d("订单的sportsTypeId：",""+cursor.getLong(cursor.getColumnIndex("sportstype_id")));
+                LogUtil.d("订单的sponsorId：",""+cursor.getLong(cursor.getColumnIndex("userinfo_id")));
+                LogUtil.d("订单的stadiumId：",""+cursor.getLong(cursor.getColumnIndex("stadiuminfo_id")));
+
                 SportsType sportsType = LitePal.find(SportsType.class, cursor.getLong(cursor.getColumnIndex("sportstype_id")));
+                if (sportsType==null){
+                    sportsType=LitePal.find(SportsType.class, order.getOrderSportsTypeId());
+                }
                 order.setOrderSportsType(sportsType);
 
                 UserInfo sponsor = LitePal.find(UserInfo.class, cursor.getLong(cursor.getColumnIndex("userinfo_id")));
+                if (sponsor==null){
+                    sponsor=LitePal.find(UserInfo.class, order.getOrderSponsorId());
+                }
                 order.setOrderSponsor(sponsor);
-
-                StadiumInfo stadium = LitePal.find(StadiumInfo.class, cursor.getLong(cursor.getColumnIndex("stadiuminfo_id")));
-                order.setOrderStadium(stadium);
 
                 //                order.setOrderParticipants(getAllParticipantsByOrderId(order.getId()));   因为存在动态操作，所以不在此处进行加载
             }

@@ -32,8 +32,7 @@ public class StadiumInfoDaoImpl implements StadiumInfoDao {
         try {
             stadiumInfoList = LitePal.findAll(StadiumInfo.class);
             for (int i = 0; i < stadiumInfoList.size(); i++) {
-                StadiumInfo stadiumInfo = stadiumInfoList.get(i);
-                stadiumInfo = loadStadiumInfo(stadiumInfo);
+                StadiumInfo stadiumInfo = loadStadiumInfo(stadiumInfoList.get(i));
                 stadiumInfoList.set(i, stadiumInfo);
             }
         } catch (LitePalSupportException ex) {
@@ -104,6 +103,9 @@ public class StadiumInfoDaoImpl implements StadiumInfoDao {
             Cursor cursor = LitePal.findBySQL("select * from StadiumInfo where id = " + stadiumInfo.getId());
             while (cursor.moveToNext()) {
                 SportsType sportsType = LitePal.find(SportsType.class, cursor.getLong(cursor.getColumnIndex("sportstype_id")));
+                if (sportsType==null){
+                    sportsType=LitePal.find(SportsType.class, stadiumInfo.getSportsTypeId());//尚未考虑category的问题
+                }
                 stadiumInfo.setSportsType(sportsType);
             }
         } catch (Exception ex) {

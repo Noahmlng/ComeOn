@@ -81,7 +81,9 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
         /*
             展示数据库的值
          */
-        viewHolder.img_headIcon.setImageBitmap(Utilities.translateBytes(order.getOrderSponsor().getHeadIcon()));
+        if (order.getOrderSponsor()!=null){
+            viewHolder.img_headIcon.setImageBitmap(Utilities.translateBytes(order.getOrderSponsor().getHeadIcon()));
+        }
         viewHolder.txt_launchTime.setText("发布于" + Utilities.calculateTimeGapFromNowInMinutes(order.getOrderLaunchTime()) + "前");
         /*
             如果用户选择的是场馆信息，则输入场馆的地址
@@ -98,7 +100,10 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
          */
         List<UserInfo> participants=orderBusiness.loadParticipantsList(order); //参与者的List
         int memberGapCount=order.getOrderExpectedSize()-participants.size();//记录缺口人数
-        String typeName=order.getOrderSportsType().getTypeName();//记录订单的运动类型
+        String typeName="";
+        if (order.getOrderSportsType()!=null){
+            typeName=order.getOrderSportsType().getTypeName();//记录订单的运动类型
+        }
 
         /*
             用SpannableString给文字做特殊处理
@@ -106,7 +111,7 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
 
         //1、处理运动类型文字
         SpannableStringBuilder typeSizeTip=new SpannableStringBuilder("发出" + typeName+"邀约\t  ");
-        typeSizeTip.setSpan(new ForegroundColorSpan(Color.RED),2, 2+typeName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //为组团的运动类型加上前景色
+        typeSizeTip.setSpan(new StyleSpan(Typeface.BOLD),2, 2+typeName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //为组团的运动类型加上前景色
         typeSizeTip.setSpan(new StyleSpan(Typeface.BOLD),2, 2+typeName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //给组团的运动类型加粗处理
 
 
@@ -118,12 +123,12 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
         if(memberGapCount>0){
             typeSizeTip.append("仍需" +memberGapCount + "人");
             int length=(memberGapCount>=10)?2:1; //记录缺口人数的数字长度
-            typeSizeTip.setSpan(new ForegroundColorSpan(Color.RED),2+typeName.length()+7, 2+typeName.length()+7+length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //为组团的缺口人数加上前景色
+            typeSizeTip.setSpan(new StyleSpan(Typeface.BOLD),2+typeName.length()+7, 2+typeName.length()+7+length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //为组团的缺口人数加上前景色
             typeSizeTip.setSpan(new StyleSpan(Typeface.BOLD),2+typeName.length()+7, 2+typeName.length()+7+length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //给组团的缺口人数加粗处理
         }else{
             typeSizeTip.append("已成功组团（" +participants.size() + "人）");
             int length=(participants.size()>=10)?2:1; //记录已成功组团的人数的数字长度
-            typeSizeTip.setSpan(new ForegroundColorSpan(Color.RED),2+typeName.length()+11, 2+typeName.length()+11+length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //为组团的缺口人数加上前景色
+            typeSizeTip.setSpan(new StyleSpan(Typeface.BOLD),2+typeName.length()+11, 2+typeName.length()+11+length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //为组团的缺口人数加上前景色
             typeSizeTip.setSpan(new StyleSpan(Typeface.BOLD),2+typeName.length()+11, 2+typeName.length()+11+length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //给组团的缺口人数加粗处理
         }
         viewHolder.txt_groupInfo.setText(typeSizeTip);

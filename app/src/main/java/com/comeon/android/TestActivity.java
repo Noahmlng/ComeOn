@@ -5,11 +5,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.comeon.android.business_logic.OrderBusiness;
+import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.util.Activity_Parent;
 import com.comeon.android.util.HttpUtil;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
+
+import org.litepal.LitePal;
 
 import java.io.IOException;
 
@@ -53,28 +58,8 @@ public class TestActivity extends Activity_Parent {
             }
         });
 
-        ImageView icon = new ImageView(this);
-        icon.setImageResource(R.mipmap.ic_plus);
-
-        com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton floatingActionButton = new com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton.Builder(this).setContentView(icon).build();
-
-        SubActionButton.Builder itemBuidler1 = new SubActionButton.Builder(this);
-        ImageView itemIcon1 = new ImageView(this);
-        itemIcon1.setImageResource(R.mipmap.ic_plus);
-        SubActionButton button1 = itemBuidler1.setContentView(itemIcon1).build();
-
-
-        SubActionButton.Builder itemBuidler2 = new SubActionButton.Builder(this);
-        ImageView itemIcon2 = new ImageView(this);
-        itemIcon2.setImageResource(R.mipmap.ic_plus);
-        SubActionButton button2 = itemBuidler2.setContentView(itemIcon2).build();
-
-        SubActionButton.Builder itemBuidler3 = new SubActionButton.Builder(this);
-        ImageView itemIcon3 = new ImageView(this);
-        itemIcon3.setImageResource(R.mipmap.ic_plus);
-        SubActionButton button3 = itemBuidler3.setContentView(itemIcon3).build();
-
-        FloatingActionMenu actionMenu=new FloatingActionMenu.Builder(this).addSubActionView(button1).addSubActionView(button2).addSubActionView(button3).attachTo(floatingActionButton).build();
-
+        Toast.makeText(this, "当前有"+LitePal.count(AppointmentOrder.class) +"订单",Toast.LENGTH_SHORT).show();
+        OrderBusiness orderBusiness=new OrderBusiness();
+        Toast.makeText(this, "最后一个订单的发起者电话："+orderBusiness.getAllOrders().get(4).getOrderSponsor().getUserPhone(),Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,6 +1,7 @@
 package com.comeon.android.db_accessing;
 
 import com.comeon.android.db.AppointmentOrder;
+import com.comeon.android.db.StadiumInfo;
 import com.comeon.android.db.UserInfo;
 
 import java.util.ArrayList;
@@ -26,10 +27,9 @@ public interface AppointmentOrderDao {
 
     /**
      * 新增订单
-     * @param newOrder
      * @return  新增订单对象
      */
-    AppointmentOrder insertNewOrder(AppointmentOrder newOrder);
+    AppointmentOrder insertNewOrder(UserInfo loginUser, int peopleSize, String groupName, String contact, StadiumInfo stadiumInfo);
 
 
     /**

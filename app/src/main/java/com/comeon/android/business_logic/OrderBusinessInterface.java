@@ -2,6 +2,7 @@ package com.comeon.android.business_logic;
 
 import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.db.SportsType;
+import com.comeon.android.db.StadiumInfo;
 import com.comeon.android.db.UserInfo;
 import com.comeon.android.db_accessing.AppointmentOrderDao;
 
@@ -49,6 +50,18 @@ public interface OrderBusinessInterface {
      * @return
      */
     boolean createNewOrder(UserInfo loginUser, int peopleSize, String groupName, String contact, String location, SportsType selectedSportsType);
+
+    /**
+     * 发布新的组团信息
+     *
+     * @param loginUser          登录用户为发起者
+     * @param peopleSize         组团人数
+     * @param groupName          团名
+     * @param contact            订单联系电话
+     * @param stadiumInfo        选中场馆
+     * @return
+     */
+    boolean createNewOrder(UserInfo loginUser, int peopleSize, String groupName, String contact, StadiumInfo stadiumInfo);
 
 
     /**

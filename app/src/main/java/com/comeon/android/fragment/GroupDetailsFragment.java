@@ -74,12 +74,18 @@ public class GroupDetailsFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     protected void initControls(View view) {
+        if (group.getOrderSponsor()==null){
+            return;
+        }
+
         //加载发起者头像
         head_icon = (CircleImageView) view.findViewById(R.id.head_icon);
         head_icon.setImageBitmap(Utilities.translateBytes(group.getOrderSponsor().getHeadIcon()));
 
         //加载组团名（/发起人姓名）
         txt_sponsorName = (TextView) view.findViewById(R.id.txt_sponsorName);
+
+        //???
         if (group.getOrderName() != null) {
             txt_sponsorName.setText(group.getOrderName());
         } else {

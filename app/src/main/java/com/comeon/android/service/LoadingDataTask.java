@@ -196,6 +196,7 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             stadium1.setAvgConsumption(90);
             SportsType type = sportsTypeDao.findSportsTypeByName("足球");
             stadium1.setSportsType(type);
+            stadium1.setSportsTypeId(type.getId());
 
             /*
             位置信息
@@ -221,7 +222,9 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             stadium2.setDistrict("天河区");
             stadium2.setStreet("天河路");
             stadium2.setStreetNumber("299号");
-            stadium2.setSportsType(sportsTypeDao.findSportsTypeByName("足球"));
+            SportsType soccer=sportsTypeDao.findSportsTypeByName("足球");
+            stadium2.setSportsType(soccer);
+            stadium1.setSportsTypeId(type.getId());
             /*
                 经纬度信息：广州天河体育中心
              */
@@ -238,7 +241,8 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             stadium3.setDistrict("朝阳区");
             stadium3.setStreet("工人体育场北路");
             stadium3.setStreetNumber("1号");
-            stadium3.setSportsType(sportsTypeDao.findSportsTypeByName("足球"));
+            stadium3.setSportsType(soccer);
+            stadium3.setSportsTypeId(soccer.getId());
                         /*
             经纬度信息：北京工人体育场
              */
@@ -250,7 +254,9 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             stadium4.setStadiumName("东莞体育馆");
             stadium4.setStadiumContact("12345678910");
             stadium4.setAvgConsumption(5);
-            stadium4.setSportsType(sportsTypeDao.findSportsTypeByName("篮球"));
+            SportsType basketball=sportsTypeDao.findSportsTypeByName("篮球");
+            stadium4.setSportsType(basketball);
+            stadium4.setSportsTypeId(basketball.getId());
                         /*
             位置信息
              */
@@ -276,7 +282,8 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             stadium5.setDistrict("虎门镇");
             stadium5.setStreet("连升中路");
             stadium5.setStreetNumber("4号");
-            stadium5.setSportsType(sportsTypeDao.findSportsTypeByName("篮球"));
+            stadium5.setSportsType(basketball);
+            stadium5.setSportsTypeId(basketball.getId());
             /*
                 经纬度信息：虎门公园
              */
@@ -302,7 +309,9 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
              */
             stadium6.setLongitude(113.757089);
             stadium6.setLatitude(23.031066);
-            stadium6.setSportsType(sportsTypeDao.findSportsTypeByName("羽毛球"));
+            SportsType badminton=sportsTypeDao.findSportsTypeByName("羽毛球");
+            stadium6.setSportsType(badminton);
+            stadium6.setSportsTypeId(badminton.getId());
             stadium6.save();
 
             StadiumInfo stadium8 = new StadiumInfo();
@@ -319,7 +328,9 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
              */
             stadium8.setLongitude(113.695774);
             stadium8.setLatitude(22.811979);
-            stadium8.setSportsType(sportsTypeDao.findSportsTypeByName("网球"));
+            SportsType tennis=sportsTypeDao.findSportsTypeByName("网球");
+            stadium8.setSportsType(tennis);
+            stadium8.setSportsTypeId(tennis.getId());
             stadium8.save();
 
         /*
@@ -487,12 +498,15 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             order1.setOrderAppointTime(new Date(2019,6,30));
             order1.setOrderExpectedSize(15);
             order1.setOrderLaunchTime(new Date(2019, 4, 19));
-            order1.setOrderStadium(stadium1);
             order1.setOrderName("热血足球团");
             order1.setOrderSponsor(user1);
             order1.setOrderStatus(0);
-            order1.setOrderContact(order1.getOrderSponsor().getUserPhone());
-            order1.setOrderSportsType(sportsTypeDao.findSportsTypeByName("足球"));
+            order1.setOrderContact(user1.getUserPhone());
+            order1.setOrderSportsType(soccer);
+            order1.setOrderSportsTypeId(soccer.getId());
+            order1.setLongitude(stadium1.getLongitude());
+            order1.setLatitude(stadium1.getLatitude());
+            order1.setOrderLocation(stadium1.getStreet()+stadium1.getStreetNumber());
             order1.save();
 
             AttendanceRecord participant1 = new AttendanceRecord();
@@ -514,13 +528,15 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             order2.setOrderAppointTime(new Date(2019, 5, 15));
             order2.setOrderExpectedSize(9);
             order2.setOrderLaunchTime(new Date(2019, 4, 2));
-            order2.setOrderStadium(stadium2);
             order2.setOrderName("NBA级别篮球局");
             order2.setOrderSponsor(user2);
             order2.setOrderStatus(0);
-            order2.setOrderContact(order2.getOrderSponsor().getUserPhone());
-            type = sportsTypeDao.findSportsTypeByName("篮球");
-            order2.setOrderSportsType(type);
+            order2.setOrderContact(user2.getUserPhone());
+            order2.setOrderSportsType(basketball);
+            order2.setOrderSportsTypeId(basketball.getId());
+            order2.setLongitude(stadium2.getLongitude());
+            order2.setLatitude(stadium2.getLatitude());
+            order2.setOrderLocation(stadium2.getStreet()+stadium2.getStreetNumber());
             order2.save();
 
             AttendanceRecord participant4 = new AttendanceRecord();
@@ -545,11 +561,13 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             order3.setOrderName("打个羽毛球？");
             order3.setOrderSponsor(user3);
             order3.setOrderStatus(1);
-            order3.setOrderContact(order3.getOrderSponsor().getUserPhone());
-            type = sportsTypeDao.findSportsTypeByName("羽毛球");
-            order3.setOrderSportsType(type);
+            order3.setOrderContact(user3.getUserPhone());
+            order3.setOrderSportsType(badminton);
+            order3.setOrderSportsTypeId(badminton.getId());
 //            order3.setOrderLocation("广东省东莞市市辖区建设路一号球场");
-            order3.setOrderStadium(stadium6);
+            order3.setLongitude(stadium6.getLongitude());
+            order3.setLatitude(stadium6.getLatitude());
+            order3.setOrderLocation(stadium6.getStreet()+stadium6.getStreetNumber());
             order3.save();
 
             AttendanceRecord participant7 = new AttendanceRecord();

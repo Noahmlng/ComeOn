@@ -1,9 +1,14 @@
 package com.comeon.android.fragment;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -18,6 +24,11 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.bikenavi.BikeNavigateHelper;
+import com.baidu.mapapi.bikenavi.adapter.IBEngineInitListener;
+import com.baidu.mapapi.bikenavi.adapter.IBRoutePlanListener;
+import com.baidu.mapapi.bikenavi.model.BikeRoutePlanError;
+import com.baidu.mapapi.bikenavi.params.BikeNaviLaunchParam;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -34,8 +45,17 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
+import com.baidu.mapapi.walknavi.WalkNavigateHelper;
+import com.baidu.mapapi.walknavi.adapter.IWEngineInitListener;
+import com.baidu.mapapi.walknavi.adapter.IWRoutePlanListener;
+import com.baidu.mapapi.walknavi.model.WalkRoutePlanError;
+import com.baidu.mapapi.walknavi.params.WalkNaviLaunchParam;
+import com.baidu.mapapi.walknavi.params.WalkRouteNodeInfo;
+import com.baidu.platform.comapi.walknavi.widget.ArCameraView;
+import com.comeon.android.BNaviGuideActivity;
 import com.comeon.android.InfoDisplayActivity;
 import com.comeon.android.R;
+import com.comeon.android.WNaviGuideActivity;
 import com.comeon.android.business_logic.OrderBusiness;
 import com.comeon.android.business_logic.OrderBusinessInterface;
 import com.comeon.android.db.AppointmentOrder;
@@ -87,7 +107,7 @@ public class MapAppointmentFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //加载个性化地图文件
-        //        setMapCustomFile(getActivity(), "custom_map_config.json");
+                setMapCustomFile(getActivity(), "custom_map_config.json");
         View view = inflater.inflate(R.layout.fragment_map_appointment, container, false);
         /*
             加载基础控件
@@ -117,6 +137,7 @@ public class MapAppointmentFragment extends BaseFragment {
         bMap.setMyLocationEnabled(true);
         MapView.setMapCustomEnable(true);
 
+        requestAccessLocationPermission(); //申请定位权限
         mLocationClient = new LocationClient(this.getActivity());
         initLocationSettings();
         MyLocationListener myLocatioListener = new MyLocationListener();
@@ -435,7 +456,7 @@ public class MapAppointmentFragment extends BaseFragment {
          * @return
          */
         @Override
-        public boolean onMarkerClick(Marker marker) {
+        public boolean onMarkerClick(final Marker marker) {
             /*
                 1、显示layout
                 2、加载信息
@@ -453,7 +474,7 @@ public class MapAppointmentFragment extends BaseFragment {
             if (order.getOrderContact()!=null){
                 appointmentContact.setText(order.getOrderContact());
             }
-            double actualDistance = DistanceUtil.getDistance(new LatLng(order.getLatitude(), order.getLongitude()), currentPosition);
+            final double actualDistance = DistanceUtil.getDistance(new LatLng(order.getLatitude(), order.getLongitude()), currentPosition);
             appointmentDistance.setText(workWithDistanceData(actualDistance));
 
             btn_comeON.setOnClickListener(new View.OnClickListener() {
@@ -468,7 +489,14 @@ public class MapAppointmentFragment extends BaseFragment {
             btn_navigate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    requestCameraPermission();
+                    if (actualDistance<1000){
+                        walkNavigate(new LatLng(order.getLatitude(),order.getLongitude())); //步行导航暂未成功
+                    }else if (actualDistance<10000){
+                        bikeNavigate(new LatLng(order.getLatitude(),order.getLongitude())); //骑行导航
+                    }else{
+                        Toast.makeText(getActivity(), "距离超过可导航范围（"+workWithDistanceData(actualDistance)+"）", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             return true;
@@ -487,6 +515,183 @@ public class MapAppointmentFragment extends BaseFragment {
         @Override
         public boolean onMapPoiClick(MapPoi mapPoi) {
             return false;
+        }
+    }
+
+
+    /**
+     * 步行导航
+     * @param endPt  终点
+     */
+    private void walkNavigate(final LatLng endPt){
+        // 获取导航控制类
+        // 引擎初始化
+        WalkNavigateHelper.getInstance().initNaviEngine(this.getActivity(), new IWEngineInitListener() {
+            @Override
+            public void engineInitSuccess() {
+                //引擎初始化成功的回调
+                walkRoutePlanWithParam(endPt);
+            }
+
+            @Override
+            public void engineInitFail() {
+                //引擎初始化失败的回调
+                Toast.makeText(getActivity(), "导航引擎初始化失败",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * 步行算路
+     * @param endPt  终点LatLng
+     */
+    private void walkRoutePlanWithParam(LatLng endPt){
+        //构造WalkNaviLaunchParam
+        WalkNaviLaunchParam mParam=new WalkNaviLaunchParam();
+        WalkRouteNodeInfo startNode=new WalkRouteNodeInfo();//起点
+        startNode.setLocation(currentPosition);
+        WalkRouteNodeInfo destNode=new WalkRouteNodeInfo();//终点
+        startNode.setLocation(endPt);
+
+        mParam.startNodeInfo(startNode);
+        mParam.endNodeInfo(destNode);
+        mParam.stPt(currentPosition).endPt(endPt);
+
+
+        //发起算路
+        WalkNavigateHelper.getInstance().routePlanWithParams(mParam, new IWRoutePlanListener() {
+            @Override
+            public void onRoutePlanStart() {
+                //开始算路的回调
+                Toast.makeText(getActivity(),"发起算路",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRoutePlanSuccess() {
+                Toast.makeText(getActivity(),"算路成功",Toast.LENGTH_SHORT).show();
+                //算路成功
+                //跳转至诱导页面
+                Intent intent = new Intent(getActivity(), WNaviGuideActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onRoutePlanFail(WalkRoutePlanError walkRoutePlanError) {
+                //算路失败的回调
+            }
+        });
+    }
+
+
+    /**
+     * 自行车导航
+     * @param endPt  终点LatLng
+     */
+    private void bikeNavigate(final LatLng endPt){
+        // 获取导航控制类
+        // 引擎初始化
+        BikeNavigateHelper.getInstance().initNaviEngine(getActivity(), new IBEngineInitListener() {
+            @Override
+            public void engineInitSuccess() {
+                //骑行导航初始化成功之后的回调
+                bikeRoutePlanWithParam(endPt);
+            }
+
+            @Override
+            public void engineInitFail() {
+                //骑行导航初始化失败之后的回调
+            }
+        });
+    }
+
+    private void bikeRoutePlanWithParam(LatLng endPt){
+        //构造BikeNaviLaunchParam
+        //.vehicle(0)默认的普通骑行导航
+        BikeNaviLaunchParam param = new BikeNaviLaunchParam().stPt(currentPosition).endPt(endPt).vehicle(0);
+        //发起算路
+        BikeNavigateHelper.getInstance().routePlanWithParams(param, new IBRoutePlanListener() {
+            @Override
+            public void onRoutePlanStart() {
+                //执行算路开始的逻辑
+            }
+
+            @Override
+            public void onRoutePlanSuccess() {
+                //算路成功
+                //跳转至诱导页面
+                Intent intent = new Intent(getActivity(), BNaviGuideActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onRoutePlanFail(BikeRoutePlanError bikeRoutePlanError) {
+                //执行算路失败的逻辑
+            }
+        });
+    }
+
+
+    /**
+     * 申请定位权限
+     */
+    private void requestAccessLocationPermission(){
+        List<String> permissionList = new ArrayList<String>();
+        if (ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+
+        //如果还有需要申请的权限，则开始发起申请
+        if (!permissionList.isEmpty()) {
+            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
+            ActivityCompat.requestPermissions(this.getActivity(), permissions, 1);
+        }
+    }
+
+    /**
+     * 申请照相机权限
+     */
+    private void requestCameraPermission(){
+        List<String> permissionList = new ArrayList<String>();
+        if (ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.CAMERA);
+        }
+
+        //如果还有需要申请的权限，则开始发起申请
+        if (!permissionList.isEmpty()) {
+            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
+            ActivityCompat.requestPermissions(this.getActivity(), permissions, 2);
+        }
+    }
+
+
+    /**
+     * 处理返回的权限结果
+     * @param requestCode  请求码
+     * @param permissions  权限列表
+     * @param grantResults 申请权限的结果
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (permissions.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            Toast.makeText(this.getActivity(), "附近服务需要位置服务权限", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                break;
+
+            case 2:
+                if (permissions.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            Toast.makeText(this.getActivity(), "导航需要使用摄像机权限", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                break;
         }
     }
 }

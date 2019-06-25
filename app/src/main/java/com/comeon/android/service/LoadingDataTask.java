@@ -333,6 +333,60 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             stadium8.setSportsTypeId(tennis.getId());
             stadium8.save();
 
+            StadiumInfo stadium9 = new StadiumInfo();
+            stadium9.setStadiumName("豪岗村篮球场");
+            stadium9.setStadiumContact("12345678910");
+            stadium9.setAvgConsumption(0);
+            stadium9.setProvince("广东省");
+            stadium9.setCity("东莞市");
+            stadium9.setDistrict("东莞市市辖区");
+            stadium9.setStreet("莞太路西");
+            stadium9.setStreetNumber("");
+            /*
+                经纬度信息：豪岗村篮球场（无法handle复合类型）
+             */
+            stadium9.setLongitude(113.751303);
+            stadium9.setLatitude(23.034623);
+            stadium9.setSportsType(basketball);
+            stadium9.setSportsTypeId(basketball.getId());
+            stadium9.save();
+
+            StadiumInfo stadium10 = new StadiumInfo();
+            stadium10.setStadiumName("辉腾百花羽毛球馆");
+            stadium10.setStadiumContact("12345678910");
+            stadium10.setAvgConsumption(25);
+            stadium10.setProvince("广东省");
+            stadium10.setCity("东莞市");
+            stadium10.setDistrict("东莞市市辖区");
+            stadium10.setStreet("创业路振兴街");
+            stadium10.setStreetNumber("2号");
+            /*
+                经纬度信息：百花羽毛球馆（无法handle复合类型）
+             */
+            stadium10.setLongitude(113.750414);
+            stadium10.setLatitude(23.040032);
+            stadium10.setSportsType(badminton);
+            stadium10.setSportsTypeId(badminton.getId());
+            stadium10.save();
+
+            StadiumInfo stadium11 = new StadiumInfo();
+            stadium11.setStadiumName("建设小学足球场");
+            stadium11.setStadiumContact("12345678910");
+            stadium11.setAvgConsumption(0);
+            stadium11.setProvince("广东省");
+            stadium11.setCity("东莞市");
+            stadium11.setDistrict("东莞市市辖区");
+            stadium11.setStreet("运河东三路");
+            stadium11.setStreetNumber("51号");
+            /*
+                经纬度信息：建设小学足球场（无法handle复合类型）
+             */
+            stadium11.setLongitude(113.749047);
+            stadium11.setLatitude(23.038988);
+            stadium11.setSportsType(soccer);
+            stadium11.setSportsTypeId(soccer.getId());
+            stadium11.save();
+
         /*
             初始化好友各自为好友
          */

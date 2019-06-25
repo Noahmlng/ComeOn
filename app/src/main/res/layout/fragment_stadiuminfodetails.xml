@@ -24,6 +24,7 @@
         android:scrollbars="vertical"
         android:scrollbarStyle="insideInset"
         android:scrollbarThumbVertical="@drawable/dropdown_bar_white"
+        android:background="@drawable/sample_img"
         >
 
 

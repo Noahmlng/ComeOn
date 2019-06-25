@@ -62,9 +62,7 @@
             android:enabled="true"
             android:process=":remote" />
 
-        <activity android:name=".TestActivity" >
-
-        </activity>
+        <activity android:name=".TestActivity" />
 
         <service
             android:name=".service.LoadingService"
@@ -87,7 +85,9 @@
             android:name=".InfoDisplayActivity"
             android:launchMode="singleTop" />
         <activity android:name=".LaunchOrderActivity" />
-        <activity android:name=".ChatActivity"></activity>
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".WNaviGuideActivity" />
+        <activity android:name=".BNaviGuideActivity"></activity>
     </application>
 
 </manifest>

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 用户参加组团记录数据库访问接口实现类
  */
-public class AttendanceRecordDaoImpl implements AttendanceRecordDao {
+public class AttendanceRecordDaoImpl extends BaseDao implements AttendanceRecordDao {
     private static final String TAG = "AttendanceRecordDaoImpl";
 
     @Override

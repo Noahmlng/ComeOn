@@ -16,7 +16,7 @@ public class UserInfo extends LitePalSupport implements Parcelable {
 
     private long id;
     @Column(nullable = false)
-    private long userLoginId;
+    private long userLoginId;//没有必要
 
     @Column(nullable = false)
     private String userPhone;
@@ -31,8 +31,6 @@ public class UserInfo extends LitePalSupport implements Parcelable {
     private Date registerTime;
 
     private float acceptedDistance;
-
-    private Date lastModifiedTime;
 
     private List<AppointmentOrder> sponsoredOrder;
 
@@ -162,14 +160,6 @@ public class UserInfo extends LitePalSupport implements Parcelable {
 
     public void setAcceptedDistance(float acceptedDistance) {
         this.acceptedDistance = acceptedDistance;
-    }
-
-    public Date getLastModifiedTime() {
-        return lastModifiedTime;
-    }
-
-    public void setLastModifiedTime(Date lastModifiedTime) {
-        this.lastModifiedTime = lastModifiedTime;
     }
 
     public List<AppointmentOrder> getSponsoredOrder() {

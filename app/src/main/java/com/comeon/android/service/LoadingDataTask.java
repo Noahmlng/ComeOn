@@ -143,7 +143,6 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             user1.setHeadIcon(Utilities.decodeResource(R.drawable.head_icon_sample2));
             user1.setUserNickName("Noah");
             user1.setUserPhone("17620388542");
-            user1.setLastModifiedTime(new Date());
             user1.setRegisterTime(new Date(2016, 10, 15));
             user1.setUserGender(0);
             user1.save();
@@ -164,7 +163,6 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             user2.setUserBirthday(new Date(1980, 12, 5));
             user2.setHeadIcon(Utilities.decodeResource(R.drawable.head_icon_sample1));
             user2.setUserPhone("17988554477");
-            user2.setLastModifiedTime(new Date());
             user2.setRegisterTime(new Date(2017, 4, 1));
             user2.save();
 
@@ -180,212 +178,165 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             user3.setHeadIcon(Utilities.decodeResource(R.drawable.head_icon_sample3));
             user3.setUserPhone("13688975564");
             user3.setUserNickName("Mike");
-            user3.setLastModifiedTime(new Date());
             user3.setRegisterTime(new Date(2014, 3, 10));
             user3.setUserGender(1);
             user3.save();
 
 
             SportsTypeDao sportsTypeDao = new SportsTypeDaoImpl();
+            SportsType soccer = sportsTypeDao.findSportsTypeByName("足球");
+            SportsType basketball = sportsTypeDao.findSportsTypeByName("篮球");
+            SportsType badminton = sportsTypeDao.findSportsTypeByName("羽毛球");
+
             /*
                 添加八个场馆信息
              */
             StadiumInfo stadium1 = new StadiumInfo();
-            stadium1.setStadiumName("索福德足球场");
-            stadium1.setStadiumContact("12345678910");
-            stadium1.setAvgConsumption(90);
-            SportsType type = sportsTypeDao.findSportsTypeByName("足球");
-            stadium1.setSportsType(type);
-            stadium1.setSportsTypeId(type.getId());
-
+            stadium1.setStadiumName("泥岗社区公园");
+            stadium1.setAvgConsumption(0);
+            stadium1.setSportsType(soccer);
+            stadium1.setSportsTypeId(soccer.getId());
             /*
             位置信息
              */
             stadium1.setProvince("广东省");
-            stadium1.setCity("东莞市");
-            stadium1.setDistrict("东莞市市辖区");
-            stadium1.setStreet("南城街道体育路");
-            stadium1.setStreetNumber("3号");
+            stadium1.setCity("深圳市");
+            stadium1.setDistrict("罗湖区");
+            stadium1.setStreet("金碧路");
+            stadium1.setStreetNumber("16号");
             /*
-            经纬度信息：东莞市体育馆
+            经纬度信息：泥岗社区公园
              */
-            stadium1.setLongitude(113.757089);
-            stadium1.setLatitude(23.031066);
+            stadium1.setLongitude(114.105508);
+            stadium1.setLatitude(22.575146);
             stadium1.save();
 
             StadiumInfo stadium2 = new StadiumInfo();
-            stadium2.setStadiumName("广州恒大主场");
-            stadium2.setStadiumContact("12345678910");
-            stadium2.setAvgConsumption(120);
+            stadium2.setStadiumName("深圳市风光小学");
+            stadium2.setStadiumContact("075582423696");
+            stadium2.setAvgConsumption(0);
             stadium2.setProvince("广东省");
-            stadium2.setCity("广州市");
-            stadium2.setDistrict("天河区");
-            stadium2.setStreet("天河路");
-            stadium2.setStreetNumber("299号");
-            SportsType soccer=sportsTypeDao.findSportsTypeByName("足球");
+            stadium2.setCity("深圳市");
+            stadium2.setDistrict("罗湖区");
+            stadium2.setStreet("泥岗西路");
+            stadium2.setStreetNumber("40号");
             stadium2.setSportsType(soccer);
-            stadium1.setSportsTypeId(type.getId());
+            stadium2.setSportsTypeId(soccer.getId());
             /*
-                经纬度信息：广州天河体育中心
+                经纬度信息：深圳凤光小学
              */
-            stadium2.setLongitude(113.331641);
-            stadium2.setLatitude(23.145248);
+            stadium2.setLongitude(114.106742);
+            stadium2.setLatitude(22.575534);
             stadium2.save();
 
+
             StadiumInfo stadium3 = new StadiumInfo();
-            stadium3.setStadiumName("北京工人体育场");
-            stadium3.setStadiumContact("(010)65016655");
-            stadium3.setAvgConsumption(5);
-            stadium3.setProvince("北京市");
-            stadium3.setCity("北京市");
-            stadium3.setDistrict("朝阳区");
-            stadium3.setStreet("工人体育场北路");
-            stadium3.setStreetNumber("1号");
-            stadium3.setSportsType(soccer);
-            stadium3.setSportsTypeId(soccer.getId());
-                        /*
-            经纬度信息：北京工人体育场
+            stadium3.setStadiumName("深圳体育馆篮球训练基地游泳馆分部");
+            stadium3.setAvgConsumption(50.0f);
+            stadium3.setProvince("广东省");
+            stadium3.setCity("深圳市");
+            stadium3.setDistrict("福田区");
+            stadium3.setStreet("笋岗西路");
+            stadium3.setStreetNumber("2006号");
+            stadium3.setSportsType(basketball);
+            stadium3.setSportsTypeId(basketball.getId());
+            /*
+            经纬度信息：深圳体育馆篮球训练基地游泳馆分部
              */
-            stadium3.setLongitude(116.4492528);
-            stadium3.setLatitude(39.939505);
+            stadium3.setLongitude(114.09504);
+            stadium3.setLatitude(22.562973);
             stadium3.save();
 
+
             StadiumInfo stadium4 = new StadiumInfo();
-            stadium4.setStadiumName("东莞体育馆");
-            stadium4.setStadiumContact("12345678910");
-            stadium4.setAvgConsumption(5);
-            SportsType basketball=sportsTypeDao.findSportsTypeByName("篮球");
-            stadium4.setSportsType(basketball);
-            stadium4.setSportsTypeId(basketball.getId());
-                        /*
-            位置信息
+            stadium4.setStadiumName("华富村社区-乒乓羽毛球场");
+            stadium4.setAvgConsumption(0);
+            stadium4.setSportsType(badminton);
+            stadium4.setSportsTypeId(badminton.getId());
+            /*
+            位置信息：华富村社区-乒乓羽毛球场
              */
             stadium4.setProvince("广东省");
-            stadium4.setCity("东莞市");
-            stadium4.setDistrict("东莞市市辖区");
-            stadium4.setStreet("南城街道体育路");
-            stadium4.setStreetNumber("3号");
+            stadium4.setCity("深圳市");
+            stadium4.setDistrict("福田区");
+            stadium4.setStreet("华富一街");
             /*
-            经纬度信息：东莞市体育馆（无法handle复合类型）
+            经纬度信息：华富村社区-乒乓羽毛球场（无法handle复合类型）
              */
-            stadium4.setLongitude(113.757089);
-            stadium4.setLatitude(23.031066);
+            stadium4.setLongitude(114.088307);
+            stadium4.setLatitude(22.562051);
             stadium4.save();
 
 
             StadiumInfo stadium5 = new StadiumInfo();
-            stadium5.setStadiumName("虎门公园篮球场");
-            stadium5.setStadiumContact("12345678910");
-            stadium5.setAvgConsumption(50);
+            stadium5.setStadiumName("深圳中心公园篮球场");
+            stadium5.setAvgConsumption(10);
             stadium5.setProvince("广东省");
-            stadium5.setCity("东莞市");
-            stadium5.setDistrict("虎门镇");
-            stadium5.setStreet("连升中路");
-            stadium5.setStreetNumber("4号");
+            stadium5.setCity("深圳市");
+            stadium5.setDistrict("福田区");
+            stadium5.setStreet("振华西路");
+            stadium5.setStreetNumber("35号");
             stadium5.setSportsType(basketball);
             stadium5.setSportsTypeId(basketball.getId());
             /*
-                经纬度信息：虎门公园
+                经纬度信息：深圳中心公园篮球场
              */
-            stadium5.setLongitude(113.694857);
-            stadium5.setLatitude(22.8244);
+            stadium5.setLongitude(114.080936);
+            stadium5.setLatitude(22.552041);
             stadium5.save();
 
 
             StadiumInfo stadium6 = new StadiumInfo();
-            stadium6.setStadiumName("东莞市体育馆羽毛球馆");
-            stadium6.setStadiumContact("12345678910");
-            stadium6.setAvgConsumption(30);
-                        /*
-            位置信息
-             */
+            stadium6.setStadiumName("深圳中心公园足球场");
+            stadium6.setAvgConsumption(10);
             stadium6.setProvince("广东省");
-            stadium6.setCity("东莞市");
-            stadium6.setDistrict("东莞市市辖区");
-            stadium6.setStreet("南城街道体育路");
-            stadium6.setStreetNumber("3号");
+            stadium6.setCity("深圳市");
+            stadium6.setDistrict("福田区");
+            stadium6.setStreet("振华西路");
+            stadium6.setStreetNumber("35号");
+            stadium6.setSportsType(soccer);
+            stadium6.setSportsTypeId(soccer.getId());
             /*
-            经纬度信息：东莞市体育馆（无法handle复合类型）
+                经纬度信息：深圳中心公园足球场
              */
-            stadium6.setLongitude(113.757089);
-            stadium6.setLatitude(23.031066);
-            SportsType badminton=sportsTypeDao.findSportsTypeByName("羽毛球");
-            stadium6.setSportsType(badminton);
-            stadium6.setSportsTypeId(badminton.getId());
+            stadium6.setLongitude(114.080936);
+            stadium6.setLatitude(22.552041);
             stadium6.save();
 
-            StadiumInfo stadium8 = new StadiumInfo();
-            stadium8.setStadiumName("龙泉豪苑小区内网球场");
-            stadium8.setStadiumContact("12345678910");
-            stadium8.setAvgConsumption(1000);
-            stadium8.setProvince("广东省");
-            stadium8.setCity("东莞市");
-            stadium8.setDistrict("虎门镇");
-            stadium8.setStreet("连升中路");
-            stadium8.setStreetNumber("68号");
+            StadiumInfo stadium7 = new StadiumInfo();
+            stadium7.setStadiumName("香蜜湖体育中心");
+            stadium7.setAvgConsumption(10);
+            stadium7.setProvince("广东省");
+            stadium7.setCity("深圳市");
+            stadium7.setDistrict("福田区");
+            stadium7.setStreet("侨香路");
+            stadium7.setStreetNumber("1001号");
+            stadium7.setSportsType(basketball);
+            stadium7.setSportsTypeId(basketball.getId());
             /*
-                经纬度信息：龙泉豪苑（无法handle复合类型）
+                经纬度信息：香蜜湖体育中心
              */
-            stadium8.setLongitude(113.695774);
-            stadium8.setLatitude(22.811979);
-            SportsType tennis=sportsTypeDao.findSportsTypeByName("网球");
-            stadium8.setSportsType(tennis);
-            stadium8.setSportsTypeId(tennis.getId());
+            stadium7.setLongitude(114.038406);
+            stadium7.setLatitude(22.558441);
+            stadium7.save();
+
+            StadiumInfo stadium8 = new StadiumInfo();
+            stadium8.setStadiumName("海淀综合训练馆篮球场");
+            stadium8.setAvgConsumption(0);
+            stadium8.setProvince("北京市");
+            stadium8.setCity("北京市");
+            stadium8.setDistrict("海淀区");
+            stadium8.setStreet("颐和园路");
+            stadium8.setStreetNumber("12号");
+            stadium8.setSportsType(basketball);
+            stadium8.setSportsTypeId(basketball.getId());
+            /*
+                经纬度信息：香蜜湖体育中心
+             */
+            stadium8.setLongitude(116.311265);
+            stadium8.setLatitude(39.995519);
             stadium8.save();
 
-            StadiumInfo stadium9 = new StadiumInfo();
-            stadium9.setStadiumName("豪岗村篮球场");
-            stadium9.setStadiumContact("12345678910");
-            stadium9.setAvgConsumption(0);
-            stadium9.setProvince("广东省");
-            stadium9.setCity("东莞市");
-            stadium9.setDistrict("东莞市市辖区");
-            stadium9.setStreet("莞太路西");
-            stadium9.setStreetNumber("");
-            /*
-                经纬度信息：豪岗村篮球场（无法handle复合类型）
-             */
-            stadium9.setLongitude(113.751303);
-            stadium9.setLatitude(23.034623);
-            stadium9.setSportsType(basketball);
-            stadium9.setSportsTypeId(basketball.getId());
-            stadium9.save();
-
-            StadiumInfo stadium10 = new StadiumInfo();
-            stadium10.setStadiumName("辉腾百花羽毛球馆");
-            stadium10.setStadiumContact("12345678910");
-            stadium10.setAvgConsumption(25);
-            stadium10.setProvince("广东省");
-            stadium10.setCity("东莞市");
-            stadium10.setDistrict("东莞市市辖区");
-            stadium10.setStreet("创业路振兴街");
-            stadium10.setStreetNumber("2号");
-            /*
-                经纬度信息：百花羽毛球馆（无法handle复合类型）
-             */
-            stadium10.setLongitude(113.750414);
-            stadium10.setLatitude(23.040032);
-            stadium10.setSportsType(badminton);
-            stadium10.setSportsTypeId(badminton.getId());
-            stadium10.save();
-
-            StadiumInfo stadium11 = new StadiumInfo();
-            stadium11.setStadiumName("建设小学足球场");
-            stadium11.setStadiumContact("12345678910");
-            stadium11.setAvgConsumption(0);
-            stadium11.setProvince("广东省");
-            stadium11.setCity("东莞市");
-            stadium11.setDistrict("东莞市市辖区");
-            stadium11.setStreet("运河东三路");
-            stadium11.setStreetNumber("51号");
-            /*
-                经纬度信息：建设小学足球场（无法handle复合类型）
-             */
-            stadium11.setLongitude(113.749047);
-            stadium11.setLatitude(23.038988);
-            stadium11.setSportsType(soccer);
-            stadium11.setSportsTypeId(soccer.getId());
-            stadium11.save();
 
         /*
             初始化好友各自为好友
@@ -549,18 +500,22 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             创建三个订单，三人分别发布，都参与
          */
             AppointmentOrder order1 = new AppointmentOrder();
-            order1.setOrderAppointTime(new Date(2019,6,30));
-            order1.setOrderExpectedSize(15);
-            order1.setOrderLaunchTime(new Date(2019, 4, 19));
-            order1.setOrderName("热血足球团");
+            order1.setOrderAppointTime(new Date(2019, 8, 10, 19, 30, 0));
+            order1.setOrderExpectedSize(22);
+            order1.setOrderLaunchTime(new Date(2019, 8, 5, 4, 35, 8));
+            order1.setOrderName("周末养生足球团");
             order1.setOrderSponsor(user1);
             order1.setOrderStatus(0);
             order1.setOrderContact(user1.getUserPhone());
             order1.setOrderSportsType(soccer);
             order1.setOrderSportsTypeId(soccer.getId());
-            order1.setLongitude(stadium1.getLongitude());
-            order1.setLatitude(stadium1.getLatitude());
-            order1.setOrderLocation(stadium1.getStreet()+stadium1.getStreetNumber());
+            order1.setLongitude(stadium6.getLongitude());
+            order1.setLatitude(stadium6.getLatitude());
+            if (stadium6.getStreetNumber() != null) {
+                order1.setOrderLocation(stadium6.getStreet() + stadium6.getStreetNumber());
+            } else {
+                order1.setOrderLocation(stadium6.getStreet());
+            }
             order1.save();
 
             AttendanceRecord participant1 = new AttendanceRecord();
@@ -568,29 +523,24 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             participant1.setParticipantId(user1.getId());
             participant1.save();
 
-            AttendanceRecord participant2 = new AttendanceRecord();
-            participant2.setOrderId(order1.getId());
-            participant2.setParticipantId(user2.getId());
-            participant2.save();
-
-            AttendanceRecord participant3 = new AttendanceRecord();
-            participant3.setOrderId(order1.getId());
-            participant3.setParticipantId(user3.getId());
-            participant3.save();
 
             AppointmentOrder order2 = new AppointmentOrder();
-            order2.setOrderAppointTime(new Date(2019, 5, 15));
-            order2.setOrderExpectedSize(9);
-            order2.setOrderLaunchTime(new Date(2019, 4, 2));
-            order2.setOrderName("NBA级别篮球局");
-            order2.setOrderSponsor(user2);
-            order2.setOrderStatus(0);
-            order2.setOrderContact(user2.getUserPhone());
-            order2.setOrderSportsType(basketball);
-            order2.setOrderSportsTypeId(basketball.getId());
-            order2.setLongitude(stadium2.getLongitude());
-            order2.setLatitude(stadium2.getLatitude());
-            order2.setOrderLocation(stadium2.getStreet()+stadium2.getStreetNumber());
+            order2.setOrderAppointTime(new Date(2019, 8, 3, 19, 30, 0));
+            order2.setOrderExpectedSize(22);
+            order2.setOrderLaunchTime(new Date(2019, 8, 1));
+            order2.setOrderName("周末养生足球团");
+            order2.setOrderSponsor(user1);
+            order2.setOrderStatus(3); //已取消
+            order2.setOrderContact(user1.getUserPhone());
+            order2.setOrderSportsType(soccer);
+            order2.setOrderSportsTypeId(soccer.getId());
+            order2.setLongitude(stadium6.getLongitude());
+            order2.setLatitude(stadium6.getLatitude());
+            if (stadium6.getStreetNumber() != null) {
+                order2.setOrderLocation(stadium6.getStreet() + stadium6.getStreetNumber());
+            } else {
+                order2.setOrderLocation(stadium6.getStreet());
+            }
             order2.save();
 
             AttendanceRecord participant4 = new AttendanceRecord();
@@ -598,30 +548,24 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             participant4.setParticipantId(user1.getId());
             participant4.save();
 
-            AttendanceRecord participant5 = new AttendanceRecord();
-            participant5.setOrderId(order2.getId());
-            participant5.setParticipantId(user2.getId());
-            participant5.save();
-
-            AttendanceRecord participant6 = new AttendanceRecord();
-            participant6.setOrderId(order2.getId());
-            participant6.setParticipantId(user3.getId());
-            participant6.save();
 
             AppointmentOrder order3 = new AppointmentOrder();
-            order3.setOrderAppointTime(new Date(2018, 10, 5));
+            order3.setOrderAppointTime(new Date(2019, 8, 10, 19, 30, 0));
             order3.setOrderExpectedSize(2);
-            order3.setOrderLaunchTime(new Date(2017, 4, 12));
-            order3.setOrderName("打个羽毛球？");
-            order3.setOrderSponsor(user3);
-            order3.setOrderStatus(1);
-            order3.setOrderContact(user3.getUserPhone());
+            order3.setOrderLaunchTime(new Date(2019, 8, 5, 14, 30, 00));
+            order3.setOrderName("羽毛球，约吗？");
+            order3.setOrderSponsor(user1);
+            order3.setOrderStatus(1);  //组团成功
+            order3.setOrderContact(user1.getUserPhone());
             order3.setOrderSportsType(badminton);
             order3.setOrderSportsTypeId(badminton.getId());
-//            order3.setOrderLocation("广东省东莞市市辖区建设路一号球场");
-            order3.setLongitude(stadium6.getLongitude());
-            order3.setLatitude(stadium6.getLatitude());
-            order3.setOrderLocation(stadium6.getStreet()+stadium6.getStreetNumber());
+            order3.setLongitude(stadium4.getLongitude());
+            order3.setLatitude(stadium4.getLatitude());
+            if (stadium4.getStreetNumber() != null && stadium4.getStreetNumber().length() > 0) {
+                order3.setOrderLocation(stadium4.getStreet() + stadium4.getStreetNumber());
+            } else {
+                order3.setOrderLocation(stadium4.getStreet());
+            }
             order3.save();
 
             AttendanceRecord participant7 = new AttendanceRecord();
@@ -634,10 +578,65 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             participant8.setParticipantId(user2.getId());
             participant8.save();
 
+
+            AppointmentOrder order4 = new AppointmentOrder();
+            order4.setOrderAppointTime(new Date(2019, 8, 2, 19, 30, 0));
+            order4.setOrderExpectedSize(3);
+            order4.setOrderLaunchTime(new Date(2019, 8, 1, 14, 30, 00));
+            order4.setOrderName("泥岗青年篮球");
+            order4.setOrderSponsor(user2);
+            order4.setOrderStatus(2);  //组团成功，已过期
+            order4.setOrderContact(user2.getUserPhone());
+            order4.setOrderSportsType(basketball);
+            order4.setOrderSportsTypeId(basketball.getId());
+            order4.setLongitude(stadium1.getLongitude());
+            order4.setLatitude(stadium1.getLatitude());
+            if (stadium1.getStreetNumber() != null) {
+                order4.setOrderLocation(stadium1.getStreet() + stadium1.getStreetNumber());
+            } else {
+                order4.setOrderLocation(stadium1.getStreet());
+            }
+            order4.save();
+
             AttendanceRecord participant9 = new AttendanceRecord();
-            participant9.setOrderId(order3.getId());
-            participant9.setParticipantId(user3.getId());
+            participant9.setOrderId(order4.getId());
+            participant9.setParticipantId(user1.getId());
             participant9.save();
+
+            AttendanceRecord participant10 = new AttendanceRecord();
+            participant10.setOrderId(order4.getId());
+            participant10.setParticipantId(user2.getId());
+            participant10.save();
+
+            AttendanceRecord participant11 = new AttendanceRecord();
+            participant11.setOrderId(order4.getId());
+            participant11.setParticipantId(user3.getId());
+            participant11.save();
+
+
+            AppointmentOrder order5 = new AppointmentOrder();
+            order5.setOrderAppointTime(new Date(2019, 8, 10, 19, 30, 0));
+            order5.setOrderExpectedSize(2);
+            order5.setOrderLaunchTime(new Date(2019, 8, 5, 14, 30, 00));
+            order5.setOrderName("找个女生打羽毛球");
+            order5.setOrderSponsor(user3);
+            order5.setOrderStatus(0);  //组团中
+            order5.setOrderContact(user3.getUserPhone());
+            order5.setOrderSportsType(badminton);
+            order5.setOrderSportsTypeId(badminton.getId());
+            order5.setLongitude(stadium4.getLongitude());
+            order5.setLatitude(stadium4.getLatitude());
+            if (stadium4.getStreetNumber() != null && stadium4.getStreetNumber().length() > 0) {
+                order5.setOrderLocation(stadium4.getStreet() + stadium4.getStreetNumber());
+            } else {
+                order5.setOrderLocation(stadium4.getStreet());
+            }
+            order5.save();
+
+            AttendanceRecord participant12 = new AttendanceRecord();
+            participant12.setOrderId(order5.getId());
+            participant12.setParticipantId(user3.getId());
+            participant12.save();
 
         } catch (Exception ex) {
             LogUtil.e(TAG, "初始化数据出错：" + ex.getMessage());

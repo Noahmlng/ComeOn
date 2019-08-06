@@ -1,9 +1,7 @@
 package com.comeon.android.business_logic;
 
 import com.comeon.android.db.Message;
-import com.comeon.android.db.SportsType;
 import com.comeon.android.db.UserInfo;
-import com.comeon.android.db.UserLogin;
 
 import java.util.List;
 
@@ -43,6 +41,15 @@ public interface UserBusinessInterface {
     List<UserInfo> getAllFriends(long userId);
 
     /**
+     * 根据名字模糊查询获取一个用户的好友
+     *
+     * @param userId 该用户的id
+     * @param name   模糊查询的名字
+     * @return 符合条件的好友用户信息集合
+     */
+    List<UserInfo> getFriendsByName(long userId, String name);
+
+    /**
      * 获取两个用户间最后一条消息记录内容
      * @param userId  用户id
      * @param friendId  好友id
@@ -66,4 +73,30 @@ public interface UserBusinessInterface {
      * @return 发送出的信息
      */
     Message sendMessage(long userId, long friendId, String content);
+
+    /**
+     * 根据手机号查找用户
+     *
+     * @param phone 输入的手机号码
+     * @return 符合模糊查询的用户
+     */
+    List<UserInfo> getUsersByPhone(String phone);
+
+    /**
+     * 判断查询用户和登录用户是否是好友关系
+     *
+     * @param searchId    查询用户的id
+     * @param loginUserId 登录用户的id
+     * @return 判断结果
+     */
+    boolean checkIsFriend(long searchId, long loginUserId);
+
+    /**
+     * 添加好友
+     *
+     * @param userId      添加的用户的id
+     * @param loginUserId 登录用户的id
+     * @return 添加结果
+     */
+    boolean addFriend(long userId, long loginUserId);
 }

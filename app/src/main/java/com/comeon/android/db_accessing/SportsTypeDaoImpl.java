@@ -17,7 +17,7 @@ import javax.xml.validation.Validator;
 /**
  * 运动类型数据表数据提取层
  */
-public class SportsTypeDaoImpl implements SportsTypeDao {
+public class SportsTypeDaoImpl extends BaseDao implements SportsTypeDao {
 
     private static final String TAG = "SportsTypeDaoImpl";
     

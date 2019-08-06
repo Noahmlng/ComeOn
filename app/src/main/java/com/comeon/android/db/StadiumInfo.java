@@ -19,7 +19,6 @@ public class StadiumInfo extends LitePalSupport implements Parcelable {
     private float avgConsumption;
     @Column(nullable = false)
     private String stadiumName;
-    @Column(nullable = false)
     private String stadiumContact;
     private String stadiumDescription;
     private SportsType sportsType;  //后该做id

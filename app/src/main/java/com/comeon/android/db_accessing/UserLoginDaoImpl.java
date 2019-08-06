@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 用户登录信息数据表接口实现类
  */
-public class UserLoginDaoImpl implements UserLoginDao {
+public class UserLoginDaoImpl extends BaseDao implements UserLoginDao {
     private static final String TAG = "UserLoginDaoImpl";
 
     @Override

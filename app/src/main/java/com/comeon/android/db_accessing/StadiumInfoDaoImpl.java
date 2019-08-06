@@ -1,7 +1,6 @@
 package com.comeon.android.db_accessing;
 
 import android.database.Cursor;
-import android.nfc.Tag;
 
 import com.comeon.android.db.SportsType;
 import com.comeon.android.db.StadiumInfo;
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * 场馆数据表数据提取实现类
  */
-public class StadiumInfoDaoImpl implements StadiumInfoDao {
+public class StadiumInfoDaoImpl extends BaseDao implements StadiumInfoDao {
 
     private static final String TAG = "StadiumInfoDaoImpl";
     private SportsTypeDao sportsTypeDao = new SportsTypeDaoImpl();

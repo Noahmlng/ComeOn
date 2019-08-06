@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 组团订单数据库实现类
  */
-public class AppointmentOrderDaoImpl implements AppointmentOrderDao {
+public class AppointmentOrderDaoImpl extends BaseDao implements AppointmentOrderDao {
     private static final String TAG = "AppointmentOrderDaoImpl";
 
     private AttendanceRecordDao attendanceRecordDao=new AttendanceRecordDaoImpl();

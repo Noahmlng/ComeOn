@@ -59,6 +59,7 @@ public class SportsTypeChoiceFragment extends BaseFragment {
         sportsTypeAdapter = new SportsTypeAdapter(sportsTypeList);
 
         recyclerView.setAdapter(sportsTypeAdapter);
+
         LogUtil.d(TAG, "正在填充数据");
     }
 

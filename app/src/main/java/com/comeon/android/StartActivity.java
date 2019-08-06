@@ -35,14 +35,17 @@ import com.comeon.android.db.StadiumInfo;
 import com.comeon.android.db.UserInfo;
 import com.comeon.android.db.UserLogin;
 import com.comeon.android.db.UserLoginLog;
+import com.comeon.android.db_accessing.BaseDao;
 import com.comeon.android.service.LoadingService;
 import com.comeon.android.util.Activity_Parent;
 import com.comeon.android.util.LogUtil;
+import com.comeon.android.util.MyApplication;
 import com.comeon.android.util.Utilities;
 import com.comeon.android.util.ViewUtil;
 
 import org.litepal.LitePal;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -250,6 +253,7 @@ public class StartActivity extends Activity_Parent implements View.OnClickListen
         UserLogin loginUser=new UserLogin();
         loginUser.setUserPhone(phone);
         loginUser.setUserPassword(password);
+
         return loginUser;
     }
 }

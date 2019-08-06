@@ -71,6 +71,15 @@ public class StadiumDetailsFragment extends BaseFragment implements View.OnClick
                 //给场馆方发信息
                 break;
             case R.id.btn_call:
+                //如果没有设置场馆的联系方式或者联系方式为空，则显示暂无联系方式
+                if(stadiumInfo.getStadiumContact()==null){
+                    Toast.makeText(this.getContext(), "暂无联系方式", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (stadiumInfo.getStadiumContact().trim().length()==0){
+                    Toast.makeText(this.getContext(), "暂无联系方式", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 //给场馆方打电话
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:" + stadiumInfo.getStadiumContact()));

@@ -57,6 +57,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:maxLines="1"
+            android:hint="可输入好友昵称进查询"
             android:textSize="13sp" />
     </LinearLayout>
 

@@ -1,13 +1,10 @@
 package com.comeon.android.adapter;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,8 +87,14 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
             如果是地址，则直接赋地址值
          */
         if (order.getOrderStadium() != null) {
-            viewHolder.txt_groupLocation.setText(order.getOrderStadium().getStreet() + order.getOrderStadium().getStreetNumber());
+            if (order.getOrderStadium().getStreetNumber() != null) {
+                LogUtil.d(TAG, "使用街号");
+                viewHolder.txt_groupLocation.setText(order.getOrderStadium().getStreet() + order.getOrderStadium().getStreetNumber());
+            } else {
+                viewHolder.txt_groupLocation.setText(order.getOrderStadium().getStreet());
+            }
         } else {
+            LogUtil.d(TAG, "输入location");
             viewHolder.txt_groupLocation.setText(order.getOrderLocation());
         }
 

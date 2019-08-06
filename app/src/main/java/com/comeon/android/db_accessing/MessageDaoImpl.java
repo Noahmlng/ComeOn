@@ -12,7 +12,7 @@ import okhttp3.internal.Util;
 /**
  * 消息的数据表接口实现类
  */
-public class MessageDaoImpl implements MessageDao {
+public class MessageDaoImpl extends BaseDao implements MessageDao {
     @Override
     public Message getLastMessage(long userId, long friendId) {
         Message lastMessage=LitePal.where("userId = ? and friendId = ?",String.valueOf(userId), String.valueOf(friendId)).findLast(Message.class);

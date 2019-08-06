@@ -45,6 +45,9 @@ public class SportsTypeAdapter extends RecyclerView.Adapter<SportsTypeAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         SportsType sportsType = sportsTypes.get(i);
         viewHolder.txt_sportsType.setText(sportsType.getTypeName());
+        if(i==sportsTypes.size()-1){
+
+        }
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.comeon.android.business_logic;
 
-import android.util.Log;
-
 import com.comeon.android.db.Message;
 import com.comeon.android.db.UserInfo;
 import com.comeon.android.db.UserLogin;
@@ -87,12 +85,18 @@ public class UserBusiness implements UserBusinessInterface {
         if(friendsIds.size()>0){
             friendsList=new ArrayList<UserInfo>();
         }
-        for (int i=0; i<friendsIds.size(); i++){
+        for (int i = 0; i<friendsIds.size(); i++){
             UserInfo friend=LitePal.find(UserInfo.class, friendsIds.get(i));
             friendsList.add(friend);
         }
         return friendsList;
+    }
 
+    @Override
+    public List<UserInfo> getFriendsByName(long userId, String name) {
+        //先获取该用户的所有好友
+        List<UserInfo> qualifiedFriends = friendDao.selectFriendsByNameOfUser(userId, name);
+        return qualifiedFriends;
     }
 
     @Override
@@ -132,6 +136,25 @@ public class UserBusiness implements UserBusinessInterface {
         messageDao.insertNewMessage(receivedMessage);
 
         return sendMessage;
+    }
+
+    @Override
+    public List<UserInfo> getUsersByPhone(String phone) {
+        return userInfoDao.selectUsersByPhone(phone);
+    }
+
+    @Override
+    public boolean checkIsFriend(long searchId, long loginUserId) {
+        int count = friendDao.checkIsFriend(searchId, loginUserId);  //接受数据返回的行数结果
+        if (count > 0) {
+            return true; //如果有该条数据则返回true
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addFriend(long userId, long loginUserId) {
+        return friendDao.addFriend(userId, loginUserId);
     }
 
 }

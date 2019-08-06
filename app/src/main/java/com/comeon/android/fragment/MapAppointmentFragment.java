@@ -107,7 +107,7 @@ public class MapAppointmentFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //加载个性化地图文件
-                setMapCustomFile(getActivity(), "custom_map_config.json");
+//                setMapCustomFile(getActivity(), "custom_map_config.json");
         View view = inflater.inflate(R.layout.fragment_map_appointment, container, false);
         /*
             加载基础控件
@@ -317,13 +317,23 @@ public class MapAppointmentFragment extends BaseFragment {
      *
      * @return
      */
-    private BitmapDescriptor getMarkerBitMapDescriptor() {
+    private BitmapDescriptor getMarkerBitMapDescriptor(String typeName) {
+        switch (typeName){
+            case "篮球":
+                return BitmapDescriptorFactory.fromResource(R.drawable.marker_basketball);
+
+            case "足球":
+                return BitmapDescriptorFactory.fromResource(R.drawable.marker_soccer);
+
+            case "羽毛球":
+                return BitmapDescriptorFactory.fromResource(R.drawable.marker_badminton);
+
+        }
         return BitmapDescriptorFactory.fromResource(R.mipmap.marker);
     }
 
     /**
      * 在地图上生成组团位置标注
-     *
      * @param orderList 组团列表
      */
     private void markAppointmentList(List<AppointmentOrder> orderList) {
@@ -336,12 +346,18 @@ public class MapAppointmentFragment extends BaseFragment {
             Bundle info = new Bundle();
             info.putParcelable("order", orderList.get(i));
 
+            try{
+
             //4、为overlay设置属性
-            OverlayOptions option = new MarkerOptions().position(new LatLng(orderList.get(i).getLatitude(), orderList.get(i).getLongitude())).icon(getMarkerBitMapDescriptor())
+            OverlayOptions option = new MarkerOptions().position(new LatLng(orderList.get(i).getLatitude(), orderList.get(i).getLongitude())).icon(getMarkerBitMapDescriptor(orderList.get(i).getOrderSportsType().getTypeName()))
                     .animateType(MarkerOptions.MarkerAnimateType.jump)
                     .extraInfo(info);
 
             options.add(option);
+            }catch (Exception ex){
+                LogUtil.e("marker标注错误",ex.getMessage());
+            }
+
         }
 
         //5、在地图上加入overlay
@@ -370,7 +386,7 @@ public class MapAppointmentFragment extends BaseFragment {
         if (actualDistance < 1000) {
             return Math.round(actualDistance) + "m";  //四舍五入取整
         } else if (actualDistance < 10000) {
-            int kmDigit = (int) actualDistance % 1000; //只取整（千米值）
+            int kmDigit = (int) actualDistance / 1000; //只取整（千米值）
             long mDigit = (int) actualDistance / 1000 % 100;  ///百米值
             return kmDigit + "." + mDigit + "km";
         } else {
@@ -490,9 +506,10 @@ public class MapAppointmentFragment extends BaseFragment {
                 @Override
                 public void onClick(View v) {
                     requestCameraPermission();
-                    if (actualDistance<1000){
-                        walkNavigate(new LatLng(order.getLatitude(),order.getLongitude())); //步行导航暂未成功
-                    }else if (actualDistance<10000){
+//                    if (actualDistance<1000){
+//                        walkNavigate(new LatLng(order.getLatitude(),order.getLongitude())); //步行导航暂未成功
+//                    }else
+                     if (actualDistance<10000){
                         bikeNavigate(new LatLng(order.getLatitude(),order.getLongitude())); //骑行导航
                     }else{
                         Toast.makeText(getActivity(), "距离超过可导航范围（"+workWithDistanceData(actualDistance)+"）", Toast.LENGTH_SHORT).show();
@@ -547,29 +564,18 @@ public class MapAppointmentFragment extends BaseFragment {
      */
     private void walkRoutePlanWithParam(LatLng endPt){
         //构造WalkNaviLaunchParam
-        WalkNaviLaunchParam mParam=new WalkNaviLaunchParam();
-        WalkRouteNodeInfo startNode=new WalkRouteNodeInfo();//起点
-        startNode.setLocation(currentPosition);
-        WalkRouteNodeInfo destNode=new WalkRouteNodeInfo();//终点
-        startNode.setLocation(endPt);
-
-        mParam.startNodeInfo(startNode);
-        mParam.endNodeInfo(destNode);
-        mParam.stPt(currentPosition).endPt(endPt);
-
+        WalkNaviLaunchParam param = new WalkNaviLaunchParam().stPt(currentPosition).endPt(endPt);
 
         //发起算路
-        WalkNavigateHelper.getInstance().routePlanWithParams(mParam, new IWRoutePlanListener() {
+        WalkNavigateHelper.getInstance().routePlanWithParams(param, new IWRoutePlanListener() {
             @Override
             public void onRoutePlanStart() {
                 //开始算路的回调
-                Toast.makeText(getActivity(),"发起算路",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRoutePlanSuccess() {
-                Toast.makeText(getActivity(),"算路成功",Toast.LENGTH_SHORT).show();
-                //算路成功
+                //算路成功的回调
                 //跳转至诱导页面
                 Intent intent = new Intent(getActivity(), WNaviGuideActivity.class);
                 startActivity(intent);

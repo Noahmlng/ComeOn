@@ -101,7 +101,6 @@ public class FriendsFragment extends BaseFragment {
             public void onRefresh() {
                 String search_name = editText_searchContent.getText().toString();
                 if (loginUser != null) {
-
                     if (search_name.length() == 0) {
                         reloadRecyclerView(userBusiness.getAllFriends(loginUser.getId()));
                     } else {
@@ -121,7 +120,6 @@ public class FriendsFragment extends BaseFragment {
         //输入结束后的动态模糊查询
         LogUtil.d(TAG, "当前文字为：" + inputText + "；长度为：" + inputText.length());
         if (loginUser != null) {
-
             if (inputText.length() > 0) {
                 LogUtil.d(TAG, "正在根据好友名查询用户");
                 reloadRecyclerView(userBusiness.getFriendsByName(loginUser.getId(), inputText));
@@ -133,7 +131,6 @@ public class FriendsFragment extends BaseFragment {
 
     /**
      * 重新拉取数据
-     *
      * @param friends 好友列表
      */
     private void loadData(List<UserInfo> friends) {
@@ -147,12 +144,11 @@ public class FriendsFragment extends BaseFragment {
 
     /**
      * UI层刷新好友列表
-     *
-     * @param friendList 输入的好友列表
+     * @param friends 输入的好友列表
      */
-    private void reloadRecyclerView(List<UserInfo> friendList) {
+    private void reloadRecyclerView(List<UserInfo> friends) {
         //1、先拉取数据
-        loadData(friendList);
+        loadData(friends);
         //通知数据发生了改变，重新加载
         friendsAdapter.notifyDataSetChanged();
     }

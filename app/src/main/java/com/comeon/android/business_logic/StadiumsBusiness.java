@@ -29,4 +29,10 @@ public class StadiumsBusiness implements StadiumsBusinessLogicInterface {
     public List<StadiumInfo> getStadiumsWithConditions(StadiumInfo condition) {
         return stadiumInfoDao.getStadiumsWithCondition(condition);
     }
+
+    @Override
+    public StadiumInfo getStadiumByName(String inputText_stadiumName) {
+        return stadiumInfoDao.getStadiumByName(inputText_stadiumName);
+    }
+
 }

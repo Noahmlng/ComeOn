@@ -201,23 +201,24 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="地址"
+                android:text="场馆"
                 android:textSize="14sp"
                 android:textColor="#B5B5B5"
                 android:textStyle="bold"
                 android:layout_marginLeft="3dp"
                 />
 
-            <EditText
+            <android.support.v7.widget.AppCompatAutoCompleteTextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/edittext_location"
                 android:background="@drawable/edittext_background_square"
                 android:layout_marginLeft="40dp"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:textSize="13sp"
                 android:imeOptions="actionDone"
                 android:gravity="center"
+                android:dropDownHorizontalOffset="5dp"
                 />
 
         </LinearLayout>

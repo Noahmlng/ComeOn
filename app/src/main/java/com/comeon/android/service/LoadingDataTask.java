@@ -194,8 +194,8 @@ public class LoadingDataTask extends AsyncTask<Void, Integer, Integer> {
             StadiumInfo stadium1 = new StadiumInfo();
             stadium1.setStadiumName("泥岗社区公园");
             stadium1.setAvgConsumption(0);
-            stadium1.setSportsType(soccer);
-            stadium1.setSportsTypeId(soccer.getId());
+            stadium1.setSportsType(basketball);
+            stadium1.setSportsTypeId(basketball.getId());
             /*
             位置信息
              */

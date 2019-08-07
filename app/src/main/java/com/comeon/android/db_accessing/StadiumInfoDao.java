@@ -21,4 +21,11 @@ public interface StadiumInfoDao {
      * @return  符合条件的场馆信息
      */
     List<StadiumInfo> getStadiumsWithCondition(StadiumInfo condition);
+
+    /**
+     * 根据场馆名精确查找某个场馆
+     * @param stadiumName  场馆名
+     * @return  查询到的场馆
+     */
+    StadiumInfo getStadiumByName(String stadiumName);
 }

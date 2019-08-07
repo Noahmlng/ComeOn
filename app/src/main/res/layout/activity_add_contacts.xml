@@ -57,6 +57,7 @@
             android:background="@null"
             android:hint="可输入用户手机号码进查询"
             android:maxLines="1"
+            android:inputType="number"
             android:textSize="13sp" />
     </LinearLayout>
 

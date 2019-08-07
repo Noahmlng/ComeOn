@@ -21,4 +21,11 @@ public interface StadiumsBusinessLogicInterface {
      * @return
      */
     List<StadiumInfo> getStadiumsWithConditions(StadiumInfo condition);
+
+    /**
+     * 根据输入的场馆名查询该场馆
+     * @param inputText_stadiumName  输入的场馆名
+     * @return  场馆对象
+     */
+    StadiumInfo getStadiumByName(String inputText_stadiumName);
 }

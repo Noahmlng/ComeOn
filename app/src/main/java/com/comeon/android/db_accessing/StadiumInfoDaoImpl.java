@@ -90,6 +90,15 @@ public class StadiumInfoDaoImpl extends BaseDao implements StadiumInfoDao {
         return stadiumsQualified;
     }
 
+    @Override
+    public StadiumInfo getStadiumByName(String stadiumName) {
+        List<StadiumInfo> stadiumInfos=LitePal.where("stadiumName = ?",stadiumName).find(StadiumInfo.class);
+        if (stadiumInfos!=null && stadiumInfos.size()>0){
+            return stadiumInfos.get(0);
+        }
+        return null;
+    }
+
     /**
      * 加载数据库查询出的场馆对象
      *

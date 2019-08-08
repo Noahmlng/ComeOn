@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +14,8 @@ import com.comeon.android.R;
 import com.comeon.android.controls.GradientTextButton;
 import com.comeon.android.db.SportsType;
 import com.comeon.android.db.StadiumInfo;
+import com.comeon.android.db_accessing.SportsTypeDao;
+import com.comeon.android.db_accessing.SportsTypeDaoImpl;
 import com.comeon.android.util.MyApplication;
 
 /**
@@ -27,6 +30,9 @@ public class StadiumDetailsFragment extends BaseFragment implements View.OnClick
     ImageButton btn_call;
     GradientTextButton btn_launchAppoinment;
     private StadiumInfo stadiumInfo;
+    ScrollView scrollView;
+
+    SportsTypeDao sportsTypeDao=new SportsTypeDaoImpl();
 
     /**
      * 构造方法传递要显示的对象
@@ -48,7 +54,11 @@ public class StadiumDetailsFragment extends BaseFragment implements View.OnClick
         txt_stadiumName.setText(stadiumInfo.getStadiumName());
 
         txt_stadiumAddress = (TextView) view.findViewById(R.id.txt_stadiumAddress);
-//        txt_stadiumAddress.setText(stadiumInfo.getProvince() + stadiumInfo.getCity() + stadiumInfo.getDistrict() + stadiumInfo.getStreet() + stadiumInfo.getStreetNumber());
+        if (stadiumInfo.getStreetNumber()!=null && stadiumInfo.getStreetNumber().length()>0){
+            txt_stadiumAddress.setText(stadiumInfo.getProvince() + stadiumInfo.getCity() + stadiumInfo.getDistrict() + stadiumInfo.getStreet() + stadiumInfo.getStreetNumber());
+        }else{
+            txt_stadiumAddress.setText(stadiumInfo.getProvince() + stadiumInfo.getCity() + stadiumInfo.getDistrict() + stadiumInfo.getStreet());
+        }
 
         //加载三个按钮
         btn_sendMessage = (ImageButton) view.findViewById(R.id.btn_sendMessage);
@@ -62,6 +72,15 @@ public class StadiumDetailsFragment extends BaseFragment implements View.OnClick
 //        btn_sendMessage.setOnClickListener(this);
         btn_call.setOnClickListener(this);
         btn_launchAppoinment.setOnClickListener(this);
+
+        scrollView=(ScrollView)view.findViewById(R.id.stadium_images_layout);
+        if (stadiumInfo.getSportsType().getId()==sportsTypeDao.findSportsTypeByName("篮球").getId()){
+            scrollView.setBackgroundResource(R.drawable.stadium_sample_basketball2);
+        }else if (stadiumInfo.getSportsType().getId()==sportsTypeDao.findSportsTypeByName("足球").getId()){
+            scrollView.setBackgroundResource(R.drawable.stadium_sample_soccer1);
+        }else if (stadiumInfo.getSportsType().getId()==sportsTypeDao.findSportsTypeByName("羽毛球").getId()){
+            scrollView.setBackgroundResource(R.drawable.stadium_sample_badminton1);
+        }
     }
 
     @Override

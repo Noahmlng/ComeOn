@@ -22,7 +22,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.baidu.entity.pb.WalkPlan;
+//import com.baidu.entity.pb.WalkPlan;
 import com.comeon.android.business_logic.UserBusiness;
 import com.comeon.android.business_logic.UserBusinessInterface;
 import com.comeon.android.db.AppointmentOrder;

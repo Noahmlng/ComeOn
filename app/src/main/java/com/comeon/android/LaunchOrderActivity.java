@@ -105,22 +105,6 @@ public class LaunchOrderActivity extends Activity_Parent implements View.OnClick
         btn_addPeople.setOnClickListener(this);
         btn_reducePeople.setOnClickListener(this);
 
-        autoCompleteTextView_location.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
     }
 
     @Override

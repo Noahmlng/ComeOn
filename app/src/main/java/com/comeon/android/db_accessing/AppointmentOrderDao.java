@@ -45,4 +45,11 @@ public interface AppointmentOrderDao {
      * @return   参与者集合
      */
     List<UserInfo> getAllParticipantsByOrderId(long orderId);
+
+    /**
+     * 通过订单id获取对应的场馆id
+     * @param orderId  订单id
+     * @return  订单的场馆id
+     */
+    long getOrderStadiumIdByOrderId(long orderId);
 }

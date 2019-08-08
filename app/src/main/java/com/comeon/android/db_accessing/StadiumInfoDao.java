@@ -1,5 +1,6 @@
 package com.comeon.android.db_accessing;
 
+import com.comeon.android.db.SportsType;
 import com.comeon.android.db.StadiumInfo;
 
 import java.util.List;
@@ -28,4 +29,11 @@ public interface StadiumInfoDao {
      * @return  查询到的场馆
      */
     StadiumInfo getStadiumByName(String stadiumName);
+
+    /**
+     * 查询某个场馆的运动类型
+     * @param stadiumId  查询的场馆id
+     * @return  运动类型对象
+     */
+    SportsType getSportsTypeOfOneStadium(long stadiumId);
 }

@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.comeon.android.InfoDisplayActivity;
 import com.comeon.android.R;
 import com.comeon.android.db.StadiumInfo;
+import com.comeon.android.db_accessing.SportsTypeDao;
+import com.comeon.android.db_accessing.SportsTypeDaoImpl;
 import com.comeon.android.util.LogUtil;
 import com.comeon.android.util.MyApplication;
 import com.comeon.android.util.Utilities;
@@ -27,6 +29,8 @@ import javax.xml.transform.sax.SAXTransformerFactory;
 public class StadiumsAdapter extends RecyclerView.Adapter<StadiumsAdapter.ViewHolder> {
 
     private static final String TAG = "StadiumsAdapter";
+    private SportsTypeDao sportsTypeDao=new SportsTypeDaoImpl();
+
     private List<StadiumInfo> stadiums;
 
     public List<StadiumInfo> getStadiums(){return this.stadiums;};
@@ -82,6 +86,14 @@ public class StadiumsAdapter extends RecyclerView.Adapter<StadiumsAdapter.ViewHo
             viewHolder.txt_stadiumName.setText(stadiumInfo.getStadiumName());
             viewHolder.txt_stadiumDistrict.setText(stadiumInfo.getDistrict());
             viewHolder.txt_stadiumType.setText(stadiumInfo.getSportsType().getTypeName());
+
+            if (stadiumInfo.getSportsType().getId()==sportsTypeDao.findSportsTypeByName("篮球").getId()){
+                viewHolder.img_stadium.setImageResource(R.drawable.stadium_sample_basketball2);
+            }else if (stadiumInfo.getSportsType().getId()==sportsTypeDao.findSportsTypeByName("足球").getId()){
+                viewHolder.img_stadium.setImageResource(R.drawable.stadium_sample_soccer1);
+            }else if (stadiumInfo.getSportsType().getId()==sportsTypeDao.findSportsTypeByName("羽毛球").getId()){
+                viewHolder.img_stadium.setImageResource(R.drawable.stadium_sample_badminton1);
+            }
         }catch(Exception ex){
             LogUtil.e(TAG, "绑定子项控件时报错："+ex.getMessage());
             LogUtil.e(TAG, "当前位置为："+position);

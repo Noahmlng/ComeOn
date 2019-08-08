@@ -1,5 +1,6 @@
 package com.comeon.android.adapter;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,8 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.comeon.android.InfoDisplayActivity;
@@ -138,13 +141,11 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
 
         viewHolder.txt_groupName.setText(order.getOrderName());
 
-        /*
-        展示组团进度的功能：
-            根据memberGapCount的符号来做出不同的UI展示
-            1. 人数未到预计人数
-            2. 人数刚好到达预计人数
-            3. 人数超过预计人数
-         */
+//        loadProcessOfOrder(viewHolder, order);
+        LogUtil.d(TAG, "内容框架的宽：" + viewHolder.layout_content.getLayoutParams().width);
+        LogUtil.d(TAG, "内容框架的高：" + viewHolder.layout_content.getLayoutParams().height);
+        LogUtil.d(TAG, "颜色框架的宽：" + viewHolder.view_color.getLayoutParams().width);
+        LogUtil.d(TAG, "颜色框架的高：" + viewHolder.view_color.getLayoutParams().height);
     }
 
     @Override
@@ -153,6 +154,62 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
             return orders.size();
         }
         return 0;
+    }
+
+    private void loadProcessOfOrder(ViewHolder viewHolder, AppointmentOrder order) {
+        LinearLayout layout_content = viewHolder.layout_content;
+        View view_color = viewHolder.view_color;
+        ViewTreeObserver vto = view_color.getViewTreeObserver();
+
+        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+
+                int width = layout_content.getMeasuredWidth();
+                int height = layout_content.getMeasuredHeight();
+
+                android.view.ViewGroup.LayoutParams lp = layout_content.getLayoutParams();
+                lp.height = height;
+
+                        /*
+            展示组团的类型以及仍需组团的人数
+         */
+                List<UserInfo> participants = orderBusiness.loadParticipantsList(order); //参与者的List
+                int memberGapCount = order.getOrderExpectedSize() - participants.size();//记录缺口人数
+                        /*
+            通过人数比例设置宽度
+         */
+                if (participants.size() < order.getOrderExpectedSize()) {//组团尚未完成的情况
+                    lp.width = width * (participants.size() / order.getOrderExpectedSize());//输入比例：已参与人数/预计人数
+                } else {//组团完成的情况
+                    lp.width = width;
+                }
+                view_color.setLayoutParams(lp);
+
+                        /*
+            利用背景颜色展示组团进度的功能：
+                根据memberGapCount的符号来做出不同的UI展示
+                1. 人数未过半（#FFFFCC）
+                2 、人数过半（#CCFFCC）
+                3. 人数达到预计人数（#99FFCC）
+         */
+                String colorString = "#fff"; //默认为白色
+                if (memberGapCount <= 0) {  //组团成功
+                    colorString = "#99FFCC";
+                } else if (memberGapCount / order.getOrderExpectedSize() <= 0.5) {  //组团人数到达或过半
+                    colorString = "#9999CC";
+                } else {
+                    colorString = "#FFFFFCC";
+                }
+                LogUtil.d(TAG, "colorString：" + colorString);
+                view_color.setBackgroundColor(Color.parseColor(colorString)); //设置背景颜色
+
+                final ViewTreeObserver vto1 = view_color.getViewTreeObserver();
+                vto1.removeOnPreDrawListener(this);
+
+                return true;
+            }
+        };
+        vto.addOnPreDrawListener(preDrawListener);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -164,6 +221,8 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
         TextView txt_groupInfo;
         TextView txt_groupLocation;
         GradientTextButton txt_launchTime;
+        LinearLayout layout_content;
+        View view_color;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -172,6 +231,8 @@ public class GroupInfoAdapter extends RecyclerView.Adapter<GroupInfoAdapter.View
             txt_groupInfo = (TextView) itemView.findViewById(R.id.txt_groupInfo);
             txt_groupLocation = (TextView) itemView.findViewById(R.id.txt_groupLocation);
             txt_launchTime = (GradientTextButton) itemView.findViewById(R.id.txt_launchTime);
+            layout_content = (LinearLayout) itemView.findViewById(R.id.content_layout);
+            view_color = (View) itemView.findViewById(R.id.view_color);
         }
     }
 

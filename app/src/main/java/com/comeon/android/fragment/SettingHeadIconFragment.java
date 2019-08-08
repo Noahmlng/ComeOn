@@ -132,7 +132,7 @@ public class SettingHeadIconFragment extends Fragment implements View.OnClickLis
     /**
      * 打开相册选择照片的操作
      */
-    private void openAlbum() {
+    public void openAlbum() {
         Intent intent = new Intent("android.intent.action.GET_CONTENT");
         intent.setType("image/*");
         this.getActivity().startActivityForResult(intent, PICK_PHOTO);

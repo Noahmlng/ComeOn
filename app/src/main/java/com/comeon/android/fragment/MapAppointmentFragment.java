@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,8 +51,6 @@ import com.baidu.mapapi.walknavi.adapter.IWEngineInitListener;
 import com.baidu.mapapi.walknavi.adapter.IWRoutePlanListener;
 import com.baidu.mapapi.walknavi.model.WalkRoutePlanError;
 import com.baidu.mapapi.walknavi.params.WalkNaviLaunchParam;
-import com.baidu.mapapi.walknavi.params.WalkRouteNodeInfo;
-import com.baidu.platform.comapi.walknavi.widget.ArCameraView;
 import com.comeon.android.BNaviGuideActivity;
 import com.comeon.android.InfoDisplayActivity;
 import com.comeon.android.R;
@@ -60,6 +59,7 @@ import com.comeon.android.business_logic.OrderBusiness;
 import com.comeon.android.business_logic.OrderBusinessInterface;
 import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.util.LogUtil;
+import com.comeon.android.util.MapUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -506,11 +506,14 @@ public class MapAppointmentFragment extends BaseFragment {
                 @Override
                 public void onClick(View v) {
                     requestCameraPermission();
-//                    if (actualDistance<1000){
-//                        walkNavigate(new LatLng(order.getLatitude(),order.getLongitude())); //步行导航暂未成功
-//                    }else
-                     if (actualDistance<10000){
+//                    if (actualDistance < 1000) {
+//                        walkNavigate(new LatLng(order.getLatitude(), order.getLongitude())); //步行导航
+//                    } else
+                    if (actualDistance < 3000) {
                         bikeNavigate(new LatLng(order.getLatitude(),order.getLongitude())); //骑行导航
+                    } else if (actualDistance < 10000) {
+                        //汽车
+                        goToGaodeMap(new LatLng(order.getLatitude(), order.getLongitude()), orderBusiness.getOrderStadiumNameWithOrderId(order.getId()));
                     }else{
                         Toast.makeText(getActivity(), "距离超过可导航范围（"+workWithDistanceData(actualDistance)+"）", Toast.LENGTH_SHORT).show();
                     }
@@ -587,7 +590,6 @@ public class MapAppointmentFragment extends BaseFragment {
             }
         });
     }
-
 
     /**
      * 自行车导航
@@ -700,4 +702,56 @@ public class MapAppointmentFragment extends BaseFragment {
                 break;
         }
     }
+
+//    private void handleCluster(){
+//        //初始化点聚合管理类
+//        Cluste mClusterManager = new ClusterManager<MyItem>(this, mBaiduMap);
+//
+////ClusterItem接口的实现类
+//        public class MyItem implements ClusterItem {
+//            LatLng mPosition;
+//            public MyItem(LatLng position) {
+//                mPosition = position;
+//            }
+//            @Override
+//            public LatLng getPosition() {
+//                return mPosition;
+//            }
+//            @Override
+//            public BitmapDescriptor getBitmapDescriptor() {
+//                return BitmapDescriptorFactory
+//                        .fromResource(R.drawable.icon_gcoding);
+//            }
+//        }
+//// 添加Marker点
+//        LatLng llA = new LatLng(39.963175, 116.400244);
+//        LatLng llB = new LatLng(39.942821, 116.369199);
+//        List<MyItem> items = new ArrayList<MyItem>();
+//        items.add(new MyItem(llA));
+//        items.add(new MyItem(llB));
+//        mClusterManager.addItems(items);
+//    }
+
+
+    /**
+     * 跳转高德地图
+     *
+     * @param latLng      终点的坐标
+     * @param mAddressStr 终点关键字
+     */
+    private void goToGaodeMap(LatLng latLng, String mAddressStr) {
+        if (!MapUtil.isInstalled("com.autonavi.minimap")) {
+            Toast.makeText(this.getActivity(), "请先安装高德地图客户端", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        StringBuffer stringBuffer = new StringBuffer("androidamap://navi?sourceApplication=").append("amap");
+        stringBuffer.append("&lat=").append(latLng.latitude)
+                .append("&lon=").append(latLng.longitude).append("&keywords=" + mAddressStr)
+                .append("&dev=").append(0)
+                .append("&style=").append(2);
+        Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(stringBuffer.toString()));
+        intent.setPackage("com.autonavi.minimap");
+        startActivity(intent);
+    }
+
 }

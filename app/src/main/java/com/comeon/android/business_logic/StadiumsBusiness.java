@@ -35,4 +35,8 @@ public class StadiumsBusiness implements StadiumsBusinessLogicInterface {
         return stadiumInfoDao.getStadiumByName(inputText_stadiumName);
     }
 
+    @Override
+    public SportsType getStadiumSportsTypeByStadiumId(long stadiumId) {
+        return stadiumInfoDao.getSportsTypeOfOneStadium(stadiumId);
+    }
 }

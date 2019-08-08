@@ -2,6 +2,8 @@ package com.comeon.android.db_accessing;
 
 import android.database.Cursor;
 
+import com.comeon.android.business_logic.OrderBusiness;
+import com.comeon.android.business_logic.OrderBusinessInterface;
 import com.comeon.android.db.AppointmentOrder;
 import com.comeon.android.db.AttendanceRecord;
 import com.comeon.android.db.SportsType;
@@ -24,6 +26,7 @@ import java.util.List;
 public class AppointmentOrderDaoImpl extends BaseDao implements AppointmentOrderDao {
     private static final String TAG = "AppointmentOrderDaoImpl";
 
+    StadiumInfoDao stadiumInfoDao=new StadiumInfoDaoImpl();
     private AttendanceRecordDao attendanceRecordDao=new AttendanceRecordDaoImpl();
 
     @Override
@@ -66,6 +69,16 @@ public class AppointmentOrderDaoImpl extends BaseDao implements AppointmentOrder
     }
 
     @Override
+    public long getOrderStadiumIdByOrderId(long orderId) {
+        Cursor cursor=LitePal.findBySQL("select stadiuminfo_id from AppointmentOrder where id = ?",String.valueOf(orderId));
+        long stadiumId=0;
+        while (cursor.moveToNext()){
+            stadiumId=cursor.getLong(0);
+        }
+        return stadiumId;
+    }
+
+    @Override
     public AppointmentOrder insertNewOrder(UserInfo loginUser, int peopleSize, String groupName, String contact, StadiumInfo stadiumInfo) {
         AppointmentOrder newOrder = new AppointmentOrder();
         newOrder.setOrderAppointTime(new Date(2019,8,30)); //暂时未处理约定时间
@@ -77,9 +90,14 @@ public class AppointmentOrderDaoImpl extends BaseDao implements AppointmentOrder
 //        newOrder.setOrderSportsType(stadiumInfo.getSportsType());
 //        newOrder.setOrderSportsTypeId(stadiumInfo.getSportsType().getId());
         newOrder.setOrderSportsTypeId(stadiumInfo.getSportsTypeId());
+        newOrder.setOrderSportsType(stadiumInfoDao.getSportsTypeOfOneStadium(stadiumInfo.getId()));
         newOrder.setLongitude(stadiumInfo.getLongitude());
         newOrder.setLatitude(stadiumInfo.getLatitude());
-        newOrder.setOrderLocation(stadiumInfo.getStreet()+stadiumInfo.getStreetNumber());
+        if(stadiumInfo.getStreetNumber()!=null && stadiumInfo.getStreetNumber().trim().length()>0){
+            newOrder.setOrderLocation(stadiumInfo.getStreet()+stadiumInfo.getStreetNumber());
+        }else{
+            newOrder.setOrderLocation(stadiumInfo.getStreet());
+        }
         newOrder.setOrderLaunchTime(Utilities.getNow());
         newOrder.setOrderStatus(0);
         newOrder.save();

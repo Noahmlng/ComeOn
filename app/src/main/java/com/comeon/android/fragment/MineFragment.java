@@ -56,10 +56,17 @@ public class MineFragment extends BaseFragment {
         });
 
         head_icon=(CircleImageView)view.findViewById(R.id.head_icon);
+
         txt_userName=(TextView)view.findViewById(R.id.txt_loginUserName);
         txt_description=(TextView)view.findViewById(R.id.txt_loginUserDescription);
         if(loginUser!=null){
             head_icon.setImageBitmap(Utilities.translateBytes(loginUser.getHeadIcon()));
+            head_icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    
+                }
+            });
             txt_userName.setText(loginUser.getUserNickName());
             txt_description.setText(loginUser.getDescription());
         }

@@ -72,6 +72,7 @@ public class OrderBusiness implements OrderBusinessInterface {
             newOrder.setOrderLocation(location);
             newOrder.setOrderSponsor(loginUser);
             newOrder.setOrderSportsType(selectedSportsType);
+            newOrder.setOrderSponsorId(selectedSportsType.getId());
 //            appointmentOrderDao.insertNewOrder(newOrder);
 
             //添加发起者为第一个参与者
@@ -132,5 +133,15 @@ public class OrderBusiness implements OrderBusinessInterface {
         }
         return ordersDesc;
     }
+
+    @Override
+    public String getOrderStadiumNameWithOrderId(long orderId) {
+        long stadiumId=appointmentOrderDao.getOrderStadiumIdByOrderId(orderId);
+        if (stadiumId==0){
+            return "";
+        }
+        return LitePal.find(StadiumInfo.class, stadiumId).getStadiumName();
+    }
+
 
 }

@@ -26,4 +26,5 @@ public interface SportsTypeDao {
      * @return
      */
     List<SportsType> getSportsTypesByCategoryId(long categoryId);
+
 }

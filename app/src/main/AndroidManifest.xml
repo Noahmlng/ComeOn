@@ -38,7 +38,6 @@
             android:theme="@style/StartActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -80,7 +79,9 @@
         <activity
             android:name=".InfoDisplayActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".LaunchOrderActivity" />
+        <activity android:name=".LaunchOrderActivity"
+            android:launchMode="singleTask"
+            />
         <activity android:name=".ChatActivity" />
         <activity android:name=".BNaviGuideActivity" />
         <activity android:name=".WNaviGuideActivity" />

@@ -85,4 +85,10 @@ public interface OrderBusinessInterface {
      */
     List<AppointmentOrder> getOrdersWithCondition(AppointmentOrder condition);
 
+    /**
+     * 根据订单的id获取该订单的场馆名
+     * @param orderId  查询的订单id
+     * @return  场馆名
+     */
+    String getOrderStadiumNameWithOrderId(long orderId);
 }

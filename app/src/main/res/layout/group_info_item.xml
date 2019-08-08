@@ -16,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
+        android:id="@+id/content_layout"
         android:orientation="vertical"
         android:layout_toRightOf="@id/img_sponsorHeadIcon"
         >
@@ -58,5 +59,13 @@
         android:background="@android:color/transparent"
         android:clickable="false"
         />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/view_color"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@id/img_sponsorHeadIcon"
+        ></View>
 
 </RelativeLayout>

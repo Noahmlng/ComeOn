@@ -99,6 +99,16 @@ public class StadiumInfoDaoImpl extends BaseDao implements StadiumInfoDao {
         return null;
     }
 
+    @Override
+    public SportsType getSportsTypeOfOneStadium(long stadiumId) {
+        Cursor cursor=LitePal.findBySQL("select sportstype_id from StadiumInfo where id = ?",String.valueOf(stadiumId));
+        while (cursor.moveToNext()){
+            long sportsTypeId = cursor.getLong(0);
+            return LitePal.find(SportsType.class, sportsTypeId);
+        }
+        return null;
+    }
+
     /**
      * 加载数据库查询出的场馆对象
      *
